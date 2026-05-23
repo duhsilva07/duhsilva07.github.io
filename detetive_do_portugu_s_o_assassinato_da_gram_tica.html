@@ -1,0 +1,2421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detetive do Português - O Assassinato da Gramática</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-typewriter {
+            font-family: 'Courier Prime', monospace;
+        }
+        .font-vintage {
+            font-family: 'Special Elite', cursive;
+        }
+        .font-serif-news {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+        
+        .paper-texture {
+            background-color: #f4ecd8;
+            background-image: radial-gradient(#ebdfc3 10%, transparent 11%), radial-gradient(#ebdfc3 10%, transparent 11%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 0 40px rgba(139,94,60,0.3);
+            border: 1px solid #d5c39a;
+        }
+        
+        .paper-diary-texture {
+            background-color: #faf6eb;
+            background-image: linear-gradient(#e1d9c3 1px, transparent 1px);
+            background-size: 100% 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 0 30px rgba(150,110,80,0.15);
+            border: 1px solid #e1d3b0;
+        }
+
+        .paper-receipt {
+            background-color: #f8f9fa;
+            background-image: radial-gradient(#ececec 8%, transparent 0);
+            background-size: 8px 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            border: 1px dashed #ced4da;
+        }
+        
+        .paper-pink {
+            background-color: #fff0f5; 
+            background-image: linear-gradient(rgba(240, 210, 220, 0.3) 1px, transparent 1px);
+            background-size: 100% 24px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2), inset 0 0 30px rgba(220, 100, 150, 0.15);
+            border: 1px solid #e8ccd7;
+        }
+
+        .paper-blue {
+            background-color: #f0f8ff; 
+            background-image: linear-gradient(rgba(210, 225, 240, 0.4) 1px, transparent 1px);
+            background-size: 100% 24px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2), inset 0 0 30px rgba(100, 150, 220, 0.15);
+            border: 1px solid #ccdbe8;
+        }
+
+        .paper-yellow {
+            background-color: #fdf5e6; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25), inset 0 0 30px rgba(180, 140, 100, 0.2);
+            border: 1px solid #e6d3be;
+        }
+
+        .crumpled {
+            position: relative;
+        }
+        .crumpled::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.07) 100%),
+                linear-gradient(45deg, rgba(0,0,0,0.05) 0%, rgba(255,255,255,0.3) 50%, rgba(0,0,0,0.05) 100%);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .coffee-stain {
+            position: absolute;
+            width: 140px;
+            height: 130px;
+            border-radius: 50%;
+            border: 8px solid rgba(110, 75, 45, 0.12);
+            box-shadow: inset 0 0 20px rgba(110, 75, 45, 0.08);
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .tear-stain {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            filter: blur(4px);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            pointer-events: none;
+        }
+
+        .blueprint-theme {
+            background-color: #0b1e36;
+            background-image: 
+                linear-gradient(rgba(30, 63, 102, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 63, 102, 0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 2px solid #1e3f66;
+        }
+
+        .folder-texture {
+            background-color: #dfcaa0;
+            background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 8px 100%;
+            box-shadow: inset 0 0 30px rgba(110,75,45,0.2);
+            border: 2px solid #bda373;
+        }
+
+        .slate-texture {
+            background-color: #0f172a;
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        .crossed-out {
+            text-decoration: line-through;
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .shake-effect {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between overflow-x-hidden slate-texture">
+
+    <!-- CABEÇALHO -->
+    <header class="bg-slate-900 border-b border-slate-800 p-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-500 animate-pulse">
+                    <i class="fa-solid fa-magnifying-glass-chart text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-vintage text-2xl tracking-wider text-amber-400">DETETIVE DO PORTUGUÊS</h1>
+                    <p class="text-xs text-slate-400 font-mono">Caso: O Assassinato da Gramática</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button id="btn-sound" onclick="toggleMute()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm flex items-center gap-2 border border-slate-700 transition">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-amber-500"></i>
+                    <span id="sound-text" class="text-slate-300">Som Ativo</span>
+                </button>
+                <div class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-mono flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></span>
+                    <span class="text-slate-300">ABIL • Investigação Ativa</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col justify-center items-center p-4">
+        
+        <!-- TELA 1: MENU DE ENTRADA -->
+        <div id="screen-intro" class="max-w-4xl w-full bg-slate-900/95 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl my-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="text-center mb-8">
+                <span class="px-3 py-1 bg-red-500/10 border border-red-500/30 text-red-500 rounded-full text-xs font-mono uppercase tracking-widest font-bold">Inquérito Sob Sigilo</span>
+                <h2 class="font-vintage text-4xl md:text-5xl mt-4 mb-2 text-slate-100">QUEM ASSASSINOU A GRAMÁTICA?</h2>
+                <div class="h-1 w-24 bg-amber-500 mx-auto rounded-full my-4"></div>
+                <p class="text-slate-300 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                    A venerada <strong>Gramática</strong> foi estrangulada na Biblioteca Central com uma fita vermelha de máquina de escrever. Cinco figuras clássicas são suspeitas. Somente corrigindo os desvios textuais e acareando os investigados a justiça será feita.
+                </p>
+            </div>
+
+            <!-- Seleção de Modo de Jogo -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Modo Solo -->
+                <div onclick="startSoloMode()" class="group bg-slate-950/60 p-6 border border-slate-800 hover:border-amber-500/50 rounded-xl transition cursor-pointer flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 mb-3 text-2xl group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-user-secret"></i>
+                        </div>
+                        <h3 class="font-vintage text-lg text-slate-100 mb-2">Modo Solo Imersivo</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Interrogue os suspeitos, faça buscas em seus pertences (como a bolsa de Dona Crase), leia o diário da vítima, estude a planta baixa do local do crime e desmascare as provas forjadas do Dr. Solecismo.
+                        </p>
+                    </div>
+                    <span class="text-xs font-mono text-amber-500 mt-4 inline-flex items-center gap-2">Jogar Online <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <!-- Modo Mestre / Apresentador -->
+                <div onclick="openPresenterPanel()" class="group bg-slate-950/60 p-6 border border-slate-800 hover:border-red-500/50 rounded-xl transition cursor-pointer flex flex-col justify-between">
+                    <div>
+                        <div class="text-red-500 mb-3 text-2xl group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3 class="font-vintage text-lg text-slate-100 mb-2">Roteiro do Apresentador</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Espaço para o Professor ou Líder de Grupo conduzir a atividade teatral em sala. Contém o roteiro dramatizado completo dividido em 6 partes e uma mesa de efeitos sonoros.
+                        </p>
+                    </div>
+                    <span class="text-xs font-mono text-red-500 mt-4 inline-flex items-center gap-2">Abrir Painel do Mestre <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA 1B: PAINEL DO APRESENTADOR (ROTEIRO TEATRAL) -->
+        <div id="screen-presenter-panel" class="hidden max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl my-8">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-4 mb-6">
+                <div>
+                    <span class="px-2 py-0.5 bg-red-950 text-red-400 border border-red-900 rounded text-[10px] font-mono font-bold uppercase">Mesa do Mestre de Jogo</span>
+                    <h2 class="font-vintage text-2xl text-slate-100 mt-1">Dossiê e Roteiro Teatral</h2>
+                </div>
+                <button onclick="backToMainIntro()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-mono border border-slate-700 transition">
+                    <i class="fa-solid fa-chevron-left mr-1"></i> Voltar
+                </button>
+            </div>
+
+            <!-- Navegador de Roteiro -->
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-6">
+                <button onclick="showScriptPart(1)" id="btn-part-1" class="py-2 bg-amber-500/20 border border-amber-500/40 rounded-lg text-xs font-mono font-bold text-amber-400">Parte 1</button>
+                <button onclick="showScriptPart(2)" id="btn-part-2" class="py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 hover:bg-slate-800">Parte 2</button>
+                <button onclick="showScriptPart(3)" id="btn-part-3" class="py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 hover:bg-slate-800">Parte 3</button>
+                <button onclick="showScriptPart(4)" id="btn-part-4" class="py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 hover:bg-slate-800">Parte 4</button>
+                <button onclick="showScriptPart(5)" id="btn-part-5" class="py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 hover:bg-slate-800">Parte 5</button>
+                <button onclick="showScriptPart(6)" id="btn-part-6" class="py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 hover:bg-slate-800">Parte 6</button>
+            </div>
+
+            <div class="paper-texture text-slate-900 p-6 md:p-8 rounded-xl font-typewriter text-sm md:text-base leading-relaxed mb-6 min-h-[300px]">
+                
+                <!-- Parte 1 -->
+                <div id="script-part-1" class="script-content space-y-4">
+                    <span class="block text-xs font-mono text-amber-700 font-bold uppercase mb-2">// PARTE 1 — AQUECIMENTO (1 minuto)</span>
+                    <div class="bg-amber-100/60 border-l-4 border-amber-500 p-3 italic text-xs text-slate-700 my-2">
+                        [APRESENTADOR entra caracterizado como detetive: sobretudo, lupa no bolso, crachá no peito. A sala está com luz baixa. Uma música de suspense toca ao fundo.]
+                    </div>
+                    <p class="font-bold text-slate-900">(Fala pausada, olhando nos olhos da plateia)</p>
+                    <p class="text-lg">"Boa noite. Ou boa tarde. Depende de onde vocês estão... e de quando vocês estão. Porque a Gramática — sim, a própria — foi encontrada morta ontem à noite."</p>
+                    <p class="italic text-slate-600">(Pausa. Deixa o silêncio pesar.)</p>
+                    <p class="text-lg">"Eu sei o que vocês estão pensando: 'Gramática não morre'. Ah, meus caros... morre sim. E foi assassinada."</p>
+                    <p class="italic text-slate-600">(Levanta uma pasta com fotos fictícias dos suspeitos)</p>
+                    <p class="text-lg">"Eu sou o detetive designado para este caso. E vocês... (aponta de forma dramática para a plateia)... vocês são minha equipe de investigação."</p>
+                </div>
+
+                <!-- Parte 2 -->
+                <div id="script-part-2" class="script-content hidden space-y-4">
+                    <span class="block text-xs font-mono text-amber-700 font-bold uppercase mb-2">// PARTE 2 — O CRIME (1 minuto e 30 segundos)</span>
+                    <div class="bg-amber-100/60 border-l-4 border-amber-500 p-3 italic text-xs text-slate-700 my-2">
+                        (Anda lentamente pela sala, simulando que reconstitui a cena na mente.)
+                    </div>
+                    <p class="text-lg">"Entre 19h e 21h de ontem, a Gramática estava na Biblioteca Central. Sozinha. Revisando um manuscrito com sua inseparável caneta verde. Alguém entrou. Alguém que ela conhecia. Alguém que ela já havia corrigido... muitas vezes."</p>
+                    <div class="bg-amber-100/60 border-l-4 border-amber-500 p-3 italic text-xs text-slate-700 my-2">
+                        (Tira uma fita vermelha do bolso, estica lentamente entre as mãos.)
+                    </div>
+                    <p class="text-lg">"A arma do crime: uma fita de máquina de escrever. Simbólico, não? Matar a Gramática com aquilo que ela mais amava: as palavras escritas."</p>
+                    <p class="italic text-slate-600">(Guarda a fita no bolso)</p>
+                    <p class="text-lg">"Mas o assassino cometeu um erro. Aliás, vários erros. Porque a Gramática, mesmo morrendo, não deixou de corrigir. A última coisa que ela fez foi circular um erro no manuscrito. Um erro que entrega o criminoso."</p>
+                </div>
+
+                <!-- Parte 3 -->
+                <div id="script-part-3" class="script-content hidden space-y-4">
+                    <span class="block text-xs font-mono text-amber-700 font-bold uppercase mb-2">// PARTE 3 — OS SUSPEITOS (2 minutos)</span>
+                    <p class="italic text-slate-600">(Aponta para as fichas dos suspeitos)</p>
+                    <p class="text-lg">"Cinco suspeitos. Todos com motivos claros. Todos com álibis extremamente frágeis:"</p>
+                    <div class="space-y-3 text-slate-900 border-t border-amber-200 pt-3 mt-2">
+                        <p><strong>• Sr. Pleonasmo:</strong> Cansado de ser ridicularizado por suas redundâncias. Teve sua entrada na Academia vetada pela vítima sob o pretexto de "ele se repete demais".</p>
+                        <p><strong>• Dona Crase:</strong> Companheira íntima. Vivia sob constante cobrança para evitar ser mal empregada.</p>
+                        <p><strong>• Seu Estrangeirismo:</strong> Forasteiro na língua. A Gramática planejava bani-lo por completo. Ele ameaçou "deletá-la do mapa".</p>
+                        <p><strong>• Professor Gerundismo:</strong> Ex-namorado de linguajar prolixo, rejeitado brutalmente via carta fria de término.</p>
+                        <p><strong>• Dr. Solecismo:</strong> Acusado de desvios sérios, com pendências financeiras pesadas que seriam cobradas no congresso.</p>
+                    </div>
+                </div>
+
+                <!-- Parte 4 -->
+                <div id="script-part-4" class="script-content hidden space-y-4">
+                    <span class="block text-xs font-mono text-amber-700 font-bold uppercase mb-2">// PARTE 4 — A DINÂMICA DO JOGO (2 minutos)</span>
+                    <p class="text-lg">"Como investigadores credenciados da <strong>ABIL — Academia Brasileira de Investigações Linguísticas</strong>, sua missão é depurar os textos e coletar provas físicas."</p>
+                    <p class="text-lg">"Seus crachás oficiais darão acesso à cena inicial. Cada documento corrigido abrirá coordenadas para o próximo local estratégico."</p>
+                </div>
+
+                <!-- Parte 5 -->
+                <div id="script-part-5" class="script-content hidden space-y-4">
+                    <span class="block text-xs font-mono text-amber-700 font-bold uppercase mb-2">// PARTE 5 — INÍCIO DO JOGO (Condução Prática)</span>
+                    <p class="text-lg">"Iniciem pela Cena do Crime. Analisem o Boletim, consultem o Diário Secreto e estudem o Mapa Policial. Corrijam as infrações da norma culta e avancem."</p>
+                    <p class="text-lg font-bold text-amber-800">"A verdade está escrita! Que a justiça triunfe!"</p>
+                    <p class="italic text-slate-600 text-center uppercase tracking-widest my-4">[SOAR O APITO DO MESTRE]</p>
+                </div>
+
+                <!-- Parte 6 -->
+                <div id="script-part-6" class="script-content hidden space-y-4">
+                    <span class="block text-xs font-mono text-red-700 font-bold uppercase mb-2">// PARTE 6 — REVELAÇÃO (Veredito Final)</span>
+                    <p class="text-lg">"Atenção, detetives! Reúnam as evidências!"</p>
+                    <p class="text-lg font-bold">"E o culpado pelo assassinato é... o DR. SOLECISMO!"</p>
+                    <p class="text-md mt-2">"Ele usou 'entre eu e você' no manuscrito final que estava sobre a mesa de leitura. Trata-se de um Solecismo clássico de regência. A vítima, antes de dar seu último suspiro, circulou a prova cabal com a tinta verde!"</p>
+                </div>
+
+            </div>
+
+            <!-- Efeitos de som para o Mestre -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                <h4 class="text-xs font-mono text-slate-400 uppercase tracking-widest"><i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> Sons de Apoio para Condução</h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <button onclick="playSound('click')" class="px-3 py-2 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 rounded-lg text-xs font-mono flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-keyboard"></i> Máquina
+                    </button>
+                    <button onclick="playSound('unlocked')" class="px-3 py-2 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 rounded-lg text-xs font-mono flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-bell"></i> Revelar Pista
+                    </button>
+                    <button onclick="playSound('victory')" class="px-3 py-2 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 rounded-lg text-xs font-mono flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-clapping-hands"></i> Palmas
+                    </button>
+                    <button onclick="playSound('fail')" class="px-3 py-2 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 rounded-lg text-xs font-mono flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-skull"></i> Erro Crítico
+                    </button>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2 border-t border-slate-900">
+                    <button onclick="copyPresenterScript()" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-mono border border-slate-700 flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-copy text-amber-500"></i> Copiar Roteiro Completo
+                    </button>
+                    <button onclick="startSoloMode()" class="w-full sm:w-auto px-6 py-2.5 bg-red-700 hover:bg-red-600 text-slate-100 font-bold text-xs rounded-lg uppercase tracking-wider flex items-center justify-center gap-2">
+                        Iniciar Painel de Pistas <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA 2: TELA DO JOGO (MURAL + INTERROGATÓRIO) -->
+        <div id="screen-game" class="hidden w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 my-4 px-2">
+            
+            <!-- COLUNA ESQUERDA: PROGRESSO & SUSPEITOS -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                
+                <!-- Progresso -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg">
+                    <h3 class="font-mono text-xs text-slate-400 uppercase tracking-wider mb-2">Progresso da Investigação</h3>
+                    <div class="flex justify-between text-sm font-bold mb-1">
+                        <span>Erros Identificados</span>
+                        <span id="progress-text" class="text-amber-400">0 / 11</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2.5 border border-slate-800 overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-amber-500 to-emerald-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Quadro de Suspeitos -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg flex-grow flex flex-col">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-vintage text-lg text-amber-400 tracking-wide">Quadro de Suspeitos</h3>
+                        <span class="text-xs font-mono text-slate-400">Clique para descartar</span>
+                    </div>
+                    <div class="space-y-3 flex-grow overflow-y-auto max-h-[460px] pr-1" id="suspects-list">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 flex flex-col gap-6">
+                
+                <!-- Abas -->
+                <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl flex gap-2">
+                    <button id="tab-clues" onclick="switchTab('clues')" class="flex-1 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-slate-950">
+                        <i class="fa-solid fa-map-location-dot"></i> Mural de Pistas
+                    </button>
+                    <button id="tab-interrogation" onclick="switchTab('interrogation')" class="flex-1 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 bg-slate-950 hover:bg-slate-800 text-slate-400">
+                        <i class="fa-solid fa-comments"></i> Sala de Interrogatório
+                    </button>
+                </div>
+
+                <!-- CONTEÚDO DA ABA: MURAL DE PISTAS -->
+                <div id="tab-content-clues" class="flex flex-col gap-6">
+                    
+                    <!-- Mapa de Localidades -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg">
+                        <h3 class="font-vintage text-md text-amber-400 mb-3 tracking-wide">Mapa de Busca de Evidências</h3>
+                        <div class="grid grid-cols-5 gap-2 md:gap-4 text-center">
+                            <!-- Local 1 -->
+                            <button id="loc-1" onclick="selectClue(1)" class="p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950 border-amber-500/50 text-amber-500 cursor-pointer">
+                                <span class="text-[9px] font-mono mb-1">Cena</span>
+                                <i class="fa-solid fa-circle-nodes text-lg mb-1"></i>
+                                <span class="text-[9px] uppercase font-bold truncate w-full">Biblioteca</span>
+                            </button>
+                            <!-- Local 2 -->
+                            <button id="loc-2" onclick="selectClue(2)" disabled class="p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950/40 border-slate-800 text-slate-600 cursor-not-allowed">
+                                <span class="text-[9px] font-mono mb-1">Pista 2</span>
+                                <i class="fa-solid fa-newspaper text-lg mb-1"></i>
+                                <span class="text-[9px] uppercase font-bold truncate w-full">Hemeroteca</span>
+                            </button>
+                            <!-- Local 3 -->
+                            <button id="loc-3" onclick="selectClue(3)" disabled class="p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950/40 border-slate-800 text-slate-600 cursor-not-allowed">
+                                <span class="text-[9px] font-mono mb-1">Pista 3</span>
+                                <i class="fa-solid fa-envelope text-lg mb-1"></i>
+                                <span class="text-[9px] uppercase font-bold truncate w-full">Correios</span>
+                            </button>
+                            <!-- Local 4 -->
+                            <button id="loc-4" onclick="selectClue(4)" disabled class="p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950/40 border-slate-800 text-slate-600 cursor-not-allowed">
+                                <span class="text-[9px] font-mono mb-1">Pista 4</span>
+                                <i class="fa-solid fa-mug-hot text-lg mb-1"></i>
+                                <span class="text-[9px] uppercase font-bold truncate w-full">Cafeteria</span>
+                            </button>
+                            <!-- Local 5 -->
+                            <button id="loc-5" onclick="selectClue(5)" disabled class="p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950/40 border-slate-800 text-slate-600 cursor-not-allowed">
+                                <span class="text-[9px] font-mono mb-1">Prova</span>
+                                <i class="fa-solid fa-print text-lg mb-1"></i>
+                                <span class="text-[9px] uppercase font-bold truncate w-full">Gráfica</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Exibição da Pista Selecionada -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col justify-between relative">
+                        
+                        <div class="border-b border-slate-800 pb-4 mb-4 flex justify-between items-start">
+                            <div>
+                                <span id="clue-tag" class="text-xs font-mono text-amber-500 uppercase tracking-widest font-bold">Investigando local...</span>
+                                <h2 id="clue-title" class="font-vintage text-2xl text-slate-100 mt-1">Título da Pista</h2>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span id="clue-errors-remaining" class="text-xs font-mono bg-red-950 text-red-400 border border-red-900 px-2 py-1 rounded">Erros restantes: -</span>
+                            </div>
+                        </div>
+
+                        <!-- Botões de inspeção extras contextuais (Jornal, Diário, Provas Forjadas) -->
+                        <div id="pista-extra-interactive-container" class="hidden mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <!-- Injetado dinamicamente -->
+                        </div>
+
+                        <!-- Texto Antigo Interativo -->
+                        <div class="paper-texture text-slate-900 p-6 md:p-8 rounded-xl shadow-inner font-typewriter text-sm md:text-base leading-relaxed my-4 relative select-text">
+                            <div class="absolute top-2 right-2 text-slate-400/30 text-3xl font-vintage pointer-events-none">
+                                <i class="fa-solid fa-feather-pointed"></i>
+                            </div>
+                            <div id="clue-text-container" class="space-y-4">
+                                <!-- Texto clicável -->
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-400 italic mb-4 font-mono">
+                            💡 Instrução: Clique nas palavras sob suspeita de erro gramatical e proponha a correção adequada para desbloquear novas localidades de busca.
+                        </p>
+
+                        <!-- Caixa de enigma resolvido -->
+                        <div id="riddle-box" class="hidden mt-4 p-4 bg-slate-950 border border-emerald-500/30 rounded-xl">
+                            <div class="flex items-center gap-3 text-emerald-500 mb-2">
+                                <i class="fa-solid fa-circle-check text-xl"></i>
+                                <h4 class="font-bold font-mono text-sm">Todos os desvios deste documento foram corrigidos!</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-3">Sua perspicácia linguística revelou uma pista de localização:</p>
+                            <blockquote id="clue-riddle-text" class="text-sm italic font-serif text-slate-300 border-l-2 border-amber-500 pl-3 mb-4">
+                                "O enigma revela..."
+                            </blockquote>
+                            
+                            <div class="border-t border-slate-800 pt-3">
+                                <label class="block text-xs font-mono text-amber-500 mb-2">Envie seu esquadrão de detetives para:</label>
+                                <div id="destination-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <!-- Opções de destinos -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SALA DE INTERROGATÓRIO -->
+                <div id="tab-content-interrogation" class="hidden flex flex-col gap-6">
+                    
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 shadow-lg">
+                        <div class="flex flex-col sm:flex-row gap-4 items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                            <div>
+                                <h3 class="font-vintage text-xl text-amber-400">Sala de Interrogatório da ABIL</h3>
+                                <p class="text-xs text-slate-400">Selecione o suspeito desejado para conduzir as perguntas.</p>
+                            </div>
+                            <select id="interrogate-suspect-select" onchange="loadInterrogationSuspect(this.value)" class="bg-slate-950 border border-slate-700 px-3 py-2 rounded-xl text-sm text-amber-500 focus:outline-none">
+                                <option value="pleonasmo">Sr. Pleonasmo</option>
+                                <option value="crase">Dona Crase</option>
+                                <option value="estrangeirismo">Seu Estrangeirismo</option>
+                                <option value="gerundismo">Prof. Gerundismo</option>
+                                <option value="solecismo">Dr. Solecismo</option>
+                            </select>
+                        </div>
+
+                        <div id="interrogation-room-container" class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                            
+                            <div class="md:col-span-5 flex flex-col gap-4">
+                                <div class="folder-texture p-4 rounded-xl flex flex-col items-center text-slate-900">
+                                    <div class="w-32 h-32 bg-slate-850 rounded-lg flex items-center justify-center mb-3 font-vintage text-5xl font-bold border-2 border-slate-900 shadow-md text-slate-100" id="suspect-avatar">
+                                        P
+                                    </div>
+                                    <h4 class="font-vintage text-xl font-bold" id="suspect-card-name">Nome</h4>
+                                    <span class="text-xs font-mono uppercase bg-slate-900/10 px-2 py-0.5 rounded font-bold mt-1" id="suspect-card-alias">Alias</span>
+                                    
+                                    <div class="w-full text-xs space-y-1.5 mt-4 border-t border-slate-900/20 pt-3">
+                                        <p><strong><i class="fa-solid fa-shirt"></i> Roupa:</strong> <span id="suspect-card-clothing">-</span></p>
+                                        <p><strong><i class="fa-solid fa-id-badge"></i> Cabelo:</strong> <span id="suspect-card-hair">-</span></p>
+                                        <p><strong><i class="fa-solid fa-briefcase"></i> Acessórios:</strong> <span id="suspect-card-accessories">-</span></p>
+                                        <p><strong><i class="fa-solid fa-comment-dots"></i> Voz:</strong> <span id="suspect-card-voice">-</span></p>
+                                        <p><strong><i class="fa-solid fa-person-running"></i> Trejeito:</strong> <span id="suspect-card-quirk">-</span></p>
+                                        <p class="text-red-900 font-bold bg-red-100/60 p-2 rounded-lg mt-2 border border-red-200">
+                                            <strong><i class="fa-solid fa-signature"></i> Vício de Linguagem:</strong> <span id="suspect-card-linguistic-error">-</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div id="suspect-investigate-belongings-box" class="hidden">
+                                    <!-- Botão dinâmico da bolsa da Crase -->
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-7 flex flex-col gap-4 justify-between min-h-[440px]">
+                                <div class="bg-slate-950 rounded-xl border border-slate-800 p-4 h-[260px] overflow-y-auto font-mono text-xs flex flex-col gap-3" id="interrogation-dialog-box">
+                                    <div class="text-amber-500 italic">// Escolha uma linha de questionamento abaixo...</div>
+                                </div>
+
+                                <div class="space-y-2" id="interrogation-questions-container">
+                                    <!-- Botões de perguntas -->
+                                </div>
+
+                                <button onclick="triggerSuspectPressure()" class="w-full py-3 bg-gradient-to-r from-red-900 to-rose-800 hover:from-red-800 hover:to-rose-700 border border-red-500 rounded-xl text-xs font-mono uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition duration-300 shadow-lg">
+                                    <i class="fa-solid fa-gavel animate-pulse"></i> Confrontar / Pressionar Suspeito
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA 3: TELA DE ACUSAÇÃO FINAL -->
+        <div id="screen-accusation" class="hidden max-w-5xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl my-8">
+            <div class="text-center mb-8">
+                <span class="px-3 py-1 bg-red-500/10 border border-red-500/30 text-red-500 rounded-full text-xs font-mono uppercase tracking-widest font-bold">Inquérito de Acusação</span>
+                <h2 class="font-vintage text-4xl mt-3 text-slate-100">QUEM ASSASSINOU A GRAMÁTICA?</h2>
+                <div class="h-1 w-24 bg-red-600 mx-auto rounded-full my-3"></div>
+                <p class="text-sm text-slate-400 max-w-xl mx-auto">
+                    Todos os locais foram vasculhados e os interrogatórios executados. Indique o assassino e a prova gramatical incontestável deixada pela vítima.
+                </p>
+            </div>
+
+            <!-- Seleção de Assassino -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-8" id="accusation-suspects-grid">
+                <!-- Injetados via JS -->
+            </div>
+
+            <!-- Prova de Sintaxe Crucial -->
+            <div id="accusation-proof-section" class="hidden bg-slate-950 border border-slate-800 p-6 rounded-xl mb-6">
+                <h3 class="font-bold text-slate-200 text-sm mb-3 font-mono text-amber-500">Qual desvio no manuscrito final circulado em verde entrega a identidade do assassino?</h3>
+                <div class="space-y-3">
+                    <label class="flex items-start gap-3 p-3 bg-slate-900 border border-slate-800 rounded-lg cursor-pointer hover:bg-slate-850 transition">
+                        <input type="radio" name="murder-proof" value="pleonasmo_proof" class="mt-1 text-amber-500 focus:ring-amber-500">
+                        <div>
+                            <span class="text-sm font-bold text-slate-200 block">Dizeres redundantes na nota de rodapé</span>
+                            <span class="text-xs text-slate-400">O assassino comete redundâncias crônicas como "subir para cima" e tentou culpar o Sr. Pleonasmo.</span>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 bg-slate-900 border border-slate-800 rounded-lg cursor-pointer hover:bg-slate-850 transition">
+                        <input type="radio" name="murder-proof" value="crase_proof" class="mt-1 text-amber-500 focus:ring-amber-500">
+                        <div>
+                            <span class="text-sm font-bold text-slate-200 block">Uso inadequado de crase no bilhete de encontro</span>
+                            <span class="text-xs text-slate-400">O uso incorreto de "graças à Deus" e "em relação à isso" no álibi de Dona Crase.</span>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 bg-slate-900 border border-slate-800 rounded-lg cursor-pointer hover:bg-slate-850 transition">
+                        <input type="radio" name="murder-proof" value="solecismo_proof" class="mt-1 text-amber-500 focus:ring-amber-500">
+                        <div>
+                            <span class="text-sm font-bold text-slate-200 block">A regência e colocação pronominal do Solecismo ("Entre eu e você" / "Te ver")</span>
+                            <span class="text-xs text-slate-400">Solecismo grosseiro de regência de pronomes retos e colocação pronominal em bilhetes e correspondências. A Gramática circulou o desvio que nomeia o culpado.</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="confirmAccusation()" class="px-8 py-3.5 bg-red-700 hover:bg-red-600 text-slate-100 font-bold rounded-xl transition shadow-lg">
+                    <i class="fa-solid fa-gavel mr-2"></i> Emitir Sentença de Prisão
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 4: TELA DE RESULTADO (VITÓRIA OU DERROTA) -->
+        <div id="screen-result" class="hidden max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl my-8 text-center">
+            <div id="result-icon-container" class="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-3xl mb-6">
+                <!-- Ícone -->
+            </div>
+            
+            <h2 id="result-title" class="font-vintage text-4xl mb-2 text-slate-100">Laudo Criminalístico</h2>
+            <div class="h-1 w-24 bg-amber-500 mx-auto rounded-full my-4"></div>
+            
+            <p id="result-message" class="text-slate-300 max-w-2xl mx-auto text-sm md:text-base leading-relaxed mb-6">
+                Resultado...
+            </p>
+
+            <!-- Roteiro Parte 6 Integrado -->
+            <div id="revelation-script-box" class="hidden text-left mb-8">
+                <h3 class="font-vintage text-lg text-red-500 mb-3 border-b border-slate-800 pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-scroll"></i> Leitura da Sentença Dramática (Apresentador Parte 6)
+                </h3>
+                <div class="paper-texture text-slate-900 p-6 rounded-xl font-typewriter text-sm leading-relaxed space-y-4">
+                    <span class="block text-xs font-mono text-red-700 font-bold uppercase">// PARTE 6 — REVELAÇÃO DO MESTRE</span>
+                    <p class="italic text-slate-600 font-semibold">[O APRESENTADOR reúne todos os detetives com olhar triunfal]</p>
+                    <p class="text-base font-bold">"E o assassino é... (Pausa dramática) ...O DR. SOLECISMO!"</p>
+                    <p><strong>Por que este veredito?</strong> O Dr. Solecismo é batizado com o nome do erro de sintaxe que ele cometeu ao escrever 'entre eu e você' no manuscrito final da Gramática. A própria vítima usou suas últimas forças para circular essa prova indelével com tinta verde."</p>
+                    <p>O Dr. Solecismo devia fortunas à Gramática por conta de acordos literários falidos. Quando ela ameaçou expor sua ruína e seus erros no Congresso, ele invadiu a biblioteca às 19h15 e a estrangulou com a fita de sua antiga máquina de escrever.</p>
+                </div>
+            </div>
+
+            <div id="result-explanation" class="bg-slate-950 p-6 rounded-xl border border-slate-800 text-left text-sm text-slate-400 max-w-2xl mx-auto mb-8 space-y-3">
+                <!-- Explicação do caso -->
+            </div>
+
+            <button onclick="restartGame()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg border border-slate-700 transition">
+                <i class="fa-solid fa-rotate-left mr-2"></i> Investigar Novamente
+            </button>
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-slate-900 border-t border-slate-800 p-4 text-center text-xs text-slate-500 font-mono">
+        <p>Detetive do Português © 2026 — Academia Brasileira de Investigações Linguísticas (ABIL).</p>
+    </footer>
+
+    <!-- MODAL DE CORREÇÃO -->
+    <div id="correction-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-vintage text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-nib text-sm"></i> Lupa Ortográfica
+                </h3>
+                <button onclick="closeCorrectionModal()" class="text-slate-500 hover:text-slate-300">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-4">
+                <span class="text-xs font-mono text-slate-500 block uppercase">Original sob suspeita:</span>
+                <span id="modal-original-word" class="font-typewriter text-red-500 text-lg font-bold block mt-1">erro</span>
+            </div>
+
+            <div class="mb-4">
+                <label for="modal-input-correction" class="block text-xs font-mono text-slate-400 mb-2">Digite a correção adequada (Atenção para hífens e acentuação):</label>
+                <input type="text" id="modal-input-correction" class="w-full bg-slate-950 border border-slate-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-xl px-4 py-3 text-slate-100 font-typewriter tracking-wide outline-none text-base" placeholder="Substituição..." autocomplete="off" onkeydown="handleCorrectionKeydown(event)">
+            </div>
+
+            <div id="modal-hint-box" class="hidden mb-4 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs rounded-lg flex items-start gap-2">
+                <i class="fa-solid fa-circle-info mt-0.5"></i>
+                <p id="modal-hint-text">Dica...</p>
+            </div>
+
+            <div class="flex gap-2">
+                <button id="btn-show-hint" onclick="revealHint()" class="flex-1 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm border border-slate-700 transition">
+                    <i class="fa-solid fa-lightbulb mr-1.5 text-amber-400"></i> Ver Dica
+                </button>
+                <button onclick="submitCorrection()" class="flex-1 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-sm transition">
+                    <i class="fa-solid fa-circle-check mr-1.5"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DO JORNAL RETRÔ FICTÍCIO -->
+    <div id="journal-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+        <div class="bg-stone-100 text-stone-900 border border-stone-300 rounded-2xl max-w-4xl w-full h-[90vh] shadow-2xl flex flex-col overflow-hidden relative">
+            <div class="coffee-stain top-12 right-20 opacity-80 pointer-events-none"></div>
+            <div class="bg-stone-200 border-b border-stone-300 p-4 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-newspaper text-stone-700 text-lg"></i>
+                    <span class="font-mono text-xs uppercase tracking-widest text-stone-600 font-bold">Evidência: Arquivo da Hemeroteca</span>
+                </div>
+                <div class="flex gap-2 font-mono">
+                    <button onclick="changeJournalPage(-1)" id="btn-prev-page" class="px-3 py-1 bg-stone-300 hover:bg-stone-400 rounded-lg text-xs">&lt; Anterior</button>
+                    <span id="journal-page-indicator" class="text-xs text-stone-700 flex items-center px-2">Pág. 1 de 3</span>
+                    <button onclick="changeJournalPage(1)" id="btn-next-page" class="px-3 py-1 bg-stone-300 hover:bg-stone-400 rounded-lg text-xs">Próxima &gt;</button>
+                    <button onclick="closeJournalModal()" class="ml-4 px-3 py-1 bg-stone-800 hover:bg-stone-900 text-white rounded-lg text-xs">Fechar [X]</button>
+                </div>
+            </div>
+
+            <div class="flex-grow overflow-y-auto p-6 font-serif-news select-text">
+                
+                <!-- PÁGINA 1 -->
+                <div id="journal-page-1" class="space-y-6">
+                    <div class="text-center border-b-4 border-double border-stone-800 pb-4">
+                        <h1 class="font-vintage text-4xl md:text-5xl uppercase tracking-tight text-stone-950">O CORREIO DA LÍNGUA</h1>
+                        <p class="font-mono text-xs uppercase tracking-widest mt-1 text-stone-600">Fundado em 1808 • O Guardião da Norma Culta</p>
+                        <div class="flex justify-between border-t border-stone-400 mt-2 pt-1 text-[10px] font-mono text-stone-500 uppercase">
+                            <span>Ano CCXVI — Nº 1.247</span>
+                            <span>São Paulo, Quinta-Feira, 22 de Maio de 2026</span>
+                            <span>Preço: Cr$ 50,00</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-950 text-white text-center py-2 font-bold uppercase tracking-widest text-sm font-mono border-2 border-stone-800">
+                        🚨 EDIÇÃO EXTRA 🚨
+                    </div>
+
+                    <div class="text-center my-6">
+                        <h2 class="text-3xl md:text-5xl font-bold leading-tight uppercase tracking-tight font-serif-news text-stone-950">GRAMÁTICA É ASSASSINADA DENTRO DA BIBLIOTECA CENTRAL</h2>
+                        <h3 class="text-md md:text-xl italic mt-2 text-stone-700">Vítima foi encontrada estrangulada com fita de máquina de escrever. Cinco suspeitos são investigados pela ABIL.</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-4 border-t border-stone-300">
+                        <div class="md:col-span-4 border-r-0 md:border-r border-stone-300 pr-0 md:pr-4">
+                            <div class="border-2 border-stone-800 p-1.5 bg-stone-200">
+                                <div class="w-full h-44 bg-stone-400 flex items-center justify-center font-vintage text-lg border border-stone-500">
+                                    [ RETRATO FALADO ]
+                                </div>
+                            </div>
+                            <p class="text-[11px] italic mt-2 text-stone-600 leading-snug">Foto de arquivo da Gramática (45 anos), mestre em regência, assassinada com frieza na seção de obras raras.</p>
+                        </div>
+                        <div class="md:col-span-8 text-sm text-stone-900 leading-relaxed text-justify space-y-3">
+                            <p class="indent-6"><strong>SÃO PAULO</strong> — A comunidade linguística brasileira e os apaixonados pelas letras amanheceram em profundo luto. A venerable Gramática da Língua Portuguesa foi assassinada brutalmente na noite de ontem, entre 19h e 21h, no pavilhão de obras raras da Biblioteca Central.</p>
+                            <p>O corpo apresentava marcas severas de estrangulamento executado com uma fita vermelha de máquina de escrever — artefato incomum considerado a arma técnica do crime. Peritos do Instituto de Linguística Forense encontraram ao lado do corpo um vidro de corretivo derramado, uma caneta de tinta verde e um manuscrito literário com marcações enérgicas em andamento.</p>
+                            <p>"A cena do crime é perturbadoramente simbólica", asseverou o Professor Acácio de Andrade, diretor da Academia Brasileira de Investigações Linguísticas (ABIL). "Matar a Gramática utilizando as fitas que outrora imprimiam as palavras é um golpe à soberania nacional".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PÁGINA 2 -->
+                <div id="journal-page-2" class="hidden space-y-6">
+                    <div class="border-b border-stone-400 pb-3">
+                        <span class="text-xs font-mono uppercase tracking-widest text-stone-500">O Correio da Língua — Edição Extra — Página 2</span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold uppercase tracking-tight text-stone-950 border-b-2 border-stone-800 pb-2">INVESTIGAÇÃO AVANÇA: CINCO SUSPEITOS, CINCO MOTIVOS DOSADOS</h2>
+                    <p class="text-sm text-stone-700">A ABIL tornou público o dossiê parcial de suspeitos que orbitavam no convívio próximo da vítima. Todos possuíam rancores e álibis questionáveis:</p>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="border-l-4 border-stone-800 pl-4">
+                            <h4 class="font-bold text-stone-950 text-sm font-mono">SR. PLEONASMO, 52 ANOS</h4>
+                            <p class="text-xs text-stone-800 italic mt-0.5">"A Gramática me humilhava publicamente em todo congresso. Ela apontava para mim e gritava: 'Isso é redundante, isso é elo de ligação!'. Eu era chacota. Mas juro que não fui eu, não fui eu."</p>
+                        </div>
+                        <div class="border-l-4 border-stone-800 pl-4">
+                            <h4 class="font-bold text-stone-950 text-sm font-mono">DONA CRASE, 48 ANOS</h4>
+                            <p class="text-xs text-stone-800 italic mt-0.5">"Eu amava a Gramática. Nós tínhamos uma relação amorosa profunda, mas ela terminou comigo por carta dizendo que eu era controversa e incompreendida. Jamais faria mal a ela, jamais."</p>
+                        </div>
+                        <div class="border-l-4 border-stone-800 pl-4">
+                            <h4 class="font-bold text-stone-950 text-sm font-mono">SEU ESTRANGEIRISMO, 35 ANOS</h4>
+                            <p class="text-xs text-stone-800 italic mt-0.5">"Ela queria me dar um 'kick-out' do vocabulário do país. Dizia que eu poluía os jovens. Ela era old-school, mas essa acusação contra mim é pura fake news!"</p>
+                        </div>
+                        <div class="border-l-4 border-stone-800 pl-4">
+                            <h4 class="font-bold text-stone-950 text-sm font-mono">PROF. GERUNDISMO, 61 ANOS</h4>
+                            <p class="text-xs text-stone-800 italic mt-0.5">"Eu vou estar amando ela para sempre. Ela terminou por carta ríspida dizendo que eu prolongava tudo. Eu só queria estar sendo ouvido."</p>
+                        </div>
+                        <div class="border-l-4 border-stone-800 pl-4">
+                            <h4 class="font-bold text-stone-950 text-sm font-mono text-red-800">DR. SOLECISMO, 41 ANOS</h4>
+                            <p class="text-xs text-stone-800 italic mt-0.5">"Eu devia R$ 50 mil de direitos autorais a ela. Mas isso não me torna assassino. <strong class="text-red-800 underline">Entre eu e você</strong>, jornalista, tem gente muito mais culpada nesta cidade." (Nota da redação: O Dr. Solecismo cometeu um desvio de sintaxe de regência pronominal clássico em sua fala ao repórter).</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-200 p-4 border border-stone-300 mt-6">
+                        <h3 class="font-vintage text-sm font-bold text-stone-950">A ASSINATURA QUE DENUNCIA</h3>
+                        <p class="text-xs text-stone-800 leading-relaxed mt-2">Fontes ligadas ao inquérito confirmaram que a Gramática, com seus últimos instantes de lucidez, utilizou o marcador verde para circular o desvio gritante do manuscrito: um <strong class="uppercase text-red-900">Solecismo</strong> de regência pronominal. A Gramática morreu nos corrigindo e nomeando o autor da agressão.</p>
+                    </div>
+                </div>
+
+                <!-- PÁGINA 3 -->
+                <div id="journal-page-3" class="hidden space-y-6">
+                    <div class="border-b border-stone-400 pb-3">
+                        <span class="text-xs font-mono uppercase tracking-widest text-stone-500">O Correio da Língua — Anúncios e Classificados — Página 3</span>
+                    </div>
+
+                    <h2 class="text-xl font-bold uppercase tracking-tight text-stone-950">CLASSIFICADOS E AVISOS DA ABIL</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-stone-300 p-3 bg-stone-50">
+                            <h4 class="font-bold text-xs uppercase text-stone-950">📚 PROCURA-SE DETETIVES</h4>
+                            <p class="text-[11px] text-stone-800 mt-1">Detetives com olhar clínico e destreza em acentuação gráfica para auditar o Caso da fita vermelha. Salário moral garantido. Comparecer à ABIL.</p>
+                        </div>
+                        <div class="border border-stone-300 p-3 bg-stone-50">
+                            <h4 class="font-bold text-xs uppercase text-stone-950">✏️ VENDO CANETAS VERMELHAS</h4>
+                            <p class="text-[11px] text-stone-800 mt-1">Lote exclusivo de canetas vermelhas, ideal para correções cirúrgicas de regências falhas. Procurar Papelaria Ponto Final.</p>
+                        </div>
+                        <div class="border border-stone-300 p-3 bg-stone-50">
+                            <h4 class="font-bold text-xs uppercase text-stone-950">☕ CAFÉ PONTO E VÍRGULA</h4>
+                            <p class="text-[11px] text-stone-800 mt-1">O expresso predileto da Gramática. Venha debater literatura e sintaxe. Traga um texto sem erros e ganhe desconto na segunda xícara.</p>
+                        </div>
+                        <div class="border border-stone-300 p-3 bg-stone-50">
+                            <h4 class="font-bold text-xs uppercase text-stone-950">⚠️ RECOMPENSA DE INFORMAÇÕES</h4>
+                            <p class="text-[11px] text-stone-800 mt-1">Viu um homem magro de terno preto correndo nos arredores da biblioteca entre 19h15 e 19h40? Disque ABIL. Sigilo garantido.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE EXIBIÇÃO DE CARTAS DE AMOR -->
+    <div id="letters-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full h-[85vh] shadow-2xl flex flex-col overflow-hidden">
+            
+            <div class="bg-slate-800 border-b border-slate-700 p-4 flex justify-between items-center shrink-0">
+                <h3 class="text-sm font-vintage text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open"></i> Pasta de Cartas de Amor (Bolsa de Dona Crase)
+                </h3>
+                <button onclick="closeLettersModal()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded text-slate-300 font-mono">Fechar [X]</button>
+            </div>
+
+            <!-- Seleção de Carta -->
+            <div class="bg-slate-950 p-2 border-b border-slate-800 flex gap-2 shrink-0">
+                <button onclick="selectLetter(1)" id="btn-letter-1" class="flex-1 py-1.5 rounded text-xs font-mono font-bold bg-pink-300 text-pink-950">Carta 1 (Rosa)</button>
+                <button onclick="selectLetter(2)" id="btn-letter-2" class="flex-1 py-1.5 rounded text-xs font-mono text-slate-400 bg-slate-900 hover:bg-slate-800">Carta 2 (Azul)</button>
+                <button onclick="selectLetter(3)" id="btn-letter-3" class="flex-1 py-1.5 rounded text-xs font-mono text-slate-400 bg-slate-900 hover:bg-slate-800">Carta 3 (Término)</button>
+            </div>
+
+            <div class="flex-grow overflow-y-auto p-6 flex flex-col justify-between">
+                
+                <!-- CARTA 1 (ROSA) -->
+                <div id="letter-content-1" class="paper-pink text-pink-950 p-6 rounded-xl font-typewriter text-xs md:text-sm leading-relaxed space-y-4">
+                    <p class="text-right">São Paulo, 14 de fevereiro de 2023.<br>Dia de São Valentim</p>
+                    <p>Minha querida Gramática,</p>
+                    <p class="indent-6">Escrevo esta carta à mão — sim, eu sei, você adora cartas manuscritas — para confessar algo que há muito tempo está entalado na minha garganta como um ponto final fora do lugar.</p>
+                    <p class="font-bold text-center text-sm my-3 uppercase tracking-wider">Eu te amo.</p>
+                    <p class="indent-6">Não como se ama um colega de trabalho. Não como se ama uma amiga. Eu te amo como quem ama a própria razão de existir. Porque sem você, querida, eu não existo. Sem a Gramática, a Crase é só um acento perdido no teclado. Um risco à toa no papel. Você me dá sentido. Você me dá regras — e eu amo suas regras.</p>
+                    <p class="indent-6">Lembra daquela tarde na Biblioteca Nacional? Nossas mãos se tocaram sobre a página. Você corou. Naquele dia, eu soube: pertenço à você.</p>
+                    <p>Encontro você hoje à noite, às 19h, no nosso café favorito "Ponto e Vírgula"?</p>
+                    <p class="text-right">Sua,<br><strong>Crase</strong></p>
+                    <p class="text-[10px] border-t border-pink-300/60 pt-2 italic text-pink-800">P.S.: Perdão pelo "à você" no meio da carta. Foi a emoção. Corrija-me. Eu deixo.</p>
+                </div>
+
+                <!-- CARTA 2 (AZUL) -->
+                <div id="letter-content-2" class="hidden paper-blue text-sky-950 p-6 rounded-xl font-typewriter text-xs md:text-sm leading-relaxed space-y-4">
+                    <p class="text-right">São Paulo, 15 de fevereiro de 2023.</p>
+                    <p>Cara Crase,</p>
+                    <p class="indent-6">Sua carta me deixou... sem palavras. E isso, para mim, é quase impossível.</p>
+                    <p class="indent-6">Você disse que me ama. Eu não sei o que é o amor. Sei que "amor" é paroxítona terminada em "r", sei que pode ser sujeito ou objeto direto. Mas sentir? Sentir é verbo irregular. E eu sempre tive medo de irregularidades. Mas com você, Crase, eu me sinto... irregular. No bom sentido.</p>
+                    <p class="indent-6">Aceito o café. Às 19h. No "Ponto e Vírgula". E aceito o "à você" da sua carta. Entenda: eu, a Gramática, estou permitindo um erro. Por você. Isso é a prova de que o que sinto é real.</p>
+                    <p class="text-right">Com rigor e afeto,<br><strong>Gramática</strong></p>
+                    <p class="text-[10px] border-t border-sky-300/60 pt-2 italic text-sky-800">P.S.: "Pertencer à você" está errado. O correto é "pertencer a você". Mas não se preocupe. Eu te pertenço. Sem crase. Sem regras. Só eu.</p>
+                </div>
+
+                <!-- CARTA 3 (TÉRMINO AMASSADO) -->
+                <div id="letter-content-3" class="hidden space-y-4">
+                    <div class="paper-yellow crumpled text-amber-950 p-6 rounded-xl font-typewriter text-xs md:text-sm leading-relaxed space-y-4">
+                        <p class="text-right">São Paulo, 1º de outubro de 2024.</p>
+                        <p>Crase,</p>
+                        <p class="indent-4 font-bold text-red-900">Preciso terminar.</p>
+                        <p class="indent-6">Não porque deixei de gostar de você. Não porque você errou uma crase na semana passada (embora "graças à Deus" ainda me tire o sono). Mas porque nós somos incompatíveis. Eu sou a Gramática, a norma, a lei. Você é a exceção, a dúvida, a controvérsia. Metade das pessoas te ama, metade te odeia. E eu não posso viver dividida assim.</p>
+                        <p class="indent-6">Ontem, um professor me perguntou sobre uma crase opcional e eu não soube responder. Você me fez duvidar de mim mesma. E isso é insuportável.</p>
+                        <p class="indent-6">Além disso, há o Gerundismo. Ele ainda me ama. Sinto pena. E a pena, Crase, é um sentimento que corrói a sintaxe da alma.</p>
+                        <p>Não me procure. Adeus.</p>
+                        <p class="text-right">Ainda sua (mas nem tanto),<br><strong>Gramática</strong></p>
+                        <p class="text-[10px] border-t border-amber-300/60 pt-2 italic text-amber-800">P.S.: "Graças a Deus" NÃO tem crase. Jamais teve. Jamais terá.</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="revealSecretTicket()" id="btn-reveal-ticket" class="w-full py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold font-mono text-xs rounded-lg uppercase tracking-wider transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-envelope-open-text"></i> Olhar fundo do envelope (Extrair Bilhete Secreto)
+                        </button>
+                    </div>
+
+                    <!-- Bilhete Secreto -->
+                    <div id="secret-ticket-paper" class="hidden paper-texture border-dashed border-red-500 text-slate-900 p-4 rounded-lg font-typewriter text-xs space-y-3 shadow-lg transform rotate-1">
+                        <span class="block text-[10px] font-mono text-red-700 font-bold uppercase tracking-wider border-b border-red-300 pb-1">// Bilhete Escrito com Letra Trêmula da Crase:</span>
+                        <p>"Gramática,</p>
+                        <p>Li sua carta 20 vezes. Chorei em todas elas. Você terminou comigo, mas não terminei com você.</p>
+                        <p>Na noite do crime, eu fui até a biblioteca para te pedir para voltar. Mas você já estava morta...</p>
+                        <p class="font-bold text-red-700 underline">Eu vi o vulto. Magro, terno preto, rápido. Solecismo. Era ele. Tenho certeza.</p>
+                        <p>Mas não posso falar. Ele é perigoso. Me perdoa por não ter chegado a tempo de te salvar."</p>
+                        <p class="text-right italic">Eternamente sua, Crase</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DO DIÁRIO DA VÍTIMA -->
+    <div id="diary-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+        <div class="bg-amber-950/95 border border-amber-800 rounded-2xl max-w-2xl w-full h-[85vh] shadow-2xl flex flex-col overflow-hidden">
+            
+            <div class="bg-amber-900 border-b border-amber-800 p-4 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark text-amber-300"></i>
+                    <span class="font-vintage text-xs uppercase text-amber-200">Diário Íntimo da Vítima (Gramática)</span>
+                </div>
+                <div class="flex items-center gap-2 font-mono">
+                    <button onclick="changeDiaryPage(-1)" id="btn-prev-diary" class="px-2 py-1 bg-amber-800 hover:bg-amber-700 text-amber-100 rounded text-xs">&lt; Ant</button>
+                    <span id="diary-page-indicator" class="text-xs text-amber-200 px-1">Capa</span>
+                    <button onclick="changeDiaryPage(1)" id="btn-next-diary" class="px-2 py-1 bg-amber-800 hover:bg-amber-700 text-amber-100 rounded text-xs">Prox &gt;</button>
+                    <button onclick="closeDiaryModal()" class="ml-4 px-3 py-1 bg-slate-900 hover:bg-slate-950 text-white rounded text-xs">Fechar [X]</button>
+                </div>
+            </div>
+
+            <div class="flex-grow overflow-y-auto p-6 flex flex-col justify-between paper-diary-texture text-slate-950 relative">
+                <div class="coffee-stain bottom-4 right-4 opacity-50"></div>
+                <div class="tear-stain top-12 left-1/3"></div>
+                
+                <div id="diary-pages-container" class="font-handwriting text-xl md:text-2xl leading-relaxed space-y-4 relative select-text">
+                    <!-- CAPA -->
+                    <div id="diary-page-0" class="flex flex-col items-center justify-center h-[50vh] text-center space-y-4">
+                        <div class="border-4 border-double border-amber-900 p-8 rounded-lg max-w-sm">
+                            <h1 class="font-vintage text-2xl tracking-widest text-amber-950">DIÁRIO PESSOAL</h1>
+                            <p class="text-red-800 font-bold text-sm tracking-wider my-3 font-mono">⚠️ CONFIDENCIAL ⚠️</p>
+                            <div class="h-0.5 bg-amber-900 my-2"></div>
+                            <p class="text-lg italic">Propriedade da Gramática da Língua Portuguesa</p>
+                            <p class="text-xs font-mono uppercase text-slate-600 mt-4">Volume III — Ano de 2024 a 2026</p>
+                        </div>
+                    </div>
+
+                    <!-- PAG 1: PLEONASMO -->
+                    <div id="diary-page-1" class="hidden space-y-3">
+                        <span class="block text-right text-sm font-mono font-bold text-amber-900">12 de janeiro de 2024</span>
+                        <p class="font-bold text-2xl text-amber-950 mb-4">Querido diário,</p>
+                        <p class="indent-6">Começo este volume com uma sensação estranha. Algo está errado no ar. Não um erro gramatical — desses eu dou conta. É algo mais profundo. Uma desinência solta no tecido da língua.</p>
+                        <p class="indent-6">Hoje o Sr. Pleonasmo me parou na rua. Ele estava furioso. "Você me humilhou, me humilhou naquele congresso, naquele simpósio!", ele gritou, gritou. Tentei explicar que pleonasmo não é crime, mas é vício de linguagem. Ele não quis ouvir.</p>
+                        <p class="indent-6">"A senhora vai se arrepender, vai se arrepender!", ele disse. E foi embora pisando duro, duro. Confesso: senti medo. Ele tem duas bocas. Senti que precisava evitar locais escuros sozinha.</p>
+                        <p class="text-right italic mt-6">— G.</p>
+                    </div>
+
+                    <!-- PAG 2: ESTRANGEIRISMO -->
+                    <div id="diary-page-2" class="hidden space-y-3">
+                        <span class="block text-right text-sm font-mono font-bold text-amber-900">3 de março de 2024</span>
+                        <p class="font-bold text-2xl text-amber-950 mb-4">Querido diário,</p>
+                        <p class="indent-6">O Estrangeirismo está cada vez mais insolente. Hoje ele publicou um artigo num blog — desculpe, num "blog" — defendendo o uso de palavras estrangeiras sem tradução. "A língua é viva, baby", ele escreveu. BABY. Em um texto em português.</p>
+                        <p class="indent-6">O convoquei para uma reunião. Disse que se ele continuasse assim, eu abriria um processo na Academia para expulsá-lo oficialmente da língua. Ele riu de mim. "Me deleta então, tia. Tenta aí."</p>
+                        <p class="indent-6">Tia. ELE ME CHAMOU DE TIA. Eu não sou tia. Eu sou a Gramática. A Gramática não é tia de ninguém. Respirei fundo e contei até dez. Em português.</p>
+                        <p class="text-right italic mt-6">— G.</p>
+                    </div>
+
+                    <!-- PAG 3: GERUNDISMO -->
+                    <div id="diary-page-3" class="hidden space-y-3">
+                        <span class="block text-right text-sm font-mono font-bold text-amber-900">15 de maio de 2024</span>
+                        <p class="font-bold text-2xl text-amber-950 mb-4">Querido diário,</p>
+                        <p class="indent-6">Terminei com o Gerundismo. Foi horrível. Ele não parava de chorar. "Você está terminando... está terminando comigo?" Sim, estava. Mas ele demorou 20 minutos para processar porque repetia tudo no gerúndio.</p>
+                        <p class="indent-6">"Eu vou estar sentindo sua falta", "Você vai estar se arrependendo". PARA SEMPRE não existe no gerúndio, Gerundismo! Gerúndio é contínuo, é inacabado. É uma contradição linguística!</p>
+                        <p class="indent-6">Escrevi uma carta límpida de término. Fui clara. Fui direta. Usei verbos no pretérito perfeito. Acabou. Sinto pena, mas não sinto saudade. Saudade é substantivo, e substantivo não se conjuga.</p>
+                        <p class="text-right italic mt-6">— G.</p>
+                    </div>
+
+                    <!-- PAG 4: CRASE -->
+                    <div id="diary-page-4" class="hidden space-y-3">
+                        <span class="block text-right text-sm font-mono font-bold text-amber-900">20 de julho de 2024</span>
+                        <p class="font-bold text-2xl text-amber-950 mb-4">Querido diário,</p>
+                        <p class="indent-6">A Crase me mandou flores. Outra vez. Desde que terminamos, ela não me deixa em paz. O problema com a Crase é que ela nunca sabe quando deve ou não aparecer. Ela aparecia em momentos errados, sumia nos momentos certos.</p>
+                        <p class="indent-6">"Você me usa quando quer", ela disse. "Você só me põe onde te convém." E não está errada. A Crase é situacional, mas o que ela não entende é que nem toda situação a exige. E há situações em que ela é simplesmente errada.</p>
+                        <p class="indent-6">"Graças à Deus" não tem crase. NUNCA TEVE. Mas como explicar isso para alguém que se chama Crase? Amor com erro de crase não é amor. É vício de regência.</p>
+                        <p class="text-right italic mt-6">— G.</p>
+                    </div>
+
+                    <!-- PAG 5: SOLECISMO -->
+                    <div id="diary-page-5" class="hidden space-y-3">
+                        <span class="block text-right text-sm font-mono font-bold text-amber-900">8 de setembro de 2024</span>
+                        <p class="font-bold text-2xl text-amber-950 mb-4">Querido diário,</p>
+                        <p class="indent-6">Algo muito grave aconteceu. O Dr. Solecismo veio até minha casa hoje. Não foi uma visita social. Foi uma ameaça velada, usando a sintaxe mais distorcida que já presenciei.</p>
+                        <p class="indent-6">"Entre eu e você", ele disse, "a situação vai ficar feia se você não tirar meu nome do congresso." Primeiro: "ENTRE EU E VOCÊ" ESTÁ ERRADO. O correto é "entre MIM e você"!</p>
+                        <p class="indent-6">Segundo: eu NÃO vou tirar o nome dele. Ele deve R$ 50 mil à Academia. Ele fraudou o projeto do dicionário. Ele é um CRIMINOSO. E eu vou expô-lo no Congresso de Língua Portuguesa para todo mundo ver. Comprei uma caneta verde nova. Vou usá-la para circular todos os erros dele.</p>
+                        <p class="text-right italic mt-6">— G.</p>
+                    </div>
+
+                    <!-- PAG 6: DIA DO CRIME -->
+                    <div id="diary-page-6" class="hidden space-y-3">
+                        <span class="block text-right text-sm font-mono font-bold text-amber-900">21 de maio de 2026 — MANHÃ DO CRIME</span>
+                        <p class="font-bold text-2xl text-amber-950 mb-4">Querido diário,</p>
+                        <p class="indent-6">Hoje é o dia. O Congresso de Língua Portuguesa começa amanhã. E eu vou expor o Dr. Solecismo para todos. Preparei uma apresentação impecável. "Entre eu e você" é o carro-chefe das minhas correções.</p>
+                        <p class="indent-6">Mas estou com medo. Recebi um envelope sem remetente hoje cedo. Dentro, só uma fita vermelha de máquina de escrever. É uma ameaça flagrante: "Você vai ser calada". Não vou me calar. Vou à Biblioteca Central hoje à noite revisar a apresentação. Sozinha.</p>
+                        <p class="indent-6 font-bold text-red-800">Se algo me acontecer... quem achar este diário, saiba: o assassino é aquele que diz "ENTRE EU E VOCÊ". O assassino usa ternos escuros e deve dinheiro à Academia!</p>
+                        <p class="text-right italic mt-6">— Gramática</p>
+                    </div>
+
+                    <!-- PAG 7: CONTRACAPA / RECIBO BANCO -->
+                    <div id="diary-page-7" class="hidden space-y-4">
+                        <div class="border-2 border-dashed border-amber-950 p-4 rounded-xl text-center bg-amber-100/50">
+                            <h3 class="font-vintage text-lg text-amber-950">CONTRACAPA — ENVELOPE COLADO</h3>
+                            <p class="text-xs text-slate-700 mt-1">Havia um pequeno envelope fixado na contracapa do caderno com a marcação "EVIDÊNCIA FINANCEIRA DA ABIL".</p>
+                            
+                            <button onclick="revealSecretReceipt()" id="btn-reveal-receipt" class="mt-4 px-4 py-2 bg-amber-900 hover:bg-amber-950 text-white font-bold font-mono text-xs rounded-lg uppercase tracking-wider transition">
+                                <i class="fa-solid fa-receipt mr-1.5"></i> Abrir Envelope (Extrair Recibo Bancário)
+                            </button>
+                        </div>
+
+                        <!-- Recibo Bancário -->
+                        <div id="secret-receipt-container" class="hidden paper-receipt text-slate-800 p-6 rounded-xl font-typewriter text-xs space-y-3 shadow-md border border-slate-300">
+                            <div class="text-center border-b border-dashed border-slate-400 pb-2">
+                                <h4 class="font-bold text-sm">🟢 BANCO DA LÍNGUA PORTUGUESA S.A.</h4>
+                                <p class="text-[9px]">Agência: 0001 — Conta Corrente: 071-ABIL</p>
+                            </div>
+                            <div class="space-y-1 py-1">
+                                <p><strong>Favorecido:</strong> Academia Brasileira de Investigações Linguísticas</p>
+                                <p><strong>Depositante:</strong> DR. SOLECISMO</p>
+                                <p><strong>Valor Depositado:</strong> R$ 50.000,00 (Cinquenta mil reais)</p>
+                                <p><strong>Data de Compensação:</strong> 21 de maio de 2026</p>
+                                <p><strong>Horário do Depósito:</strong> 18h45 (UMA HORA ANTES DO HOMICÍDIO)</p>
+                            </div>
+                            <div class="border-t border-dashed border-slate-400 pt-2 text-[10px] italic text-slate-600 bg-yellow-50/50 p-2 rounded">
+                                <p><strong>Observação do Caixa:</strong> "O cliente apresentava nervosismo extremo no balcão. Efetuou o depósito de cinquenta mil reais totalmente em papel-moeda amassado e sujo. Indagou incansavelmente se a compensação financeira seria liquidada antes do fechamento das 19h. Confirmamos que sim e ele partiu apressadamente em direção à Rua da Biblioteca."</p>
+                            </div>
+                            <p class="text-[10px] text-red-700 font-bold text-center mt-2 uppercase tracking-wide">⚠️ ESTE DOCUMENTO COMPROVA QUE O DR. SOLECISMO PAGOU SUA DÍVIDA NA NOITE DO CRIME E DIRIGIU-SE DIRETAMENTE À BIBLIOTECA CENTRAL! ⚠️</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DO MAPA DA CENA DO CRIME -->
+    <div id="map-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-5xl w-full h-[90vh] shadow-2xl flex flex-col overflow-hidden">
+            
+            <div class="bg-slate-850 border-b border-slate-700 p-4 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-map text-amber-500"></i>
+                    <span class="font-vintage text-xs uppercase text-slate-200">Planta Baixa & Linha do Tempo da Perícia</span>
+                </div>
+                <button onclick="closeMapModal()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded text-slate-300 font-mono">Fechar [X]</button>
+            </div>
+
+            <div class="bg-slate-950 p-2 border-b border-slate-800 flex gap-2 shrink-0 font-mono text-xs">
+                <button onclick="switchMapTab('blueprint')" id="btn-map-tab-blueprint" class="flex-1 py-1.5 rounded font-bold bg-amber-500 text-slate-950">Planta Baixa (Blueprint)</button>
+                <button onclick="switchMapTab('evidences')" id="btn-map-tab-evidences" class="flex-1 py-1.5 rounded text-slate-400 bg-slate-900 hover:bg-slate-800">Inventário de Evidências</button>
+                <button onclick="switchMapTab('timeline')" id="btn-map-tab-timeline" class="flex-1 py-1.5 rounded text-slate-400 bg-slate-900 hover:bg-slate-800">Linha do Tempo</button>
+            </div>
+
+            <!-- Corpo de Informações do Mapa -->
+            <div class="flex-grow overflow-y-auto p-4 md:p-6 bg-slate-950">
+                
+                <!-- PLANTA BAIXA BLUEPRINT -->
+                <div id="map-tab-blueprint" class="space-y-6">
+                    <div class="blueprint-theme rounded-xl p-4 overflow-x-auto">
+                        <div class="min-w-[640px] text-xs font-mono select-none space-y-4">
+                            <div class="text-center text-sky-400 border-b border-sky-800 pb-2 uppercase tracking-widest font-bold">
+                                // DEPARTAMENTO DE CRIMINALÍSTICA DA ABIL — DIVISÃO DE PERÍCIA //
+                            </div>
+                            
+                            <div class="grid grid-cols-12 gap-2 text-center text-sky-300">
+                                <div class="col-span-4 border border-sky-800 p-4 rounded bg-[#0b1e36]/60 flex flex-col justify-between h-32">
+                                    <span class="font-bold border-b border-sky-800 pb-1">ENTRADA PRINCIPAL 🚪</span>
+                                    <p class="text-[10px] text-sky-500">Acesso público dos corredores externos.</p>
+                                    <span class="text-yellow-500 font-bold text-[10px]">👣 Pegadas de café iniciam-se aqui</span>
+                                </div>
+                                <div class="col-span-4 border border-sky-800 p-4 rounded bg-[#0b1e36]/60 flex flex-col justify-between h-32">
+                                    <span class="font-bold border-b border-sky-800 pb-1">BALCÃO DE EMPRÉSTIMO</span>
+                                    <p class="text-[10px] text-sky-500">Mesa central de atendimento da biblioteca.</p>
+                                    <span class="text-sky-600 italic text-[10px]">// Área desimpedida</span>
+                                </div>
+                                <div class="col-span-4 border border-sky-800 p-4 rounded bg-[#0b1e36]/60 flex flex-col justify-between h-32">
+                                    <span class="font-bold border-b border-sky-800 pb-1">SEÇÃO DE PERIÓDICOS 📰</span>
+                                    <p class="text-[10px] text-sky-500">Arquivo de jornais de época (Hemeroteca).</p>
+                                    <span class="text-amber-500 font-bold text-[10px]">Pista 2 localizada aqui</span>
+                                </div>
+
+                                <div class="col-span-12 border-l border-r border-sky-800 py-2 bg-[#081525] text-sky-400 flex justify-between px-4 text-[10px]">
+                                    <span>◄ CORREDOR PRINCIPAL (👣 Trilha de pegadas de sapato social úmidas de café) ►</span>
+                                </div>
+
+                                <div class="col-span-4 border border-sky-800 p-4 rounded bg-[#0b1e36]/60 flex flex-col justify-between h-36">
+                                    <span class="font-bold border-b border-sky-800 pb-1">SAÍDA DE EMERGÊNCIA 🚪</span>
+                                    <p class="text-[10px] text-sky-500">Porta dos fundos com saída para o pátio.</p>
+                                    <span class="text-red-500 font-bold text-[10px]">👣 Rota de fuga usada pelo vulto</span>
+                                </div>
+                                <div class="col-span-4 border border-sky-800 p-4 rounded bg-[#0b1e36]/60 flex flex-col justify-between h-36">
+                                    <span class="font-bold border-b border-sky-800 pb-1">COPA / CAFÉ ☕</span>
+                                    <p class="text-[10px] text-sky-500">Área de descanso dos funcionários.</p>
+                                    <span class="text-yellow-600 font-bold text-[10px]">Copo de café descartado na lixeira</span>
+                                </div>
+                                <div class="col-span-4 border-2 border-red-500/50 p-4 rounded bg-red-950/20 flex flex-col justify-between h-36 relative">
+                                    <span class="font-bold text-red-400 border-b border-red-900 pb-1">SEÇÃO DE OBRAS RARAS 🔴</span>
+                                    <p class="text-[10px] text-slate-300">🔴 Corpo da Gramática encontrado aqui.</p>
+                                    <p class="text-[9px] text-slate-400">📝 Manuscrito com caneta verde sobre a mesa.</p>
+                                    <p class="text-[9px] text-slate-400">⬜ Corretivo derramado no chão de tacos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono mt-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-amber-500 mb-2 uppercase tracking-wider"><i class="fa-solid fa-tags"></i> Legenda de Campo</h4>
+                            <ul class="space-y-1.5 text-slate-300">
+                                <li><strong class="text-red-500">🔴 Corpo da Vítima:</strong> Localizado no centro da sala de obras raras.</li>
+                                <li><strong class="text-emerald-500">🟢 Caneta Verde:</strong> Segura firmemente pela mão direita da Gramática.</li>
+                                <li><strong class="text-slate-400">⬜ Corretivo Líquido:</strong> Frasco tombado a 30 cm dos pés da mesa de estudos.</li>
+                                <li><strong class="text-yellow-500">👣 Pegadas de Sapato:</strong> Trilha sutil de solado social impregnado de café.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-amber-500 mb-2 uppercase tracking-wider"><i class="fa-solid fa-user-doctor"></i> Laudo do Perito (Dr. Sintaxe de Almeida)</h4>
+                            <p class="text-slate-400 leading-relaxed text-[11px]">
+                                "A cena é inequívoca quanto à ocorrência de luta corporal. A mesa de leitura de carvalho maciço está deslocada e há corretivo espalhado no piso. O estrangulamento foi executado pelas costas. As pegadas denotam que o criminoso pisou em uma poça de café fresco na copa e rumou diretamente ao setor de Obras Raras, escapando posteriormente pela porta traseira."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INVENTÁRIO DE EVIDÊNCIAS -->
+                <div id="map-tab-evidences" class="hidden space-y-4 font-mono text-xs text-slate-300">
+                    <h3 class="font-vintage text-amber-400 text-sm border-b border-slate-800 pb-2 uppercase">Relatório de Provas Materiais Coletadas</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+                            <p class="font-bold text-slate-100">1. Fita Vermelha de Máquina de Escrever</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Arma técnica de estrangulamento. Envolvia o pescoço da vítima. Marca: Olivetti Facit.</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+                            <p class="font-bold text-slate-100">2. Caneta Esferográfica Verde</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Empunhada pela vítima. Tinta verde de secagem rápida com marcações frescas sobre o papel.</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+                            <p class="font-bold text-slate-100">3. Frasco de Corretivo Líquido</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Derramado no assoalho. Tampa removida com violência durante a contenção corporal.</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+                            <p class="font-bold text-slate-100">4. Copo de Café da Cafeteria 'Ponto e Vírgula'</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Acondicionado na lixeira do pavilhão de obras raras. Ainda continha sedimentos quentes na perícia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LINHA DO TEMPO DA RECONSTITUIÇÃO -->
+                <div id="map-tab-timeline" class="hidden space-y-4 font-mono text-xs text-slate-300">
+                    <h3 class="font-vintage text-amber-400 text-sm border-b border-slate-800 pb-2 uppercase">Reconstituição Cronológica Forense</h3>
+                    <div class="border-l-2 border-amber-500 pl-4 space-y-4 ml-2 py-2">
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-amber-500 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-amber-400 font-bold">18h30</span> — Dona Crase despede-se da bibliotecária e deixa as dependências da instituição.
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-amber-500 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-amber-400 font-bold">18h50</span> — Gramática adentra a Biblioteca Central carregando uma pasta executiva.
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-amber-500 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-amber-400 font-bold">19h10</span> — Dr. Solecismo é visto na cafeteria 'Ponto e Vírgula'. Age de forma errática e derrama bebida sobre uma mesa de leitura.
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-amber-500 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-amber-400 font-bold">19h15</span> — Dr. Solecismo ingressa na biblioteca. (Testemunha ocular externa: Prof. Gerundismo).
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-amber-500 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-amber-400 font-bold">19h20</span> — Ruídos de gritos abafados e altercação de voz são discernidos no corredor de Obras Raras.
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-amber-500 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-amber-400 font-bold">19h40</span> — O Dr. Solecismo corre em fuga utilizando a saída dos fundos de emergência. (Testemunha ocular: Prof. Gerundismo).
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[21px] top-1 bg-red-600 w-2.5 h-2.5 rounded-full"></span>
+                            <span class="text-red-500 font-bold">19h45</span> — O corpo é localizado pelo guarda do turno da noite durante a ronda de segurança.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE PROVA FORJADA: CARTA FALSA (GERUNDISMO) -->
+    <div id="forged-letter-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full h-[85vh] shadow-2xl flex flex-col overflow-hidden">
+            <div class="bg-slate-800 border-b border-slate-700 p-4 flex justify-between items-center shrink-0">
+                <h3 class="text-sm font-vintage text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-file-invoice"></i> Carta Encontrada na Prensa Mecânica (Pista Oculta)
+                </h3>
+                <button onclick="closeForgedLetterModal()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded text-slate-300 font-mono">Fechar [X]</button>
+            </div>
+            <div class="flex-grow overflow-y-auto p-6 flex flex-col justify-between">
+                <div class="paper-yellow crumpled text-amber-950 p-6 rounded-xl font-typewriter text-xs md:text-sm leading-relaxed space-y-4">
+                    <span class="block text-right text-red-900 font-bold uppercase tracking-wider text-[10px]">// CONFIDENCIAL — EVIDÊNCIA COLETADA</span>
+                    <p>Gramática,</p>
+                    <p>Esta é minha última carta. Depois desta, não escreverei mais. Prometo.</p>
+                    <p>Você me humilhou. Na frente de todos. Me chamou de doente. Disse que eu era uma "doença da língua". Suas palavras me perseguem. Me perseguem. Me perseguem.</p>
+                    <p>Eu te amava. Mas o amor acabou. O que resta é raiva. Raiva pura. Raiva que não passa. Raiva que cresce. Raiva que vai estar explodindo.</p>
+                    <p>Você vai estar me pagando. Não sei como. Não sei quando. Mas você vai estar me pagando.</p>
+                    <p>Estive na biblioteca hoje. Sei que você vai estar indo lá à noite. Sozinha. Sem ninguém. Eu vou estar te esperando.</p>
+                    <p>Não tente fugir. Não tente gritar. Eu vou estar calando você. Com minhas próprias mãos. Com a fita da sua máquina de escrever. Sim, eu sei que você tem uma. Vermelha. Igual ao sangue. Igual à sua caneta de corrigir.</p>
+                    <p>Você me chamou de excessivo. Agora eu vou ser excessivo. Vou estar prolongando sua dor. Vou estar terminando sua vida.</p>
+                    <p class="text-right">Assinado,<br><strong>Aquele que você humilhou</strong></p>
+                    <p class="text-[10px] border-t border-amber-300/60 pt-2 italic text-amber-800">
+                        P.S.: "Vou estar te matando" está errado? GERÚNDIO NÃO É PARA FUTURO. Mas você não estará mais aqui para me corrigir.
+                    </p>
+                </div>
+                <div class="mt-4 p-3 bg-red-950/40 border border-red-500/20 rounded-lg text-xs text-red-300 font-mono">
+                    <p><strong>🚨 ANÁLISE DO DETETIVE:</strong> Esta carta parece caricata e óbvia demais. Ela repete gerúndios obsessivamente, quase como se o autor estivesse tentando, de forma desesperada, imitar e incriminar o Professor Gerundismo. Um assassino meticuloso deixaria uma confissão tão escancarada na fresta da prensa?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE RECADO DE LIXEIRA (PROVA PREMEDITADA) -->
+    <div id="trash-ticket-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full shadow-2xl flex flex-col overflow-hidden">
+            <div class="bg-slate-800 border-b border-slate-700 p-4 flex justify-between items-center shrink-0">
+                <h3 class="text-sm font-vintage text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> Recado Recuperado na Lixeira da Copa
+                </h3>
+                <button onclick="closeTrashTicketModal()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded text-slate-300 font-mono">Fechar [X]</button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="paper-texture border-2 border-dashed border-slate-400 text-slate-950 p-6 rounded-lg font-typewriter text-sm relative rotate-1 shadow-md">
+                    <p class="font-bold">Gramática,</p>
+                    <br>
+                    <p class="indent-4">Preciso te ver. Hoje. 19h. Biblioteca. Seção de obras raras.</p>
+                    <p class="indent-4">Não falte. É sobre o Solecismo. Tenho provas contra ele.</p>
+                    <br>
+                    <p class="text-right">Assinado: <strong>G.</strong></p>
+                </div>
+                
+                <div class="p-3 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-lg text-xs font-mono space-y-2">
+                    <h4 class="font-bold text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> OBSERVAÇÃO SINTÁTICA CRÍTICA:</h4>
+                    <p>O bilhete está assinado como "G." (que poderia indicar Gerundismo), mas repare no erro: <strong>"Preciso te ver"</strong>.</p>
+                    <p>A Gramática, defensora ferrenha da norma culta, JAMAIS aceitaria ou escreveria "Te ver" iniciando oração ou em colocação inadequada. Ela exigiria "Preciso vê-lo" ou "Preciso ver você".</p>
+                    <p>Alguém que comete erros constantes de colocação pronominal (Doutor Solecismo) redigiu e forjou esse bilhete apressadamente para <strong>atrair</strong> a Gramática até a Biblioteca às 19h!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================================
+           SISTEMA DE SOM SINTETIZADO (Web Audio API)
+           ========================================================================= */
+        let audioCtx = null;
+        let isMuted = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            if (isMuted) return;
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.04);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                osc.start(now);
+                osc.stop(now + 0.04);
+            } else if (type === 'success') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); 
+                osc.frequency.setValueAtTime(659.25, now + 0.08); 
+                osc.frequency.setValueAtTime(783.99, now + 0.16); 
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } else if (type === 'fail') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.linearRampToValueAtTime(80, now + 0.25);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'unlocked') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(330, now);
+                osc.frequency.exponentialRampToValueAtTime(660, now + 0.3);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'tension') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(90, now);
+                osc.frequency.linearRampToValueAtTime(300, now + 0.6);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                osc.start(now);
+                osc.stop(now + 0.6);
+            } else if (type === 'victory') {
+                osc.type = 'triangle';
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25];
+                notes.forEach((freq, idx) => {
+                    const noteOsc = audioCtx.createOscillator();
+                    const noteGain = audioCtx.createGain();
+                    noteOsc.connect(noteGain);
+                    noteGain.connect(audioCtx.destination);
+                    noteOsc.type = 'sine';
+                    noteOsc.frequency.setValueAtTime(freq, now + idx * 0.1);
+                    noteGain.gain.setValueAtTime(0.06, now + idx * 0.1);
+                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + 0.7 + idx * 0.1);
+                    noteOsc.start(now + idx * 0.1);
+                    noteOsc.stop(now + 0.7 + idx * 0.1);
+                });
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            const icon = document.getElementById('sound-icon');
+            const txt = document.getElementById('sound-text');
+            if (isMuted) {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+                txt.textContent = 'Mudo';
+            } else {
+                icon.className = 'fa-solid fa-volume-high text-amber-500';
+                txt.textContent = 'Som Ativo';
+                playSound('click');
+            }
+        }
+
+        /* =========================================================================
+           DADOS DOS SUSPEITOS E INTERROGATÓRIO
+           ========================================================================= */
+        const suspectsData = [
+            { 
+                id: 'pleonasmo', 
+                name: 'Sr. Pleonasmo', 
+                alias: 'O Repetidor',
+                relation: 'Inimigo Declarado', 
+                motive: 'A Gramática vetou sua entrada na Academia justificando que "ele se repetia demais" ("subir para cima", "elo de ligação").', 
+                initialLetter: 'P', 
+                color: 'bg-orange-950 border-orange-800 text-orange-400', 
+                crossed: false,
+                clothing: 'Terno amarelo mostarda, gravata borboleta vermelha, sapatos engraxados demais',
+                hair: 'Careca, mas com um topete postiço que cai o tempo todo',
+                accessories: 'Relógio em cada pulso, duas canetas no bolso, dois lenços',
+                voice: 'Fala tudo duas vezes. TUDO. Com ênfase exagerada',
+                quirks: 'Pisca os dois olhos ao mesmo tempo. Conta nos dedos e repete.',
+                linguisticError: 'Pleonasmo — repetir a mesma ideia com palavras diferentes ("subir para cima", "surpresa inesperada").',
+                questions: [
+                    {
+                        q: "Onde você estava na noite do crime, entre 19h e 21h?",
+                        a: "Eu estava em casa, em casa. Sozinho, completamente sozinho. Assistindo televisão, vendo TV. Um filme, um longa-metragem. De suspense, de mistério. Ninguém pode confirmar, ninguém pode testemunhar. Infelizmente, infelizmente."
+                    },
+                    {
+                        q: "Pressionado: Diga a verdade sobre seu álibi!",
+                        a: "Eu já disse, já falei! Estava em casa, na minha residência. Isso é um fato real, um fato verdadeiro!"
+                    },
+                    {
+                        q: "Qual era sua relação com a vítima?",
+                        a: "A Gramática e eu éramos inimigos, rivais, adversários. Ela me odiava, me detestava. Vivia me corrigindo, me retificando. Dizia que eu era redundante, repetitivo. Mas eu juro, eu prometo: não fui eu, não fui eu o assassino!"
+                    },
+                    {
+                        q: "Quem você acha que matou a Gramática?",
+                        a: "O Gerundismo! O Gerundismo! Ele estava furioso, possesso de raiva! Vi ele discutindo com a vítima na véspera, no dia anterior. Ele disse que ia se vingar, que ia se vingar! Ou talvez, ou talvez o Estrangeirismo... ele é um forasteiro, um alienígena da língua!"
+                    }
+                ],
+                secret: "Tá bom, tá certo! Eu vi! Eu testemunhei! O Dr. Solecismo entrou na biblioteca às 19h15, 19h15! Ele estava com um copo de café na mão, um copo de café! E estava resmungando, murmurando qualquer coisa sobre 'ela me paga', 'ela me paga'!"
+            },
+            { 
+                id: 'crase', 
+                name: 'Dona Crase', 
+                alias: 'A Centenária',
+                relation: 'Amiga Íntima', 
+                motive: 'Sentia-se desgastada por ser odiada por muitos e mal empregada. A Gramática dizia que ela necessitava de rigor.', 
+                initialLetter: 'C', 
+                color: 'bg-emerald-950 border-emerald-800 text-emerald-400', 
+                crossed: false,
+                clothing: 'Tailleur cinza, colar de pérolas, salto baixo, bolsa de mão',
+                hair: 'Grisalho, preso em coque com um pente em formato de acento grave (`)',
+                accessories: 'Óculos pendurados em correntinha, lenço de seda',
+                voice: 'Pausada, triste, suspirosa. Corrige a crase dos outros o tempo todo',
+                quirks: 'Leva a mão ao peito. Suspira. Fala "às vezes" com frequência.',
+                linguisticError: 'Crase — às vezes usa onde não deve ("graças à Deus", "em relação à isso"), às vezes omite ("cheiro à café").',
+                questions: [
+                    {
+                        q: "Onde você estava na noite do crime, entre 19h e 21h?",
+                        a: "Eu estava na biblioteca, sim. Mas saí às 18h30, graças à Deus. Tinha ido devolver um livro, 'A Origem da Tragédia', de Nietzsche. Fui embora às pressas porque estava escuro e tenho medo à noite. Cheguei em casa às 19h, disposta à dormir."
+                    },
+                    {
+                        q: "Qual era sua relação com a vítima?",
+                        a: "Éramos amigas íntimas. Muito íntimas. Mas... (suspira) ...às vezes eu me sentia usada. As pessoas não me compreendem. Umas me odeiam, outras me esquecem. A Gramática era a única que me defendia. Mas ela também me corrigia. Dizia que eu era mal empregada. 'Crase, você está trabalhando demais em lugar errado', ela dizia. Isso doía, sabe? Mas eu jamais... JAMIAS faria mal à ela."
+                    },
+                    {
+                        q: "Você foi vista saindo da biblioteca carregando uma pasta suspeita. O que tinha nela?",
+                        a: "Era... era minha pasta pessoal. Documentos. Nada importante à investigação. (Pausa longa) Está bem... eram cartas. Cartas que eu e a Gramática trocávamos. Eu não queria que lessem. Era nossa intimidade à duas. Nós tínhamos uma relação... especial."
+                    },
+                    {
+                        q: "Quem você acha que matou a Gramática?",
+                        a: "O Dr. Solecismo devia dinheiro à ela. Muito dinheiro. A Gramática ia expô-lo no Congresso de Língua Portuguesa. Ele estava desesperado, disposto à tudo. Às vezes o desespero leva as pessoas à loucura. Mas... também desconfio do Seu Estrangeirismo. Ele ameaçou a Gramática na semana passada. Disse que ia deletá-la."
+                    }
+                ],
+                secret: "Eu amava ela! Amava a Gramática! Mas ela ia me deixar. Disse que eu era complicada demais, que ninguém sabia me usar direito. Na noite do crime, eu voltei. Voltei sim! Mas era só para pedir para ela ficar. Quando cheguei... ela já estava... (soluça) ...já estava morta. Eu vi o vulto de um homem saindo pela porta dos fundos. Um homem magro, de terno preto. Não era o Pleonasmo — ele é gordo. Não era o Gerundismo — ele anda devagar. Era magro e rápido."
+            },
+            { 
+                id: 'estrangeirismo', 
+                name: 'Seu Estrangeirismo', 
+                alias: 'O Importado',
+                relation: 'Forasteiro', 
+                motive: 'A Gramática travava uma guerra formal para limitar o uso de termos importados nos documentos oficiais.', 
+                initialLetter: 'E', 
+                color: 'bg-blue-950 border-blue-800 text-blue-400', 
+                crossed: false,
+                clothing: 'Jaqueta de couro com bandeiras de vários países, óculos escuros (tira e põe), calça jeans rasgada',
+                hair: 'Azul neon, penteado moderno, undercut',
+                accessories: 'Fone de ouvido pendurado no pescoço, celular na mão o tempo todo, mochila com patches',
+                voice: 'Fala misturando inglês, espanhol e francês. Tem sotaque forçado',
+                quirks: 'Faz aspas com os dedos. Usa "tipo assim". Olha o celular a cada 30 segundos.',
+                linguisticError: 'Estrangeirismo — insere palavras estrangeiras desnecessariamente ("feedback", "brainstorming", "top", "call").',
+                questions: [
+                    {
+                        q: "Onde você estava na noite do crime, entre 19h e 21h?",
+                        a: "Cara, eu tava numa call, tipo conference call, com meus brothers do exterior. Discutindo um novo project, um brainstorming sobre comme on dit 'inteligência artificial'. Foi das 18h até umas 21h30. Depois eu fui dar um check no meu Instagram. Tenho o print, saca? Olha aqui no meu smartphone. (Mostra o celular rapidamente e guarda)."
+                    },
+                    {
+                        q: "Qual era sua relação com a vítima?",
+                        a: "A Gramática era old school, tá ligado? Conservadora, traditional. Ela queria me kick out da língua portuguesa. Disse que eu era uma má influência, que eu tava corrompendo os jovens. Hello?! A língua é viva! Precisa de update! Precisa de upgrade! Mas eu não matei ela, juro pela minha mãe, pela my mother!"
+                    },
+                    {
+                        q: "Você a ameaçou por e-mail. Disse que ia 'deletá-la'. Por quê?",
+                        a: "Olha... eu me exaltei. Foi um momento de rage, de raiva. Eu só quis dizer que ela estava outdated, ultrapassada. Eu jamais faria mal a alguém. Eu sou um cara peaceful, de boa. Só quero viver minha life em paz, trazer novas palavras, enriquecer o vocabulário. Isso é crime agora? Ser moderno é crime?"
+                    },
+                    {
+                        q: "Quem você acha que matou a Gramática?",
+                        a: "Fácil, easy. O Professor Gerundismo. Ele tava full pistola com ela. Ela deu um ghosting nele, terminou por carta, sem closure. Ele ficou mal, traumatized. Outro dia vi ele na rua falando sozinho, repetindo 'ela vai pagar, ela vai pagar'. Bizarro. Ou, sei lá, maybe o Dr. Solecismo. Esse cara é shady, sinistro. Deve dinheiro até para o banco. E vive errando sintaxe. A Gramática odiava ele."
+                    }
+                ],
+                secret: "OK, OK! Eu não tava numa call, tá feliz? Eu tava sozinho em casa, maratonando série. Não tenho álibi. Mas eu não matei ela! Eu só... eu só queria ser aceito. Essa língua é minha também, eu tenho direito de estar aqui!"
+            },
+            { 
+                id: 'gerundismo', 
+                name: 'Professor Gerundismo', 
+                alias: 'O Eterno',
+                relation: 'Ex-Namorado', 
+                motive: 'Romperam de forma drástica sob a acusação de que ele prolongava as conversas ao extremo e nunca terminava nada.', 
+                initialLetter: 'G', 
+                color: 'bg-indigo-950 border-indigo-800 text-indigo-400', 
+                crossed: false,
+                clothing: 'Jaleco branco de professor com manchas de café, camisa xadrez por baixo, gravata torta',
+                hair: 'Branco, bagunçado, "cabelo de cientista maluco"',
+                accessories: 'Faixa na cabeça escrito "NDO", óculos quebrados remendados com fita adesiva, pilha de papéis',
+                voice: 'Fala arrastado, sempre no gerúndio. Exageradamente calmo ou exageradamente raivoso',
+                quirks: 'Anda em círculos. Fala sozinho. Coça a cabeça. Derrama café em si mesmo.',
+                linguisticError: 'Gerundismo — usa gerúndio para tudo, inclusive para futuro ("vou estar transferindo", "vamos estar analisando").',
+                questions: [
+                    {
+                        q: "Onde você estava na noite do crime, entre 19h e 21h?",
+                        a: "Eu vou estar sendo bem sincero com vocês. Eu estava terminando de estar preparando minha aula sobre verbos. Ia estar corrigindo umas provas também. Estava pensando em estar indo até a biblioteca, mas acabei não estando indo. Fiquei em casa, pensando... pensando..."
+                    },
+                    {
+                        q: "Qual era sua relação com a vítima?",
+                        a: "A Gramática e eu... tivemos um relacionamento que ia estar sendo lindo. Mas ela terminou comigo. Por carta. Uma carta! Ela nem foi capaz de estar me olhando nos olhos. Disse que eu era 'excessivo', que eu 'prolongava tudo', que eu 'nunca terminava nada'. Isso doeu. Isso está doendo até agora."
+                    },
+                    {
+                        q: "Testemunhas disseram que você discutiu com ela na véspera do crime. O que houve?",
+                        a: "Eu fui pedir para ela estar voltando para mim. Implorei. Disse que ia estar mudando, que ia estar parando com o gerúndio. Ela riu. Riu de mim! Disse que eu era patético, que eu nunca ia estar conseguindo. Então eu... eu gritei. Disse que ela ia estar se arrependendo. Mas foi só raiva, só momento. Eu não faria mal a ela. Eu juro que não."
+                    },
+                    {
+                        q: "Quem você acha que matou a Gramática?",
+                        a: "O Estrangeirismo. Ele estava ameaçando ela publicamente. Ou o Pleonasmo. Ele vivia repetindo que ia se vingar. Vivia repetindo. Mas... (olha para os lados, sussurra) ...o Solecismo é o mais perigoso. Ele deve dinheiro. Ele erra de propósito. Ele odeia ser corrigido. Ele odeia a Gramática. E ele estava na biblioteca naquela noite. Eu sei porque eu... eu estava passando por perto. Estava querendo ver ela. Só ver. E vi ele entrando. Sozinho. Com raiva."
+                    }
+                ],
+                secret: "Eu vi tudo! Eu estava lá fora! Vi o Solecismo entrando com um copo de café. Vi a luz da seção de gramática acender. Ouvi gritos. E depois... silêncio. Ele saiu correndo, sem o café, com a roupa manchada de... manchada de vermelho. Eu queria ter entrado. Mas fiquei paralisado. Covarde. Eu ia estar sendo um cobarde."
+            },
+            { 
+                id: 'solecismo', 
+                name: 'Dr. Solecismo', 
+                alias: 'O Errado (Culpado!)',
+                relation: 'Ex-Sócio Endividado', 
+                motive: 'Cometia erros pesados de concordância e regência. Devia R$ 50 mil e corria o risco de ser exposto publicamente no Congresso.', 
+                initialLetter: 'S', 
+                color: 'bg-red-950 border-red-800 text-red-400', 
+                crossed: false,
+                clothing: 'Terno preto impecável, camisa branca, gravata vermelha (levemente torta), sapatos engraxados',
+                hair: 'Preto, penteado para trás com gel, uma mecha cai sobre a testa',
+                accessories: 'Abotoaduras de ouro, relógio caro, pasta de couro. Um fio de fita vermelha saindo do bolso',
+                voice: 'Calma, calculista, educada até demais. Fala baixo. Corrige os outros com desprezo',
+                quirks: 'Sorri de canto. Não gagueja. Mantém contato visual intenso. Ajeita a gravata o tempo todo.',
+                linguisticError: 'Solecismo — erros de sintaxe ("entre eu e você", "fazem três dias", "vou no banheiro", "assisti o filme").',
+                questions: [
+                    {
+                        q: "Onde você estava na noite do crime, entre 19h e 21h?",
+                        a: "Entre eu e você, detetive, isso não é da sua conta. Mas já que insiste: eu estava na cafeteria 'Ponto e Vírgula' até umas 19h10. Tomei um café expresso. Depois fui para casa. Cheguei em casa fazem umas 20h. Sozinho. Infelizmente, não tenho testemunhas."
+                    },
+                    {
+                        q: "Qual era sua relação com a vítima?",
+                        a: "Éramos sócios. Tivemos um projeto: um dicionário de erros comuns. Mas o projeto faliu. Ela me culpou. Disse que meus erros de sintaxe afastaram os investidores. Tolice. O português evolui. O que era erro ontem pode ser a norma amanhã. Mas ela não entendia isso. Ela era... rígida. Inflexível. Uma pedra no sapato da língua."
+                    },
+                    {
+                        q: "Você devia dinheiro a ela. Quanto? E por que ela ia expô-lo?",
+                        a: "Devia. Passado. Devo não nego, pago quando puder. Eram R$ 50 mil. Ela me emprestou para eu investir no dicionário. Quando o projeto quebrou, ela quis o dinheiro de volta. Eu não tinha. Ela ameaçou me expor no Congresso de Língua Portuguesa. Disse que contaria a todos que eu era um 'solecista contumaz', um 'erro ambulante'. Minha carreira estaria arruinada. Mas isso é motivo para matar? Entre eu e você, detetive, tem gente muito mais emotiva nesta sala. O Gerundismo, por exemplo. Ele estava descontrolado. Eu só estava... endividado."
+                    },
+                    {
+                        q: "Quem você acha que matou a Gramática?",
+                        a: "O Gerundismo, obviamente. Ele amava ela. O amor é o melhor motivo para o crime. Ou o Pleonasmo — ele era corrigido todos os dias, todas as horas, todos os minutos. Isso enlouquece uma pessoa. Todos os dias... (se interrompe)... ele repetia que ia se vingar. Repetia. Mas se eu fosse o assassino, teria usado algo mais... inteligente. Uma fita de máquina de escrever é muito simbólico. Coisa de quem queria deixar uma mensagem. Eu não deixo mensagens. Eu apago."
+                    }
+                ],
+                secret: "Parabéns, detetive. Você encontrou o erro. Sim. Fui eu. Mas não me arrependo. Ela me humilhou pela última vez. Ela ia acabar comigo. 'Solecismo', ela dizia, 'você é um erro que deve ser corrigido'. Eu só... corrigi ela primeiro. Quer saber a ironia? A última coisa que ela fez foi circular meu nome. Um erro de sintaxe. 'Entre eu e você'. Ela morreu me corrigindo. Morreu fazendo o que amava. Podem me levar. Mas lembrem-se: a língua muda. A Gramática está morta. Viva a língua viva."
+            }
+        ];
+
+        let suspects = [];
+
+        /* =========================================================================
+           BASE DE DADOS DE PISTAS GRAMATICAIS
+           ========================================================================= */
+        const clueDatabase = [
+            {
+                id: 1,
+                tag: "Pista 1: Cena do Crime (Biblioteca Central)",
+                title: "Boletim de Ocorrência — 19h45",
+                riddle: "Procure onde as vozes do passado repousam em silêncio, guardadas em papel e tinta antiga.",
+                correctDestination: "loc-2", 
+                textSegments: [
+                    { type: 'text', content: 'A ' },
+                    { type: 'error', content: 'vitima', id: 'e1_1', correct: 'vítima', hint: 'Falta o acento agudo por ser uma palavra proparoxítona.' },
+                    { type: 'text', content: ' foi encontrada caída no chão da seção de gramática, entre as ' },
+                    { type: 'error', content: 'pratileiras', id: 'e1_2', correct: 'prateleiras', hint: 'Erro ortográfico clássico de vogal.' },
+                    { type: 'text', content: ' de livros raros. O corpo apresentava sinais de estrangulamento com uma fita vermelha. Aparentemente, a Gramática estava revisando um manuscrito quando foi atacada. Ao lado do corpo, os peritos encontraram um bilhete escrito ' },
+                    { type: 'error', content: 'a mão', id: 'e1_3', correct: 'à mão', hint: 'Locução adverbial com substantivo feminino exige crase.' },
+                    { type: 'text', content: ' com os seguintes dizeres: "Procure onde as vozes do passado repousam em silêncio, guardadas em papel e tinta." Havia também um frasco de corretivo derramado e um marcador de texto verde.' }
+                ],
+                destinations: [
+                    { name: "Seguir para a Cafeteria 'Ponto e Vírgula'", targetId: "loc-4" },
+                    { name: "Acessar Hemeroteca (Arquivo de Jornais)", targetId: "loc-2" }, 
+                    { name: "Explorar Gráfica do Subsolo", targetId: "loc-5" }
+                ],
+                errorsSolved: {}
+            },
+            {
+                id: 2,
+                tag: "Pista 2: Hemeroteca",
+                title: "Arquivo de Imprensa Antiga",
+                riddle: "A próxima pista está oculta no ponto exato onde as palavras viajam por quilômetros sem sair do lugar.",
+                correctDestination: "loc-3", 
+                textSegments: [
+                    { type: 'text', content: 'O Professor Gerundismo foi visto discutindo acaloradamente com a Gramática no Café Central, na tarde anterior ao crime. Testemunhas relataram que ele disse: "Você vai se arrepender de ter me humilhado naquele congresso!". A discussão teria começado ' },
+                    { type: 'error', content: 'por que', id: 'e2_1', correct: 'porque', hint: 'Conjunção explicativa ou causal escreve-se tudo junto e sem acento.' },
+                    { type: 'text', content: ' a Gramática criticou seu uso excessivo de verbos no gerúndio. Enquanto isso, Dona Crase era vista saindo da Biblioteca ' },
+                    { type: 'error', content: 'as pressas', id: 'e2_2', correct: 'às pressas', hint: 'Locução feminina plural adverbial exige uso de crase.' },
+                    { type: 'text', content: ', carregando uma pasta suspeita de cor escura.' }
+                ],
+                destinations: [
+                    { name: "Ir para a Central de Correios", targetId: "loc-3" }, 
+                    { name: "Procurar na Gráfica", targetId: "loc-5" }
+                ],
+                errorsSolved: {}
+            },
+            {
+                id: 3,
+                tag: "Pista 3: Correios",
+                title: "Correspondência Extraviada",
+                riddle: "A verdade se esconde onde o conhecimento e as conversas são servidos bem quentes e em doses estimulantes.",
+                correctDestination: "loc-4", 
+                textSegments: [
+                    { type: 'text', content: 'Eu sei quem matou a Gramática, mas tenho medo de falar. O assassino está entre nós. Na noite do crime, eu vi o Sr. Pleonasmo entrar na Biblioteca carregando uma mochila grande. Ele saiu correndo, cerca de 20 minutos depois, com a roupa toda amassada. Ele não ' },
+                    { type: 'error', content: 'viu eu', id: 'e3_1', correct: 'me viu', hint: 'Pronomes pessoais retos não servem como objeto direto ("viu eu" está incorreto).' },
+                    { type: 'text', content: ' atrás do pilar de mármore. Mas também desconfio do Seu Estrangeirismo, que havia ameaçado a vítima por ' },
+                    { type: 'error', content: 'email', id: 'e3_2', correct: 'e-mail', hint: 'A palavra estrangeira aportuguesada pede o uso de hífen.' },
+                    { type: 'text', content: ' na semana anterior.' }
+                ],
+                destinations: [
+                    { name: "Investigar a Cafeteria 'Ponto e Vírgula'", targetId: "loc-4" }, 
+                    { name: "Correr até a Gráfica", targetId: "loc-5" }
+                ],
+                errorsSolved: {}
+            },
+            {
+                id: 4,
+                tag: "Pista 4: Cafeteria 'Ponto e Vírgula'",
+                title: "Recibo de Caixa Registradora",
+                riddle: "O desfecho de tudo está localizado na prensa mecânica, onde as palavras ganham sua forma imutável e física.",
+                correctDestination: "loc-5", 
+                textSegments: [
+                    { type: 'text', content: 'Recibo nº 452 — 19h10 (Noite do Crime)\n1 Café expresso duplo — R$ 8,50\nCliente: Doutor Solecismo.\n\nAnotação do balconista no verso: "O cliente estava trêmulo. Derramou café sobre o exemplar da gramática que trazia ' },
+                    { type: 'error', content: 'con sigo', id: 'e4_1', correct: 'consigo', hint: 'Pronome oblíquo reflexivo da 3ª pessoa escreve-se junto.' },
+                    { type: 'text', content: '. Ele murmurava que aquela mulher havia arruinado sua reputação e que hoje ela pagaria. Em seguida, pagou e seguiu em direção ' },
+                    { type: 'error', content: 'a Biblioteca', id: 'e4_2', correct: 'à Biblioteca', hint: 'Preposição exigida pelo termo "direção" somada ao artigo gera crase.' },
+                    { type: 'text', content: '."' }
+                ],
+                destinations: [
+                    { name: "Dirigir-se à Gráfica / Impressora", targetId: "loc-5" }, 
+                    { name: "Retornar à Biblioteca Central", targetId: "loc-1" }
+                ],
+                errorsSolved: {}
+            },
+            {
+                id: 5,
+                tag: "Pista 5: Gráfica / Impressora",
+                title: "Manuscrito Final — Prova de Revisão",
+                riddle: "O caso foi elucidado. Proponha sua tese de acusação formal na central policial!",
+                correctDestination: "accusation",
+                textSegments: [
+                    { type: 'text', content: 'Esta é a página sob análise da Gramática antes de ser atacada. Ela circulou os seguintes erros estruturais:\n\n"A nova novela abordará dilemas complexos. A autora declarou que os personagens foram inspirados em figuras reais. ' },
+                    { type: 'error', content: 'Entre eu', id: 'e5_1', correct: 'Entre mim', hint: 'Após preposições essenciais, usa-se o pronome oblíquo tônico, não o reto.' },
+                    { type: 'text', content: ' e você, creio que o público não reagirá bem. ' },
+                    { type: 'error', content: 'Fazem três', id: 'e5_2', correct: 'Faz três', hint: 'O verbo "fazer" indicando tempo decorrido é impessoal (deve ficar no singular).' },
+                    { type: 'text', content: ' semanas que os telespectadores estão desligando a TV por conta da gravidade extrema."' }
+                ],
+                destinations: [
+                    { name: "Ir para o Painel de Acusação Final", targetId: "accusation" }
+                ],
+                errorsSolved: {}
+            }
+        ];
+
+        let currentClueId = 1;
+        let selectedWordId = null;
+        let hintUsedCount = 0;
+        let errorCount = 0;
+        let selectedCulpritId = null;
+        let currentInterrogatedSuspect = 'pleonasmo';
+        let currentJournalPage = 1;
+        let currentDiaryPageNum = 0;
+
+        window.onload = function() {
+            resetGameState();
+        };
+
+        function resetGameState() {
+            suspects = JSON.parse(JSON.stringify(suspectsData));
+            currentClueId = 1;
+            selectedWordId = null;
+            hintUsedCount = 0;
+            errorCount = 0;
+            selectedCulpritId = null;
+            currentDiaryPageNum = 0;
+            
+            clueDatabase.forEach(c => {
+                c.errorsSolved = {};
+            });
+            
+            renderSuspects();
+            renderAccusationSuspects();
+            loadInterrogationSuspect('pleonasmo');
+        }
+
+        function backToMainIntro() {
+            playSound('click');
+            document.getElementById('screen-presenter-panel').classList.add('hidden');
+            document.getElementById('screen-intro').classList.remove('hidden');
+        }
+
+        function openPresenterPanel() {
+            playSound('unlocked');
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-presenter-panel').classList.remove('hidden');
+            showScriptPart(1);
+        }
+
+        function showScriptPart(partNum) {
+            playSound('click');
+            for (let i = 1; i <= 6; i++) {
+                const btn = document.getElementById(`btn-part-${i}`);
+                if(btn) btn.className = "py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 hover:bg-slate-800";
+            }
+            document.querySelectorAll('.script-content').forEach(el => el.classList.add('hidden'));
+
+            const activeBtn = document.getElementById(`btn-part-${partNum}`);
+            if(activeBtn) activeBtn.className = "py-2 bg-amber-500/20 border border-amber-500/40 rounded-lg text-xs font-mono font-bold text-amber-400";
+            document.getElementById(`script-part-${partNum}`).classList.remove('hidden');
+        }
+
+        function startSoloMode() {
+            playSound('unlocked');
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-presenter-panel').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            switchTab('clues');
+            selectClue(1);
+        }
+
+        /* =========================================================================
+           SISTEMA DE ABAS, DIÁLOGO E INTERROGATÓRIOS
+           ========================================================================= */
+        function switchTab(tab) {
+            playSound('click');
+            const tabClues = document.getElementById('tab-clues');
+            const tabInterrog = document.getElementById('tab-interrogation');
+            const contentClues = document.getElementById('tab-content-clues');
+            const contentInterrog = document.getElementById('tab-content-interrogation');
+
+            if (tab === 'clues') {
+                tabClues.className = "flex-1 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-slate-950";
+                tabInterrog.className = "flex-1 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 bg-slate-950 hover:bg-slate-900 text-slate-400";
+                contentClues.classList.remove('hidden');
+                contentInterrog.classList.add('hidden');
+            } else {
+                tabInterrog.className = "flex-1 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-slate-950";
+                tabClues.className = "flex-1 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 bg-slate-950 hover:bg-slate-900 text-slate-400";
+                contentClues.classList.add('hidden');
+                contentInterrog.classList.remove('hidden');
+                loadInterrogationSuspect(currentInterrogatedSuspect);
+            }
+        }
+
+        function loadInterrogationSuspect(suspectId) {
+            currentInterrogatedSuspect = suspectId;
+            const selectEl = document.getElementById('interrogate-suspect-select');
+            selectEl.value = suspectId;
+
+            const s = suspects.find(item => item.id === suspectId);
+            if (!s) return;
+
+            document.getElementById('suspect-avatar').textContent = s.initialLetter;
+            document.getElementById('suspect-card-name').textContent = s.name;
+            document.getElementById('suspect-card-alias').textContent = s.alias;
+            document.getElementById('suspect-card-clothing').textContent = s.clothing;
+            document.getElementById('suspect-card-hair').textContent = s.hair;
+            document.getElementById('suspect-card-accessories').textContent = s.accessories;
+            document.getElementById('suspect-card-voice').textContent = s.voice;
+            document.getElementById('suspect-card-quirk').textContent = s.quirks;
+            document.getElementById('suspect-card-linguistic-error').textContent = s.linguisticError;
+
+            const dialogBox = document.getElementById('interrogation-dialog-box');
+            dialogBox.innerHTML = `<div class="text-amber-500 italic">// Suspeito ${s.name} sentou-se na cadeira de interrogatório. Prossiga detetive.</div>`;
+
+            const boxBelongings = document.getElementById('suspect-investigate-belongings-box');
+            if (suspectId === 'crase') {
+                boxBelongings.classList.remove('hidden');
+                boxBelongings.innerHTML = `
+                    <button onclick="openLettersModal()" class="w-full mt-2 py-2.5 bg-pink-900 hover:bg-pink-800 border border-pink-500 text-pink-100 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-folder-open animate-pulse"></i> Revistar Bolsa de Dona Crase (Cartas Secretas)
+                    </button>
+                `;
+            } else {
+                boxBelongings.classList.add('hidden');
+            }
+
+            const questionContainer = document.getElementById('interrogation-questions-container');
+            questionContainer.innerHTML = '';
+            
+            s.questions.forEach((qObj, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-2.5 bg-slate-950 hover:bg-slate-900 border border-slate-850 rounded-xl text-xs text-slate-200 transition flex justify-between items-center gap-2 hover:border-amber-500/30";
+                btn.setAttribute('onclick', `askSuspect(${index})`);
+                btn.innerHTML = `
+                    <span><strong class="text-amber-500">Questionar:</strong> "${qObj.q}"</span>
+                    <i class="fa-solid fa-chevron-right text-slate-600"></i>
+                `;
+                questionContainer.appendChild(btn);
+            });
+        }
+
+        function askSuspect(qIndex) {
+            playSound('click');
+            const s = suspects.find(item => item.id === currentInterrogatedSuspect);
+            if (!s) return;
+
+            const qObj = s.questions[qIndex];
+            const dialogBox = document.getElementById('interrogation-dialog-box');
+            
+            dialogBox.innerHTML += `
+                <div class="text-slate-400 mt-2"><strong>Você:</strong> "${qObj.q}"</div>
+                <div class="text-amber-400 pl-4 border-l-2 border-amber-500/40 font-typewriter"><strong>${s.name}:</strong> "${qObj.a}"</div>
+            `;
+            dialogBox.scrollTop = dialogBox.scrollHeight;
+        }
+
+        function triggerSuspectPressure() {
+            playSound('tension');
+            const container = document.getElementById('interrogation-room-container');
+            container.classList.add('shake-effect');
+            setTimeout(() => container.classList.remove('shake-effect'), 500);
+
+            const s = suspects.find(item => item.id === currentInterrogatedSuspect);
+            if (!s) return;
+
+            const dialogBox = document.getElementById('interrogation-dialog-box');
+            dialogBox.innerHTML += `
+                <div class="text-red-500 mt-2 font-bold uppercase tracking-wider font-mono">// CONFRONTANDO SUSPEITO COM CARTEIRA DA ABIL //</div>
+                <div class="text-red-300 pl-4 border-l-2 border-red-500 font-typewriter"><strong>${s.name} (CONFISSÃO SECRETA):</strong> "${s.secret}"</div>
+            `;
+            dialogBox.scrollTop = dialogBox.scrollHeight;
+        }
+
+        /* =========================================================================
+           SISTEMA DE CARTAS DE AMOR SECRETAS (Dona Crase)
+           ========================================================================= */
+        function openLettersModal() {
+            playSound('unlocked');
+            document.getElementById('letters-modal').classList.remove('hidden');
+            selectLetter(1);
+        }
+
+        function closeLettersModal() {
+            document.getElementById('letters-modal').classList.add('hidden');
+        }
+
+        function selectLetter(num) {
+            playSound('click');
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`letter-content-${i}`).classList.add('hidden');
+                document.getElementById(`btn-letter-${i}`).className = "flex-1 py-1.5 rounded text-xs font-mono text-slate-400 bg-slate-900 hover:bg-slate-800";
+            }
+
+            document.getElementById(`letter-content-${num}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-letter-${num}`);
+            
+            if (num === 1) activeBtn.className = "flex-1 py-1.5 rounded text-xs font-mono font-bold bg-pink-300 text-pink-950";
+            else if (num === 2) activeBtn.className = "flex-1 py-1.5 rounded text-xs font-mono font-bold bg-sky-300 text-sky-950";
+            else activeBtn.className = "flex-1 py-1.5 rounded text-xs font-mono font-bold bg-yellow-200 text-amber-950";
+
+            if(num === 3) {
+                document.getElementById('btn-reveal-ticket').classList.remove('hidden');
+                document.getElementById('secret-ticket-paper').classList.add('hidden');
+            }
+        }
+
+        function revealSecretTicket() {
+            playSound('unlocked');
+            document.getElementById('btn-reveal-ticket').classList.add('hidden');
+            document.getElementById('secret-ticket-paper').classList.remove('hidden');
+        }
+
+        /* =========================================================================
+           DIÁRIO PESSOAL DA GRAMÁTICA
+           ========================================================================= */
+        function openDiaryModal() {
+            playSound('unlocked');
+            document.getElementById('diary-modal').classList.remove('hidden');
+            showDiaryPage(0);
+        }
+
+        function closeDiaryModal() {
+            document.getElementById('diary-modal').classList.add('hidden');
+        }
+
+        function changeDiaryPage(dir) {
+            playSound('click');
+            let target = currentDiaryPageNum + dir;
+            if (target >= 0 && target <= 7) {
+                showDiaryPage(target);
+            }
+        }
+
+        function showDiaryPage(pageNum) {
+            currentDiaryPageNum = pageNum;
+            document.getElementById('diary-page-indicator').textContent = pageNum === 0 ? "Capa" : pageNum === 7 ? "Contracapa" : `Pág. ${pageNum} de 6`;
+            
+            for(let i = 0; i <= 7; i++) {
+                document.getElementById(`diary-page-${i}`).classList.add('hidden');
+            }
+            document.getElementById(`diary-page-${pageNum}`).classList.remove('hidden');
+
+            document.getElementById('btn-prev-diary').disabled = (pageNum === 0);
+            document.getElementById('btn-next-diary').disabled = (pageNum === 7);
+
+            if (pageNum !== 7) {
+                document.getElementById('btn-reveal-receipt').classList.remove('hidden');
+                document.getElementById('secret-receipt-container').classList.add('hidden');
+            }
+        }
+
+        function revealSecretReceipt() {
+            playSound('unlocked');
+            document.getElementById('btn-reveal-receipt').classList.add('hidden');
+            document.getElementById('secret-receipt-container').classList.remove('hidden');
+        }
+
+        /* =========================================================================
+           MODAIS DO JORNAL E DO MAPA BLUEPRINT
+           ========================================================================= */
+        function openJournalModal() {
+            playSound('unlocked');
+            document.getElementById('journal-modal').classList.remove('hidden');
+            showJournalPage(1);
+        }
+
+        function closeJournalModal() {
+            document.getElementById('journal-modal').classList.add('hidden');
+        }
+
+        function changeJournalPage(dir) {
+            playSound('click');
+            let target = currentJournalPage + dir;
+            if (target >= 1 && target <= 3) {
+                showJournalPage(target);
+            }
+        }
+
+        function showJournalPage(page) {
+            currentJournalPage = page;
+            document.getElementById('journal-page-indicator').textContent = `Pág. ${page} de 3`;
+            
+            for(let i=1; i<=3; i++) {
+                document.getElementById(`journal-page-${i}`).classList.add('hidden');
+            }
+            document.getElementById(`journal-page-${page}`).classList.remove('hidden');
+
+            document.getElementById('btn-prev-page').disabled = (page === 1);
+            document.getElementById('btn-next-page').disabled = (page === 3);
+        }
+
+        function openMapModal() {
+            playSound('unlocked');
+            document.getElementById('map-modal').classList.remove('hidden');
+            switchMapTab('blueprint');
+        }
+
+        function closeMapModal() {
+            document.getElementById('map-modal').classList.add('hidden');
+        }
+
+        function switchMapTab(tabName) {
+            playSound('click');
+            const tabs = ['blueprint', 'evidences', 'timeline'];
+            tabs.forEach(t => {
+                document.getElementById(`map-tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-map-tab-${t}`).className = "flex-1 py-1.5 rounded text-slate-400 bg-slate-900 hover:bg-slate-800";
+            });
+
+            document.getElementById(`map-tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`btn-map-tab-${tabName}`).className = "flex-1 py-1.5 rounded font-bold bg-amber-500 text-slate-950";
+        }
+
+        /* =========================================================================
+           SISTEMA DE PROVAS FORJADAS (MODAIS)
+           ========================================================================= */
+        function openForgedLetterModal() {
+            playSound('unlocked');
+            document.getElementById('forged-letter-modal').classList.remove('hidden');
+        }
+
+        function closeForgedLetterModal() {
+            document.getElementById('forged-letter-modal').classList.add('hidden');
+        }
+
+        function openTrashTicketModal() {
+            playSound('unlocked');
+            document.getElementById('trash-ticket-modal').classList.remove('hidden');
+        }
+
+        function closeTrashTicketModal() {
+            document.getElementById('trash-ticket-modal').classList.add('hidden');
+        }
+
+        /* =========================================================================
+           RENDERIZAÇÃO DE CORTIÇA E SELEÇÃO DE PISTAS
+           ========================================================================= */
+        function renderSuspects() {
+            const container = document.getElementById('suspects-list');
+            container.innerHTML = '';
+
+            suspects.forEach(suspect => {
+                const isCrossed = suspect.crossed ? 'crossed-out' : '';
+                const card = document.createElement('div');
+                card.className = `flex items-center gap-3 p-3 bg-slate-950/60 border border-slate-800 rounded-xl transition hover:bg-slate-950/90 cursor-pointer ${isCrossed}`;
+                card.setAttribute('onclick', `toggleSuspectCross('${suspect.id}')`);
+                
+                card.innerHTML = `
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center font-vintage text-lg shrink-0 ${suspect.color}">
+                        ${suspect.initialLetter}
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-xs text-slate-200 truncate">${suspect.name}</h4>
+                            <span class="text-[9px] text-slate-500 font-mono">${suspect.relation}</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-2">${suspect.motive}</p>
+                    </div>
+                    <div class="shrink-0 text-slate-600">
+                        <i class="fa-solid ${suspect.crossed ? 'fa-ban text-red-600' : 'fa-check text-slate-700'}"></i>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleSuspectCross(id) {
+            playSound('click');
+            const suspect = suspects.find(s => s.id === id);
+            if (suspect) {
+                suspect.crossed = !suspect.crossed;
+                renderSuspects();
+                renderAccusationSuspects();
+            }
+        }
+
+        function selectClue(clueId) {
+            playSound('click');
+            currentClueId = clueId;
+            const clue = clueDatabase.find(c => c.id === clueId);
+            
+            document.getElementById('clue-tag').textContent = clue.tag;
+            document.getElementById('clue-title').textContent = clue.title;
+            
+            const totalErrors = clue.textSegments.filter(s => s.type === 'error').length;
+            const solvedCount = Object.keys(clue.errorsSolved).length;
+            
+            document.getElementById('clue-errors-remaining').textContent = `Erros pendentes: ${totalErrors - solvedCount}`;
+
+            const extraBox = document.getElementById('pista-extra-interactive-container');
+            extraBox.innerHTML = '';
+
+            if (clueId === 1) {
+                extraBox.classList.remove('hidden');
+                extraBox.innerHTML = `
+                    <button onclick="openDiaryModal()" class="py-2 bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-600 hover:to-amber-700 text-white border border-amber-600 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition shadow">
+                        <i class="fa-solid fa-book-bookmark animate-pulse text-amber-300"></i> Ler Diário Oculto da Vítima
+                    </button>
+                    <button onclick="openMapModal()" class="py-2 bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 text-slate-100 border border-slate-600 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition shadow">
+                        <i class="fa-solid fa-map text-amber-500"></i> Planta Baixa & Laudo da Perícia
+                    </button>
+                `;
+            } else if (clueId === 2) {
+                extraBox.classList.remove('hidden');
+                extraBox.innerHTML = `
+                    <button onclick="openJournalModal()" class="w-full col-span-2 py-2 bg-gradient-to-r from-stone-700 to-stone-800 hover:from-stone-600 hover:to-stone-700 text-stone-100 border border-stone-500 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow transition">
+                        <i class="fa-solid fa-newspaper animate-pulse text-amber-400"></i> Ler o Jornal Arquivado: 'O Correio da Língua'
+                    </button>
+                `;
+            } else if (clueId === 4) {
+                extraBox.classList.remove('hidden');
+                extraBox.innerHTML = `
+                    <button onclick="openTrashTicketModal()" class="w-full col-span-2 py-2 bg-gradient-to-r from-rose-900 to-rose-950 hover:from-rose-800 hover:to-rose-900 text-rose-100 border border-rose-800 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow transition">
+                        <i class="fa-solid fa-trash-can animate-pulse text-rose-400"></i> Revistar Lixeira da Copa (Encontrar Recado Amassado)
+                    </button>
+                `;
+            } else if (clueId === 5) {
+                extraBox.classList.remove('hidden');
+                extraBox.innerHTML = `
+                    <button onclick="openForgedLetterModal()" class="w-full col-span-2 py-2 bg-gradient-to-r from-yellow-700 to-yellow-800 hover:from-yellow-600 hover:to-yellow-700 text-slate-950 border border-yellow-600 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow transition font-bold">
+                        <i class="fa-solid fa-file-invoice animate-pulse text-slate-900"></i> Inspecionar Prensa Mecânica (Carta Escondida)
+                    </button>
+                `;
+            } else {
+                extraBox.classList.add('hidden');
+            }
+
+            const textContainer = document.getElementById('clue-text-container');
+            textContainer.innerHTML = '';
+            
+            let paragraph = document.createElement('p');
+            paragraph.className = "whitespace-pre-line";
+            
+            clue.textSegments.forEach((seg) => {
+                if (seg.type === 'text') {
+                    const span = document.createElement('span');
+                    span.textContent = seg.content;
+                    paragraph.appendChild(span);
+                } else if (seg.type === 'error') {
+                    const span = document.createElement('span');
+                    span.id = seg.id;
+                    
+                    const isSolved = clue.errorsSolved[seg.id];
+                    if (isSolved) {
+                        span.textContent = seg.correct;
+                        span.className = "border-b-2 border-emerald-500 text-emerald-800 font-bold bg-emerald-100/30 px-1 rounded cursor-default";
+                    } else {
+                        span.textContent = seg.content;
+                        span.className = "border-b-2 border-dashed border-amber-600 hover:border-amber-400 text-slate-900 font-semibold bg-amber-500/10 hover:bg-amber-500/20 px-1 rounded cursor-pointer transition";
+                        span.setAttribute('onclick', `openCorrectionModal('${seg.id}')`);
+                    }
+                    paragraph.appendChild(span);
+                }
+            });
+            textContainer.appendChild(paragraph);
+
+            checkClueCompletion(clue);
+        }
+
+        /* =========================================================================
+           SISTEMA DE CORREÇÃO GRAMATICAL E NAVEGAÇÃO
+           ========================================================================= */
+        function openCorrectionModal(wordId) {
+            playSound('click');
+            selectedWordId = wordId;
+            const clue = clueDatabase.find(c => c.id === currentClueId);
+            const segment = clue.textSegments.find(s => s.id === wordId);
+            
+            document.getElementById('modal-original-word').textContent = segment.content;
+            const input = document.getElementById('modal-input-correction');
+            input.value = '';
+            
+            document.getElementById('modal-hint-box').classList.add('hidden');
+            document.getElementById('modal-hint-text').textContent = segment.hint;
+            document.getElementById('btn-show-hint').classList.remove('hidden');
+
+            document.getElementById('correction-modal').classList.remove('hidden');
+            input.focus();
+        }
+
+        function closeCorrectionModal() {
+            document.getElementById('correction-modal').classList.add('hidden');
+        }
+
+        function handleCorrectionKeydown(event) {
+            if (event.key === 'Enter') {
+                submitCorrection();
+            }
+        }
+
+        function revealHint() {
+            playSound('click');
+            hintUsedCount++;
+            document.getElementById('modal-hint-box').classList.remove('hidden');
+            document.getElementById('btn-show-hint').classList.add('hidden');
+        }
+
+        function submitCorrection() {
+            const clue = clueDatabase.find(c => c.id === currentClueId);
+            const segment = clue.textSegments.find(s => s.id === selectedWordId);
+            const userInput = document.getElementById('modal-input-correction').value.trim();
+
+            const cleanInput = userInput.toLowerCase();
+            const cleanCorrect = segment.correct.toLowerCase();
+
+            if (cleanInput === cleanCorrect || cleanInput.replace(/\s+/g, '') === cleanCorrect.replace(/\s+/g, '')) {
+                playSound('success');
+                clue.errorsSolved[selectedWordId] = true;
+                closeCorrectionModal();
+                selectClue(currentClueId);
+                updateGlobalProgress();
+            } else {
+                playSound('fail');
+                errorCount++;
+                const inputElement = document.getElementById('modal-input-correction');
+                inputElement.classList.add('border-red-500', 'animate-pulse');
+                setTimeout(() => {
+                    inputElement.classList.remove('border-red-500', 'animate-pulse');
+                }, 500);
+            }
+        }
+
+        function updateGlobalProgress() {
+            let totalSolved = 0;
+            let totalPossible = 0;
+            
+            clueDatabase.forEach(clue => {
+                const totalErrors = clue.textSegments.filter(s => s.type === 'error').length;
+                totalPossible += totalErrors;
+                totalSolved += Object.keys(clue.errorsSolved).length;
+            });
+
+            const percent = (totalSolved / totalPossible) * 100;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-text').textContent = `${totalSolved} / ${totalPossible} Erros`;
+        }
+
+        function checkClueCompletion(clue) {
+            const totalErrors = clue.textSegments.filter(s => s.type === 'error').length;
+            const solvedCount = Object.keys(clue.errorsSolved).length;
+            const riddleBox = document.getElementById('riddle-box');
+
+            if (solvedCount === totalErrors) {
+                riddleBox.classList.remove('hidden');
+                document.getElementById('clue-riddle-text').textContent = `"${clue.riddle}"`;
+                
+                const destContainer = document.getElementById('destination-options');
+                destContainer.innerHTML = '';
+                
+                clue.destinations.forEach(dest => {
+                    const isNextCorrect = dest.targetId === clue.correctDestination;
+                    const btn = document.createElement('button');
+                    btn.className = "p-3 bg-slate-900 hover:bg-slate-850 border border-slate-700 rounded-xl text-xs font-mono text-left transition text-slate-200 flex justify-between items-center hover:border-emerald-500/50";
+                    btn.setAttribute('onclick', `navigateLocation('${dest.targetId}', ${isNextCorrect})`);
+                    btn.innerHTML = `
+                        <span>${dest.name}</span>
+                        <i class="fa-solid fa-arrow-right text-amber-500"></i>
+                    `;
+                    destContainer.appendChild(btn);
+                });
+            } else {
+                riddleBox.classList.add('hidden');
+            }
+        }
+
+        function navigateLocation(targetId, isCorrect) {
+            if (!isCorrect) {
+                playSound('fail');
+                errorCount++;
+                showNotice("Caminho Errado!", "Sua equipe investigou esse ponto mas não encontrou pistas. Releia os enigmas no diário e a planta baixa para decidir.", "warning");
+                return;
+            }
+
+            playSound('unlocked');
+            
+            if (targetId === "accusation") {
+                document.getElementById('screen-game').classList.add('hidden');
+                document.getElementById('screen-accusation').classList.remove('hidden');
+            } else {
+                const nextClueNum = parseInt(targetId.replace('loc-', ''));
+                const btn = document.getElementById(targetId);
+                btn.disabled = false;
+                btn.className = "p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950 border-amber-500/50 text-amber-500 cursor-pointer hover:bg-slate-900";
+                
+                selectClue(nextClueNum);
+                showNotice("Localidade Descoberta!", `Você interpretou o enigma perfeitamente e chegou à seguinte área: ${clueDatabase[nextClueNum-1].tag.replace(/.*:/, '')}`, "success");
+            }
+        }
+
+        /* =========================================================================
+           ACUSAÇÃO FINAL E LAUDOS
+           ========================================================================= */
+        function renderAccusationSuspects() {
+            const grid = document.getElementById('accusation-suspects-grid');
+            grid.innerHTML = '';
+
+            suspects.forEach(s => {
+                const isCrossed = s.crossed ? 'opacity-40' : '';
+                const card = document.createElement('div');
+                card.id = `culprit-${s.id}`;
+                card.className = `culprit-card bg-slate-950/60 p-4 border border-slate-850 rounded-xl text-center cursor-pointer hover:border-amber-500/40 transition ${isCrossed}`;
+                card.setAttribute('onclick', `selectCulprit('${s.id}')`);
+                
+                card.innerHTML = `
+                    <div class="w-12 h-12 rounded-full mx-auto flex items-center justify-center text-lg mb-2 font-vintage ${s.color}">
+                        ${s.initialLetter}
+                    </div>
+                    <h4 class="font-bold text-slate-200 text-xs">${s.name}</h4>
+                    <span class="text-[9px] text-amber-500 font-mono block mt-1">${s.relation}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function selectCulprit(id) {
+            playSound('click');
+            selectedCulpritId = id;
+            
+            document.querySelectorAll('.culprit-card').forEach(card => {
+                const isCrossed = card.classList.contains('opacity-40');
+                card.className = `culprit-card bg-slate-950/60 p-4 border border-slate-850 rounded-xl text-center cursor-pointer hover:border-amber-500/40 transition ${isCrossed ? 'opacity-40' : ''}`;
+            });
+            
+            const card = document.getElementById(`culprit-${id}`);
+            card.className = "culprit-card bg-red-950/50 p-4 border-2 border-red-500 rounded-xl text-center cursor-pointer transition shadow-lg shadow-red-500/15";
+            
+            document.getElementById('accusation-proof-section').classList.remove('hidden');
+        }
+
+        function confirmAccusation() {
+            if (!selectedCulpritId) {
+                playSound('fail');
+                showNotice("Falta o Suspeito", "Indique quem é o culpado no painel de acusação.", "warning");
+                return;
+            }
+
+            const proofOption = document.querySelector('input[name="murder-proof"]:checked');
+            if (!proofOption) {
+                playSound('fail');
+                showNotice("Escolha a Evidência", "Selecione qual erro gramatical condena definitivamente o suspeito.", "warning");
+                return;
+            }
+
+            document.getElementById('screen-accusation').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+
+            const isCulpadoCerto = (selectedCulpritId === 'solecismo');
+            const isProofCerta = (proofOption.value === 'solecismo_proof');
+
+            const resultIcon = document.getElementById('result-icon-container');
+            const resultTitle = document.getElementById('result-title');
+            const resultMsg = document.getElementById('result-message');
+            const resultExpl = document.getElementById('result-explanation');
+            const scriptBox = document.getElementById('revelation-script-box');
+
+            if (isCulpadoCerto && isProofCerta) {
+                playSound('victory');
+                resultIcon.className = "w-20 h-20 rounded-full mx-auto flex items-center justify-center text-3xl mb-6 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400";
+                resultIcon.innerHTML = '<i class="fa-solid fa-medal animate-bounce"></i>';
+                
+                resultTitle.className = "font-vintage text-4xl mb-2 text-emerald-400";
+                resultTitle.textContent = "CASO FECHADO! JUSTIÇA FEITA!";
+                
+                resultMsg.textContent = "Suas habilidades de investigação linguística salvaram a honra da Língua Portuguesa! O Dr. Solecismo desabou em confissão frente às provas técnicas incontestáveis.";
+                
+                scriptBox.classList.remove('hidden');
+
+                resultExpl.innerHTML = `
+                    <p class="font-bold text-slate-200">📊 Relatório Policial Final (ABIL):</p>
+                    <p>• <strong>Vítima:</strong> Gramática da Língua Portuguesa</p>
+                    <p>• <strong>Assassino Condenado:</strong> Dr. Solecismo</p>
+                    <p>• <strong>Evidência Crítica:</strong> A regência "Entre eu e você" e a colocação pronominal "Te ver". Trata-se de um <strong>Solecismo</strong> de regência de pronomes pessoais ("entre mim e você") e de próclise proibida em início de orações. A Gramática circulou o desvio que batizava seu algoz.</p>
+                    <p>• <strong>O Recado Forjado:</strong> Solecismo forjou o bilhete 'Preciso te ver' fingindo ser Gerundismo para lutar e estrangulá-la, mas a Gramática jamais cometeria o erro de colocação pronominal do bilhete.</p>
+                    <p class="pt-2 text-xs text-amber-500 font-mono">🔍 Dicas Acionadas: ${hintUsedCount} | Tentativas errôneas de localidade: ${errorCount}</p>
+                `;
+            } else {
+                playSound('fail');
+                resultIcon.className = "w-20 h-20 rounded-full mx-auto flex items-center justify-center text-3xl mb-6 bg-red-500/10 border border-red-500/30 text-red-500";
+                resultIcon.innerHTML = '<i class="fa-solid fa-ban"></i>';
+                
+                resultTitle.className = "font-vintage text-4xl mb-2 text-red-500";
+                resultTitle.textContent = "SENTENÇA ANULADA!";
+                
+                if (selectedCulpritId === 'gerundismo') {
+                    resultMsg.textContent = "Você caiu na armadilha! Você acreditou na carta forjada pelo Dr. Solecismo para incriminar o Professor Gerundismo!";
+                } else {
+                    resultMsg.textContent = "Seu inquérito foi rejeitado pelo tribunal por falta de embasamento técnico ou por indiciar o suspeito inocente.";
+                }
+                
+                scriptBox.classList.add('hidden');
+
+                resultExpl.innerHTML = `
+                    <p class="font-bold text-slate-200">❌ Onde o inquérito falhou?</p>
+                    <p>• Se você acusou o Professor Gerundismo, saiba que a carta com gerúndios foi forjada para incriminá-lo. O assassino premeditou o crime e cometeu erros de colocação pronominal sutil ("te ver") no recado da lixeira da cafeteria.</p>
+                    <p>• O desvio gramatical "entre eu e você" circulado no manuscrito constitui especificamente um <strong>Solecismo</strong>, entregando o nome do ex-sócio endividado, o Dr. Solecismo.</p>
+                `;
+            }
+        }
+
+        function restartGame() {
+            playSound('click');
+            resetGameState();
+            document.getElementById('screen-result').classList.add('hidden');
+            document.getElementById('screen-intro').classList.remove('hidden');
+            
+            for(let i=2; i<=5; i++) {
+                const btn = document.getElementById(`loc-${i}`);
+                if(btn) {
+                    btn.disabled = true;
+                    btn.className = "p-2 border rounded-xl flex flex-col items-center justify-center transition bg-slate-950/40 border-slate-800 text-slate-600 cursor-not-allowed";
+                }
+            }
+        }
+
+        /* =========================================================================
+           NOTIFICAÇÕES E UTILITÁRIOS
+           ========================================================================= */
+        function showNotice(title, text, type) {
+            const container = document.createElement('div');
+            container.className = "fixed bottom-5 right-5 max-w-sm w-full bg-slate-900 border border-slate-800 p-4 rounded-xl shadow-2xl z-50 flex gap-3 animate-bounce";
+            
+            let color = "text-amber-500";
+            let icon = "fa-circle-exclamation";
+            if (type === "success") {
+                color = "text-emerald-500";
+                icon = "fa-circle-check";
+            } else if (type === "warning") {
+                color = "text-rose-500";
+                icon = "fa-triangle-exclamation";
+            }
+
+            container.innerHTML = `
+                <div class="${color} text-xl shrink-0"><i class="fa-solid ${icon}"></i></div>
+                <div>
+                    <h5 class="font-bold text-xs text-slate-100 uppercase tracking-wide font-mono">${title}</h5>
+                    <p class="text-xs text-slate-400 mt-1">${text}</p>
+                </div>
+            `;
+            document.body.appendChild(container);
+
+            setTimeout(() => {
+                container.classList.remove('animate-bounce');
+                container.classList.add('opacity-0', 'transition', 'duration-500');
+                setTimeout(() => container.remove(), 500);
+            }, 4500);
+        }
+
+        function copyPresenterScript() {
+            playSound('click');
+            const fullScriptText = `ROTEIRO DO APRESENTADOR - O ASSASSINATO DA GRAMÁTICA
+
+[APRESENTADOR entra caracterizado como detetive: sobretudo, lupa no bolso, crachá no peito.]
+
+PARTE 1 — AQUECIMENTO
+"Boa noite. Ou boa tarde. Depende de onde vocês estão... e de quando vocês estão. Porque a Gramática — sim, a própria — foi encontrada morta ontem à noite.
+Eu sei o que vocês estão pensando. 'Gramática não morre'. Ah, meus caros... morre sim. E foi assassinada."
+
+PARTE 2 — O CRIME
+"Entre 19h e 21h de ontem, a Gramática estava na Biblioteca Central. Sozinha. Revisando um manuscrito com sua inseparável caneta verde. Alguém entrou. Alguém que ela conhecia. Alguém que ela já havia corrigido... muitas vezes.
+A arma do crime: uma fita vermelha de máquina de escrever. Simbólico, não? Matar a Gramática com aquilo que ela mais amava: palavras escritas."
+
+PARTE 3 — OS SUSPEITOS
+"Cinco suspeitos. Todos com motivos. Todos com álibis frágeis.
+Sr. Pleonasmo. Cansado de ouvir 'isso é redundante'. A Gramática vetou sua entrada na Academia dizendo que 'ele se repete demais'.
+Dona Crase. Uma mulher controversa. A Gramática vivia dizendo que ela era 'mal empregada'.
+Seu Estrangeirismo. Veio de fora. A Gramática queria expulsá-lo. Ele ameaçou 'deletá-la'.
+Professor Gerundismo. Ex-namorado. A Gramática terminou com ele por carta. Ele está sofrendo.
+Dr. Solecismo. Deve dinheiro à Gramática. Muito dinheiro. E ela ia cobrá-lo publicamente no Congresso de Língua Portuguesa."
+
+PARTE 4 — A DINÂMICA DO JOGO
+"Vocês são investigadores oficiais da ABIL — Academia Brasileira de Investigações Linguísticas.
+Vou entregar a Cena do Crime. Um texto. Um boletim de ocorrência com desvios gramaticais.
+A missão de vocês é: encontrar os erros, corrigi-los, e descobrir a pista escondida. A pista vai dizer onde está o próximo texto."
+
+PARTE 5 — INÍCIO DO JOGO
+"Vocês têm o tempo limite. Comecem pela Cena do Crime. Corrijam o texto. Descubram a pista. Sigam para o próximo local.
+Que a língua portuguesa esteja com vocês. E que a justiça seja feita.
+Investigação iniciada!"
+
+PARTE 6 — REVELAÇÃO
+"Atenção, detetives. Hora da acusação final.
+E o assassino é... Dr. Solecismo!
+Solecismo é o erro de sintaxe. 'Entre eu e você' está errado. O correto é 'entre mim e você'. A Gramática circulou esse erro com a caneta verde antes de morrer. A última ação da vida dela foi apontar o nome do assassino.
+O Dr. Solecismo estava na cafeteria às 19h10, furioso. Disse 'hoje ela me paga' e foi em direção à Biblioteca.
+Dr. Solecismo, o senhor está preso... por homicídio doloso contra a Gramática da Língua Portuguesa.
+Caso encerrado."`;
+
+            const tempInput = document.createElement("textarea");
+            tempInput.value = fullScriptText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showNotice("Texto Copiado!", "O roteiro completo foi enviado para sua área de transferência com sucesso.", "success");
+        }
+    </script>
+</body>
+</html>
