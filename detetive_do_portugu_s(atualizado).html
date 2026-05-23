@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detetive do Português - O Caso da Gramática Assassinada</title>
+    <!-- Tailwind CSS para design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts para estilo vintage/noir e limpo -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+        }
+        .font-typewriter {
+            font-family: 'Courier Prime', monospace;
+        }
+        .font-vintage {
+            font-family: 'Special Elite', cursive, monospace;
+        }
+        /* Custom scrollbar para ambiente escuro */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #eab308;
+        }
+        /* Efeito de scanline vintage para imersão de terminal policial */
+        .scanline {
+            position: relative;
+            overflow: hidden;
+        }
+        .scanline::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- CABEÇALHO PRINCIPAL NOIR -->
+    <header class="bg-slate-900 border-b border-slate-800 py-4 px-6 shadow-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">🕵️‍♂️</span>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white font-vintage flex items-center gap-2">
+                        DETETIVE DO PORTUGUÊS <span class="text-yellow-500 text-sm font-sans tracking-normal font-medium bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Edição Noir</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Desvende crimes contra a língua usando a sua inteligência gramatical</p>
+                </div>
+            </div>
+            
+            <!-- Controle de Áudio Interativo -->
+            <div class="flex items-center gap-4 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700">
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Trilha Jazz Noir</span>
+                    <span class="text-xs text-yellow-500 font-semibold id-audio-status" id="audioStatus">Desativada</span>
+                </div>
+                <button onclick="toggleMusic()" id="btnAudio" class="p-2.5 bg-yellow-500 hover:bg-yellow-400 text-slate-950 rounded-lg shadow-md transition-all duration-200 hover:scale-105">
+                    <svg id="svgAudio" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL DO JOGO -->
+    <main class="max-w-7xl mx-auto w-full px-4 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- SELEÇÃO DE CASOS & PROGRESSO (Painel Lateral Esquerdo) -->
+        <section class="lg:col-span-3 space-y-6">
+            
+            <!-- Painel de Seleção de Caso -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-2 mb-4 font-vintage">📂 Casos Arquivados</h2>
+                <div class="space-y-3">
+                    <button onclick="selectCase('normativa')" id="btn-case-normativa" class="w-full text-left p-3 rounded-xl border border-slate-800 transition-all duration-200 bg-slate-950 border-l-4 border-l-yellow-500">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-yellow-500 font-bold tracking-wider">CASO #127</span>
+                            <span class="text-[10px] bg-yellow-500/10 text-yellow-400 px-1.5 py-0.5 rounded font-bold uppercase">MÉDIO</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-white mt-1">A Morte da Gramática</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Concordância, regência e ortografia tradicional.</p>
+                    </button>
+
+                    <button onclick="selectCase('acordo')" id="btn-case-acordo" class="w-full text-left p-3 rounded-xl border border-slate-800 transition-all duration-200 hover:border-slate-700 bg-slate-950/40">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-yellow-500 font-bold tracking-wider">CASO #208</span>
+                            <span class="text-[10px] bg-orange-500/10 text-orange-400 px-1.5 py-0.5 rounded font-bold uppercase">AVANÇADO</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-white mt-1">O Acordo Sequestrado</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Hífen, acentuação pós-acordo e próclises críticas.</p>
+                    </button>
+
+                    <button onclick="selectCase('semantica')" id="btn-case-semantica" class="w-full text-left p-3 rounded-xl border border-slate-800 transition-all duration-200 hover:border-slate-700 bg-slate-950/40">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-yellow-500 font-bold tracking-wider">CASO #314</span>
+                            <span class="text-[10px] bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded font-bold uppercase">EXPERT</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-white mt-1">O Enigma da Semântica</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Parónimos perigosos e subjuntivos raros.</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mapa de Níveis/Divisões -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-2 mb-4 font-vintage">📍 Mapa da Mansão</h2>
+                <div class="space-y-2" id="levelProgressMap">
+                    <!-- Gerado dinamicamente via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ÁREA CENTRAL DE INVESTIGAÇÃO (Painel de Texto e Jogabilidade) -->
+        <section class="lg:col-span-6 space-y-6">
+            
+            <!-- Painel de Documento do Nível -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl relative scanline">
+                <div class="absolute top-4 right-4 bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-full text-xs font-semibold font-typewriter tracking-widest uppercase">
+                    PROVA CRUCIAL
+                </div>
+
+                <div class="mb-4">
+                    <span class="text-xs text-yellow-500 uppercase tracking-widest font-semibold font-typewriter" id="divisaoLabel">DIVISÃO 1: A BIBLIOTECA</span>
+                    <h2 class="text-2xl font-bold font-vintage text-white mt-1" id="tituloNivel">A Carta Amarga da Vítima</h2>
+                    <p class="text-xs text-slate-400 mt-1">Analise o documento abaixo. Clique exatamente nas palavras com erros gramaticais e corrija-as.</p>
+                </div>
+
+                <!-- Quadro com o Texto a Investigar -->
+                <div class="bg-slate-950 rounded-2xl p-6 border border-slate-800 relative min-h-[220px]">
+                    <div class="absolute -top-3 -left-3 bg-yellow-500 text-slate-950 font-bold text-[10px] uppercase px-2.5 py-1 rounded font-typewriter tracking-wider">
+                        DOCUMENTO CONFISCADO
+                    </div>
+                    
+                    <!-- Espaço do texto contendo os cliques interativos -->
+                    <div class="text-slate-300 leading-relaxed font-typewriter text-sm space-y-4 pt-2" id="textContainer">
+                        <!-- Gerado dinamicamente com spans clicáveis -->
+                    </div>
+                </div>
+
+                <!-- Barra de Progresso Interna do Nível -->
+                <div class="mt-6 flex items-center justify-between bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Erros Corrigidos:</span>
+                        <div class="flex gap-1.5" id="errorDots">
+                            <!-- Círculos de progresso do nível -->
+                        </div>
+                    </div>
+                    <span class="text-xs text-yellow-500 font-bold" id="errorCounterText">0 / 5 ENCONTRADOS</span>
+                </div>
+            </div>
+
+            <!-- Interrogatório de Suspeitos Relacionado ao Caso -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-2 mb-4 font-vintage">💬 Interrogatório de Suspeitos</h2>
+                <p class="text-xs text-slate-400 mb-4">Escolha um suspeito e analise atentamente as contradições do seu álibi.</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                    <button onclick="talkToSuspect(0)" id="btn-suspect-0" class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition text-center font-vintage text-xs">
+                        🧔 Pleonasmo
+                    </button>
+                    <button onclick="talkToSuspect(1)" id="btn-suspect-1" class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition text-center font-vintage text-xs">
+                        👩 Ambiguidade
+                    </button>
+                    <button onclick="talkToSuspect(2)" id="btn-suspect-2" class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition text-center font-vintage text-xs">
+                        🧔 Estrangeirismo
+                    </button>
+                    <button onclick="talkToSuspect(3)" id="btn-suspect-3" class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition text-center font-vintage text-xs">
+                        👴 Ortográfico
+                    </button>
+                </div>
+
+                <!-- Depoimento do Suspeito -->
+                <div class="bg-slate-950 rounded-2xl p-5 border border-slate-800 min-h-[120px] flex flex-col justify-between" id="suspectSpeechBox">
+                    <p class="text-slate-400 text-xs italic font-typewriter" id="suspectSpeech">
+                        Selecione um suspeito acima para iniciar o interrogatório policial...
+                    </p>
+                    <div id="suspectClueUnlock" class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-yellow-500 font-bold hidden">
+                        <span>🕵️ PISTA DETETADA:</span>
+                        <span id="clueText">Este suspeito comete o mesmo vício de linguagem da arma do crime.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIÁRIO DE PISTAS & ACUSAÇÃO (Painel Direito) -->
+        <section class="lg:col-span-3 space-y-6">
+            
+            <!-- Diário de Bordo do Detetive -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-2 mb-4 font-vintage">📓 Diário de Descobertas</h2>
+                
+                <div class="space-y-4 max-h-[300px] overflow-y-auto" id="clueDiary">
+                    <!-- Pistas inseridas em tempo de execução -->
+                    <p class="text-xs text-slate-500 italic">Nenhuma prova recolhida. Comece a examinar a Biblioteca para encontrar a primeira pista do paradeiro da senhora Gramática.</p>
+                </div>
+            </div>
+
+            <!-- Formulário de Acusação Formal -->
+            <div class="bg-slate-900 border border-red-900/30 rounded-2xl p-5 shadow-lg bg-gradient-to-b from-slate-900 to-red-950/20">
+                <h2 class="text-sm font-bold text-red-400 uppercase tracking-widest border-b border-red-900/20 pb-2 mb-4 font-vintage">⚖️ Acusação Formal</h2>
+                <p class="text-xs text-slate-400 mb-4">Se já tiver recolhido pistas suficientes em todas as divisões, decida o culpado.</p>
+                
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Apontar o Assassino:</label>
+                        <select id="accusedSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-500">
+                            <option value="">Selecione o Suspeito...</option>
+                            <option value="pleonasmo">Srn. Pleonasmo Vicioso</option>
+                            <option value="ambiguidade">Dra. Ambiguidade Dupla</option>
+                            <option value="estrangeirismo">Sr. Estrangeirismo Abusivo</option>
+                            <option value="ortografico">Dr. Ortográfico Troca-Letras</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Apontar a Arma Gramatical:</label>
+                        <select id="weaponSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-500">
+                            <option value="">Selecione a Infraição...</option>
+                            <option value="redundancia">Redundância Crônica (Pleonasmos)</option>
+                            <option value="duplosentido">Frases com Duplo Sentido Involuntário</option>
+                            <option value="estrangeirismo">Uso Crônico de Termos Importados</option>
+                            <option value="grafia">Erros Sistemáticos de Grafia e Letras</option>
+                        </select>
+                    </div>
+
+                    <button onclick="submitAccusation()" class="w-full py-3 bg-red-700 hover:bg-red-600 text-white rounded-xl text-xs font-bold font-vintage uppercase tracking-wider transition shadow-lg shadow-red-950/30">
+                        🔨 Submeter Caso a Julgamento
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-4 text-center text-xs text-slate-500 font-typewriter">
+        Detetive do Português © 2026 - O Caso da Gramática Assassinada. Todos os direitos reservados.
+    </footer>
+
+    <!-- SISTEMA DE NOTIFICAÇÃO CUSTOMIZADO (Sem alertas do navegador) -->
+    <div id="customToast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm w-full bg-slate-900 border-2 rounded-2xl p-4 shadow-2xl flex items-start gap-3">
+        <div class="text-2xl" id="toastIcon">💡</div>
+        <div class="flex-grow">
+            <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400" id="toastTitle">NOTIFICAÇÃO</h4>
+            <p class="text-xs text-slate-200 mt-1" id="toastMessage">Conteúdo da mensagem da notificação.</p>
+        </div>
+        <button onclick="hideToast()" class="text-slate-500 hover:text-slate-300">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    <!-- MODAL DE CORREÇÃO DE ERRO -->
+    <div id="correctionModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl transform scale-95 transition-all duration-300">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="text-2xl">⚠️</span>
+                <h3 class="text-lg font-bold font-vintage text-white">Anomalia Gramatical Identificada</h3>
+            </div>
+            
+            <p class="text-xs text-slate-400 mb-4">A expressão <strong class="text-yellow-500 font-typewriter" id="modalWrongText">"houveram"</strong> viola as normas padrão da língua portuguesa. Qual a correção adequada?</p>
+            
+            <div class="space-y-2.5" id="modalOptionsContainer">
+                <!-- Opções de correção dinâmicas -->
+            </div>
+
+            <div class="mt-6 flex justify-end gap-3 border-t border-slate-800 pt-4">
+                <button onclick="closeCorrectionModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+                    Fechar Análise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE JULGAMENTO / FIM DO JOGO -->
+    <div id="verdictModal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-8 max-w-2xl w-full shadow-2xl my-8">
+            <div class="text-center mb-6">
+                <span class="text-5xl" id="verdictEmoji">⚖️</span>
+                <h2 class="text-3xl font-bold font-vintage text-white mt-3" id="verdictTitle">Sentença Judicial</h2>
+                <p class="text-xs text-slate-400 uppercase tracking-widest font-typewriter mt-1">Tribunal Constitucional da Língua Portuguesa</p>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl space-y-4 text-sm text-slate-300 leading-relaxed font-typewriter" id="verdictText">
+                <!-- Relatório da sentença gerado dinamicamente -->
+            </div>
+
+            <div class="mt-8 flex justify-center gap-4">
+                <button onclick="closeVerdictModal()" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold font-vintage rounded-xl text-xs uppercase tracking-wider transition">
+                    Continuar Investigação
+                </button>
+                <button onclick="restartCurrentCase()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
+                    Reiniciar Caso
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEB AUDIO API: SINTETIZADOR DE TRILHA JAZZ NOIR E EFEITOS -->
+    <script>
+        // Configuração e Estado do Áudio
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        
+        // Nós do sintetizador generativo
+        let bassOsc = null;
+        let drumOsc = null;
+        let harmonyOsc = null;
+        let audioTimer = null;
+
+        // Passos da trilha sonora (Padrão de walking bass jazzístico)
+        const scale = [41.20, 46.25, 49.00, 55.00, 58.27, 61.74, 65.41, 73.42]; // E-minor/jazz scale frequências (Oitava baixa)
+        let noteIndex = 0;
+        let beatCount = 0;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Sintetizador generativo que gera contrabaixo, prato de condução e acorde misterioso em tempo de execução
+        function startNoirJazzTrack() {
+            if (!audioCtx) initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            isMusicPlaying = true;
+            document.getElementById('audioStatus').innerText = "Trilha Noir Ativa (Jazz)";
+            document.getElementById('audioStatus').classList.remove('text-yellow-500');
+            document.getElementById('audioStatus').classList.add('text-green-500');
+            
+            // Ciclo de repetição infinita a 110 BPM (aproximadamente 545ms por semínima)
+            const tempo = 545; 
+            
+            audioTimer = setInterval(() => {
+                playJazzBeat();
+            }, tempo);
+        }
+
+        function stopNoirJazzTrack() {
+            isMusicPlaying = false;
+            document.getElementById('audioStatus').innerText = "Desativada";
+            document.getElementById('audioStatus').classList.remove('text-green-500');
+            document.getElementById('audioStatus').classList.add('text-yellow-500');
+            
+            if (audioTimer) {
+                clearInterval(audioTimer);
+                audioTimer = null;
+            }
+        }
+
+        // Gera sons puramente via código usando osciladores
+        function playJazzBeat() {
+            if (!audioCtx || !isMusicPlaying) return;
+
+            const time = audioCtx.currentTime;
+
+            // 1. Walking Bass (Frequências baixas e redondas)
+            const bassFreq = scale[noteIndex];
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'triangle'; // Som de corda acústica gorda
+            osc.frequency.setValueAtTime(bassFreq, time);
+            
+            // Filtro passa-baixo para deixar o contrabaixo macio e sem agudos estridentes
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(150, time);
+
+            gain.gain.setValueAtTime(0.25, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.45);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start(time);
+            osc.stop(time + 0.5);
+
+            // Mudança suave da linha de baixo
+            if (beatCount % 4 === 0) {
+                noteIndex = (noteIndex + (Math.random() > 0.5 ? 1 : -1) + scale.length) % scale.length;
+            } else {
+                noteIndex = (noteIndex + 2) % scale.length;
+            }
+
+            // 2. Prato de Condução (Ride Cymbal) - Textura de Jazz
+            if (beatCount % 2 === 0 || Math.random() > 0.6) {
+                const cymbalSource = audioCtx.createBufferSource();
+                // Gerador de ruído branco para emular o prato
+                const bufferSize = audioCtx.sampleRate * 0.15; // Prato rápido
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                cymbalSource.buffer = buffer;
+
+                // Filtro passa-alto para o prato soar agudo
+                const cymbalFilter = audioCtx.createBiquadFilter();
+                cymbalFilter.type = 'highpass';
+                cymbalFilter.frequency.setValueAtTime(8000, time);
+
+                const cymbalGain = audioCtx.createGain();
+                cymbalGain.gain.setValueAtTime(0.012, time);
+                cymbalGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.12);
+
+                cymbalSource.connect(cymbalFilter);
+                cymbalFilter.connect(cymbalGain);
+                cymbalGain.connect(audioCtx.destination);
+                cymbalSource.start(time);
+            }
+
+            // 3. Acorde Misterioso do Piano Rhodes (Tocado a cada 8 tempos para suspense)
+            if (beatCount % 8 === 0) {
+                const chord = [130.81, 155.56, 196.00, 220.00]; // Dissonante C minor 6/9
+                chord.forEach((freq) => {
+                    const oscChord = audioCtx.createOscillator();
+                    const gainChord = audioCtx.createGain();
+                    
+                    oscChord.type = 'sine';
+                    oscChord.frequency.setValueAtTime(freq, time);
+                    
+                    // Modulador de vibração para o piano
+                    const lfo = audioCtx.createOscillator();
+                    const lfoGain = audioCtx.createGain();
+                    lfo.type = 'sine';
+                    lfo.frequency.setValueAtTime(6, time); // 6Hz vibração
+                    lfoGain.gain.setValueAtTime(1.5, time);
+                    
+                    lfo.connect(lfoGain);
+                    lfoGain.connect(oscChord.frequency);
+
+                    gainChord.gain.setValueAtTime(0.04, time);
+                    gainChord.gain.exponentialRampToValueAtTime(0.0001, time + 2.5);
+
+                    oscChord.connect(gainChord);
+                    gainChord.connect(audioCtx.destination);
+                    
+                    lfo.start(time);
+                    oscChord.start(time);
+                    
+                    lfo.stop(time + 2.5);
+                    oscChord.stop(time + 2.5);
+                });
+            }
+
+            beatCount++;
+        }
+
+        // Alternar reprodução da trilha
+        function toggleMusic() {
+            initAudio();
+            if (isMusicPlaying) {
+                stopNoirJazzTrack();
+                document.getElementById('svgAudio').innerHTML = `<path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd" />`;
+            } else {
+                startNoirJazzTrack();
+                document.getElementById('svgAudio').innerHTML = `<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6zm-5-2.5v5l4-2.5-4-2.5z" clip-rule="evenodd" />`;
+            }
+        }
+
+        // Efeitos sonoros integrados
+        function playFeedbackSound(type) {
+            if (!audioCtx) initAudio();
+            const time = audioCtx.currentTime;
+
+            if (type === 'success') {
+                const osc1 = audioCtx.createOscillator();
+                const osc2 = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(523.25, time); // C5
+                osc1.frequency.setValueAtTime(659.25, time + 0.08); // E5
+                osc1.frequency.setValueAtTime(783.99, time + 0.16); // G5
+                osc1.frequency.setValueAtTime(1046.50, time + 0.24); // C6
+
+                gain.gain.setValueAtTime(0.08, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.6);
+
+                osc1.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc1.start(time);
+                osc1.stop(time + 0.6);
+            } 
+            else if (type === 'error') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, time);
+                osc.frequency.linearRampToValueAtTime(90, time + 0.35);
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(400, time);
+
+                gain.gain.setValueAtTime(0.12, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.45);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + 0.45);
+            }
+            else if (type === 'bell') {
+                // Gongo ou sino clássico de revelação
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, time);
+                gain.gain.setValueAtTime(0.08, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 1.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + 1.2);
+            }
+        }
+    </script>
+
+    <!-- MOTOR LÓGICO E BASE DE DADOS DO JOGO -->
+    <script>
+        // CASOS DO JOGO (Estruturas de Dados dos Desafios)
+        const casesDatabase = {
+            normativa: {
+                title: "O Caso da Gramática Normativa Assassinada",
+                difficulty: "Médio",
+                suspects: [
+                    {
+                        name: "Srn. Pleonasmo Vicioso",
+                        avatar: "🧔",
+                        speech: "Eu jamais teria motivos para fazer mal à velha senhora Gramática. Ontem à noite, eu saí para fora de casa por volta das 22h para ver com os meus próprios olhos o luar na rua. Depois voltei para dentro, subi lá para cima para o meu quarto e fui dormir.",
+                        hasViciousError: true,
+                        crimeMatch: "redundancia"
+                    },
+                    {
+                        name: "Dra. Ambiguidade Dupla",
+                        avatar: "👩",
+                        speech: "Que tolice acusarem-me a mim! Estava na cozinha a observar o cozinheiro e a sua faca de estimação. Depois o mordomo apareceu no seu gabinete furioso porque viu a senhora no seu carro com o seu vestido de gala.",
+                        hasViciousError: false,
+                        crimeMatch: "duplosentido"
+                    },
+                    {
+                        name: "Sr. Estrangeirismo Abusivo",
+                        avatar: "🧔",
+                        speech: "Estava no meu escritório pessoal a fazer o upload de alguns arquivos cruciais para o servidor. Tinha que responder a uma chamada de brainstorming urgente com os parceiros. Isto não faz sentido, perdi o meu tempo!",
+                        hasViciousError: false,
+                        crimeMatch: "estrangeirismo"
+                    },
+                    {
+                        name: "Dr. Ortográfico Troca-Letras",
+                        avatar: "👴",
+                        speech: "Eu estava a ler os meus manuscritos raros na Cave. Sinto uma profunda ansiedade por esta escecional tragédia. É preciso compreenção neste momento de dor, não acusações sem nexo.",
+                        hasViciousError: false,
+                        crimeMatch: "grafia"
+                    }
+                ],
+                levels: [
+                    {
+                        id: 1,
+                        division: "A Biblioteca",
+                        title: "O Bilhete de Ameaça Anónimo",
+                        text: "Haverá sempre quem discorde. [Houveram]*houve|houveram* muitas discussões terríveis sobre o seu legado rígido. Eu sei que tu [andastes]*andaste|andastes* a difamar os meus conhecimentos linguísticos por aí. Atualmente [fazem]*faz|fazem* três anos que não obedeço a nenhuma das suas regras de concordância. Por essa razão, a minha equipa e eu [iremos estar vigiando]*vigiaremos|iremos estar vigiando* cada passo que der nesta mansão. Cuidado, estou [com muita sede de vingança]*sedento de vingança|com muita sede de vingança*.",
+                        clue: "A vítima andava a ser vigiada e ameaçada por alguém extremamente redundante."
+                    },
+                    {
+                        id: 2,
+                        division: "A Cozinha",
+                        title: "O Recorte de Diário da Empregada",
+                        text: "Ontem preparei um banquete na cozinha, mas tudo correu de forma trágica. O mordomo andava nervoso e [parecia-me]*parecia|parecia-me* muito assustado com o que estava no interior do forno de lenha. Avistei [copos e pratos partidos sobre a mesa]*copos partidos e pratos empilhados sobre a mesa|copos e pratos partidos sobre a mesa* que pareciam abandonados. Ele confessou-me que [vinha à muito tempo]*vinha há muito tempo|vinha à muito tempo* a planear um segredo obscuro. Ele escondia algo perigoso [por trás do]*atrás do|por trás do* grande armário das especiarias. Se eu sumir, este diário serve de prova [para vossa própria segurança]*para a sua própria segurança|para vossa própria segurança*.",
+                        clue: "Na cozinha havia indícios de frases confusas e de duplo sentido gritante."
+                    },
+                    {
+                        id: 3,
+                        division: "O Escritório",
+                        title: "A Ata da Reunião Financeira",
+                        text: "[Anexo enviamos as faturas]*Anexas enviamos as faturas|Anexo enviamos as faturas* das últimas compras extravagantes da Mansão da Língua. Quanto ao orçamento, julgo que é crucial [dar um feedback detalhado ao nível de]*comentar detalhadamente|dar um feedback detalhado ao nível de* todas as despesas da herança. Amanhã teremos que [fazer um brainstorming intensivo]*debater exaustivamente|fazer um brainstorming intensivo* sobre o futuro da habitação. Devo acrescentar que [inclusivamente as contas]*até as contas|inclusivamente as contas* de água triplicaram. Todos nós estamos [de acordo que]*de acordo com que|de acordo que* esta situação financeira não pode continuar assim.",
+                        clue: "A transação financeira aponta para o uso crónico de termos estrangeiros supérfluos."
+                    },
+                    {
+                        id: 4,
+                        division: "A Cave",
+                        title: "O Testamento Secreto e Rasgado",
+                        text: "Escrevo estas últimas vontades para que [o meu sobrinho e eu dividirmos]*mim e o meu sobrinho dividirmos|o meu sobrinho e eu dividirmos* o espólio histórico de forma igual. Tenho a forte intuição de que alguns herdeiros gananciosos [vão se arrepender]*vão-se arrepender|vão se arrepender* das suas ações. O testamento original foi depositado [a nível provisório]*provisoriamente|a nível provisório* num cofre de difícil acesso. Contudo, mantenho a [esperança que]*esperança de que|esperança que* a justiça seja cumprida. A todos os meus discípulos dedicados, deixo o meu [muito obrigado]*muito agradecida|muito obrigado* pela companhia nesta vida.",
+                        clue: "A vítima (feminino) deixou uma mensagem final com concordância de género corrompida."
+                    },
+                    {
+                        id: 5,
+                        division: "A Sala de Estar",
+                        title: "O Depoimento Final Registado",
+                        text: "Testemunho perante todos que [não houve crimes nenhuns]*não houve crime algum|não houve crimes nenhuns* na sala de estar naquela terrível madrugada. O investigador [deve saber que os factos são de outra maneira]*deve saber que os factos são diferentes|deve saber que os factos são de outra maneira*. Se nos tentarem prender, [iremos de encontro ao]*iremos ao encontro do|iremos de encontro ao* que foi estipulado pelos advogados da família. Nenhum suspeito confessará, [mesmo implicando a revelação]*mesmo que isso implique a revelação|mesmo implicando a revelação* de segredos de família profundos. No final, todos os herdeiros [foram postos à prova]*foram testados|foram postos à prova* nesta investigação.",
+                        clue: "A frase final da sala de estar contém pleonasmos ocultos que batem certo com o suspeito redundante!"
+                    }
+                ],
+                correctSuspect: "pleonasmo",
+                correctWeapon: "redundancia"
+            },
+            acordo: {
+                title: "O Caso do Acordo Ortográfico Sequestrado",
+                difficulty: "Avançado",
+                suspects: [
+                    {
+                        name: "Srn. Pleonasmo Vicioso",
+                        avatar: "🧔",
+                        speech: "Não me metam no meio desse acordo ortográfico moderno! Eu prefiro o português clássico, mas garanto-vos que estava no meu canto a ver a chuva cair lá fora e a reviver o passado no meu pensamento.",
+                        hasViciousError: false,
+                        crimeMatch: "redundancia"
+                    },
+                    {
+                        name: "Dra. Ambiguidade Dupla",
+                        avatar: "👩",
+                        speech: "O acordo foi roubado da sala? Eu vi o diretor a conversar com o seu assistente na sua sala de testes. Depois o documento simplesmente sumiu, e o diretor acusou o assistente com a sua postura desconfiada habitual.",
+                        hasViciousError: false,
+                        crimeMatch: "duplosentido"
+                    },
+                    {
+                        name: "Sr. Estrangeirismo Abusivo",
+                        avatar: "🧔",
+                        speech: "Aquele acordo ortográfico não tinha qualquer tipo de 'design structure' inovadora. Eu preferia ler 'e-books' importados do que focar-me naquelas regras bizarras. Estava a fazer 'coaching' online ontem.",
+                        hasViciousError: false,
+                        crimeMatch: "estrangeirismo"
+                    },
+                    {
+                        name: "Dr. Ortográfico Troca-Letras",
+                        avatar: "👴",
+                        speech: "Aquele novo acordo é de uma complecsidade atroz! Eu estava a organizar a minha coleção de livros de [auto-ajuda]*autoajuda|auto-ajuda* e a tomar um comprimido [anti-inflamatório]*anti-inflamatório|antiinflamatório* para a minha dor de cabeça crónica.",
+                        hasViciousError: true,
+                        crimeMatch: "grafia"
+                    }
+                ],
+                levels: [
+                    {
+                        id: 1,
+                        division: "A Biblioteca",
+                        title: "O Manifesto da Nova Ortografia",
+                        text: "Com as novas diretrizes, muitos leitores consideram o novo modelo [anti-higiénico]*anti-higiénico|antihigiénico* para as regras clássicas da escrita antiga. Já não há razão para manter o [vôo]*voo|vôo* livre dos acentos nas vogais dobradas. Alguns consideram que esta mudança é uma [auto-estrada]*autoestrada|auto-estrada* direta para o empobrecimento, mas na verdade ela une fronteiras. Vários linguistas sentem [anti-patia]*antipatia|anti-patia* por esta reforma drástica. É preciso analisar cada [micro-organismo]*microrganismo|micro-organismo* desta reforma para avaliar os danos.",
+                        clue: "A pista aponta para um criminoso que falha sistematicamente na hifenização e na troca de fonemas semelhantes."
+                    },
+                    {
+                        id: 2,
+                        division: "A Cozinha",
+                        title: "A Receita Culinária Codificada",
+                        text: "Para preparar o banquete secreto, necessitamos de ingredientes de [infra-estrutura]*infraestrutura|infra-estrutura* perfeita. O cozinheiro prefere usar alimentos de origem [orgânica]*orgânica|organica* para manter a qualidade. No entanto, os seus métodos causam [anti-socialismo]*antissocialismo|anti-socialismo* entre os criados da mansão. O chá deve ser servido morno com uma folha de [erva-doce]*erva-doce|ervadoce* fresca no final. Note que esta mistura é um ótimo [anti-ácido]*antiácido|anti-ácido* natural para a azia após as reuniões.",
+                        clue: "O culpado tem imensa dificuldade em dobrar consoantes 's' ou 'r' após vogais diferentes."
+                    },
+                    {
+                        id: 3,
+                        division: "O Escritório",
+                        title: "A Diretiva Financeira Pós-Acordo",
+                        text: "A nossa estratégia de investimento deve focar-se no mercado de [auto-peças]*autopeças|auto-peças* da província. É obrigatório fazer uma [re-avaliação]*reavaliação|re-avaliação* anual dos nossos ativos imobiliários na cidade. Nenhum gestor deve agir de forma [contra-senso]*contrassenso|contra-senso* às normas da administração. Caso contrário, entraremos numa [espiral]*espiral|espiral* de perdas irreversíveis. O plano de contingência é uma verdadeira [super-resistente]*super-resistente|superresistente* barreira de proteção fiscal.",
+                        clue: "A análise indica erros profundos de acentuação diferencial e junção de palavras."
+                    },
+                    {
+                        id: 4,
+                        division: "A Cave",
+                        title: "O Diário Íntimo do Sequestrador",
+                        text: "Mantenho o documento do acordo escondido na cave e [pensa-se]*pensa-se|se pensa* que a polícia nunca o descobrirá. Nenhum dos investigadores [me ajudará]*me ajudará|ajudará-me* a decifrar estas pistas se eu não permitir. É possível que os polícias [se esqueçam]*se esqueçam|esqueçam-se* do verdadeiro motivo do meu protesto. A reforma ortográfica [nos trouxe]*trouxe-nos|nos trouxe* mais dúvidas do que certezas absolutas. Juro que [me arrependerei]*me arrependerei|arrependerei-me* se este manuscrito for destruído pelo fogo.",
+                        clue: "A sintaxe e colocação pronominal do suspeito revelam desobediência às regras de próclise e ênclise."
+                    },
+                    {
+                        id: 5,
+                        division: "A Sala de Estar",
+                        title: "O Último Bilhete de Resgate",
+                        text: "Exijo o pagamento imediato para libertar o Acordo Ortográfico. Esta situação é um ato de extrema [eficássia]*eficácia|eficássia* planeado com rigor. Quero que tragam a mala com o dinheiro à cave sem hesitar. Isto é [presizo]*preciso|presizo* para o bem de todos os habitantes. Não quero ver nenhuma [escepção]*exceção|escepção* a esta regra sob pena de queimar o manuscrito. Peço a vossa [compreenção]*compreensão|compreenção* para este ato de legítima defesa literária.",
+                        clue: "O bilhete de resgate está infestado de erros graves de ortografia e troca de letras homófonas!"
+                    }
+                ],
+                correctSuspect: "ortografico",
+                correctWeapon: "grafia"
+            },
+            semantica: {
+                title: "O Caso do Enigma da Semântica Roubada",
+                difficulty: "Expert",
+                suspects: [
+                    {
+                        name: "Srn. Pleonasmo Vicioso",
+                        avatar: "🧔",
+                        speech: "A minha linguagem é límpida! Eu jamais misturaria o significado das palavras. Estava no jardim a colher flores aromáticas para perfumar o ambiente do meu quarto.",
+                        hasViciousError: false,
+                        crimeMatch: "redundancia"
+                    },
+                    {
+                        name: "Dra. Ambiguidade Dupla",
+                        avatar: "👩",
+                        speech: "A semântica foi roubada na minha presença? Impossível! Eu vi o inspetor a revistar o suspeito com os seus óculos de leitura na mão. Depois, ele saiu apressado da divisão no seu cavalo veloz.",
+                        hasViciousError: true,
+                        crimeMatch: "duplosentido"
+                    },
+                    {
+                        name: "Sr. Estrangeirismo Abusivo",
+                        avatar: "🧔",
+                        speech: "Tudo isto é um grande mal-entendido. Estava a fazer o upload de conteúdos de marketing na cloud e não percebo nada de semântica tradicional. Falta-vos know-how investigativo!",
+                        hasViciousError: false,
+                        crimeMatch: "estrangeirismo"
+                    },
+                    {
+                        name: "Dr. Ortográfico Troca-Letras",
+                        avatar: "👴",
+                        speech: "Eu escrevo tudo de forma perfeita, apenas troco algumas letras sem querer no meu computador antigo de secretaria. Estava no meu quarto de luto.",
+                        hasViciousError: false,
+                        crimeMatch: "grafia"
+                    }
+                ],
+                levels: [
+                    {
+                        id: 1,
+                        division: "A Biblioteca",
+                        title: "O Ensaio de Linguística Ocultado",
+                        text: "Para compreender o verdadeiro poder das palavras, o investigador deve [discriminar]*discriminar|descriminar* as nuances de cada termo técnico com precisão. O suspeito agiu com extrema [discrição]*discrição|descrição* ao entrar silenciosamente na biblioteca ontem à noite. Ele pretendia [infringir]*infringir|infligir* uma derrota humilhante aos defensores do dicionário clássico. O seu objetivo era [eminente]*iminente|eminente* e o ataque estava prestes a acontecer a qualquer momento. No final, o culpado conseguiu [passar despercebido]*passar despercebido|passar desapercebido* pelas patrulhas de guarda.",
+                        clue: "O documento da biblioteca foi adulterado com confusões clássicas entre parónimos de significado oposto."
+                    },
+                    {
+                        id: 2,
+                        division: "A Cozinha",
+                        title: "O Menu Semântico Envenenado",
+                        text: "Espero que os convidados [consumam]*consumam|consumam* toda a comida preparada com especiarias raras. Caso o veneno [surta]*surta|sorta* efeito imediato, o plano estará totalmente concluído. É necessário que todos os criados [mantenham]*mantenham|mantêm* o silêncio absoluto sobre os eventos. Se algum herdeiro [intervier]*intervier|intervir* no banquete, o pânico reinará na mansão. No entanto, o cozinheiro exige que [caibam]*caibam|cabam* todos os pratos na grande travessa de prata.",
+                        clue: "A prova contém o uso de formas verbais raras no presente e futuro do conjuntivo."
+                    },
+                    {
+                        id: 3,
+                        division: "O Escritório",
+                        title: "O Contrato de Transação Duvidoso",
+                        text: "As partes envolvidas declaram-se [isentas]*isentas|isentos* de qualquer responsabilidade civil ou criminal sobre o roubo. A assessora jurídica considerou a cláusula [bastante clara]*bastante clara|bastantes clara* para evitar novos processos judiciais no futuro. Note que as faturas seguem [inclusas]*inclusas|incluso* na documentação confidencial do investidor. É de notar que [haja vista os]*haja vista os|haja vista aos* novos regulamentos de auditoria interna, o contrato foi validado. As testemunhas mantêm-se [alerta]*alerta|alertas* contra qualquer fraude financeira.",
+                        clue: "O documento contém desvios de concordância nominal de palavras especiais (incluso, bastante, alerta)."
+                    },
+                    {
+                        id: 4,
+                        division: "A Cave",
+                        title: "O Pergaminho Alquímico Semântico",
+                        text: "Para que a fórmula mágica funcione, é preciso que as palavras [estejam]*estejam|estejem* alinhadas com os astros celestes na noite escura. Caso os conjuradores [ponham]*ponham|põem* os ingredientes corretos no caldeirão, o sucesso é garantido. Desejo que os deuses [me protejam]*me protejam|protejem-me* de todos os espíritos e forças malignas da floresta. Se nós [quisermos]*quisermos|quiser-mos* obter a sabedoria eterna, devemos ler o livro dos segredos. Espero que a poção [seja]*seja|seje* extremamente eficaz e cure todos os enfermos da vila.",
+                        clue: "O pergaminho revela um autor que desliza na conjugação correta do subjuntivo clássico."
+                    },
+                    {
+                        id: 5,
+                        division: "A Sala de Estar",
+                        title: "A Transcrição do Testemunho Chave",
+                        text: "O culpado [viu o guarda a correr com a sua arma na mão]*viu o guarda a correr segurando a própria arma|viu o guarda a correr com a sua arma na mão*. O depoimento revela que o patrão [discutiu com o motorista no seu escritório]*discutiu com o motorista que estava no gabinete do motorista|discutiu com o motorista no seu escritório* sobre o trajeto planeado. O mordomo avistou [a governanta no seu aposento secreto]*a governanta que estava no aposento secreto da governanta|a governanta no seu aposento secreto*. A testemunha [viu o cavalo do visconde no seu jardim]*viu o cavalo do visconde a pastar no jardim do visconde|viu o cavalo do visconde no seu jardim*. Tudo isto aponta para um mistério sem fim [com dupla interpretação insolúvel]*com duplo sentido insolúvel|com dupla interpretação insolúvel*.",
+                        clue: "O depoimento da Sala de Estar está minado de frases com duplo sentido involuntário (Ambiguidade), que é a assinatura da Dra. Ambiguidade Dupla!"
+                    }
+                ],
+                correctSuspect: "ambiguidade",
+                correctWeapon: "duplosentido"
+            }
+        };
+
+        // Estado Global de Execução do Jogo
+        let currentCaseKey = "normativa";
+        let currentLevelIndex = 0; // 0 a 4 (Níveis 1 a 5)
+        let errorsFoundInCurrentLevel = []; // Array de booleanos ou strings que indica os erros identificados
+        let gameProgress = {
+            normativa: { maxLevelUnlocked: 1, cleared: false, clues: [] },
+            acordo: { maxLevelUnlocked: 1, cleared: false, clues: [] },
+            semantica: { maxLevelUnlocked: 1, cleared: false, clues: [] }
+        };
+
+        // Inicialização do Jogo no Ecrã
+        window.onload = function() {
+            // Inicializar com o caso básico "normativa"
+            selectCase("normativa");
+            
+            // Garantir que no clique do body tentamos inicializar o áudio opcionalmente
+            document.body.addEventListener('click', function() {
+                if(audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+            }, { once: true });
+        };
+
+        // Seleção de Caso de Investigação
+        function selectCase(caseKey) {
+            currentCaseKey = caseKey;
+            currentLevelIndex = 0;
+            errorsFoundInCurrentLevel = [];
+            
+            // Atualizar UI dos botões de caso
+            ['normativa', 'acordo', 'semantica'].forEach(key => {
+                const btn = document.getElementById(`btn-case-${key}`);
+                if (key === caseKey) {
+                    btn.className = "w-full text-left p-3 rounded-xl border border-yellow-500 bg-slate-950 border-l-4 border-l-yellow-500 shadow-lg";
+                } else {
+                    btn.className = "w-full text-left p-3 rounded-xl border border-slate-800 transition-all duration-200 hover:border-slate-700 bg-slate-950/40";
+                }
+            });
+
+            // Repor o interrogatório de suspeitos
+            document.getElementById('suspectSpeech').innerText = "Selecione um suspeito acima para iniciar o interrogatório policial...";
+            document.getElementById('suspectClueUnlock').classList.add('hidden');
+
+            showToast("🔍 CASO SELECIONADO", `${casesDatabase[caseKey].title} ativado! Comece a investigação na Biblioteca.`, "success");
+            
+            loadLevel(0);
+            updateClueDiary();
+            playFeedbackSound('bell');
+        }
+
+        // Carrega as informações e o texto do nível selecionado
+        function loadLevel(levelIndex) {
+            currentLevelIndex = levelIndex;
+            const currentCase = casesDatabase[currentCaseKey];
+            const levelData = currentCase.levels[levelIndex];
+            
+            // Atualiza cabeçalhos do nível
+            document.getElementById('divisaoLabel').innerText = `DIVISÃO ${levelData.id}: ${levelData.division.toUpperCase()}`;
+            document.getElementById('tituloNivel').innerText = levelData.title;
+            
+            // Reset do progresso de erros do nível atual
+            errorsFoundInCurrentLevel = [];
+            
+            // Renderização do Mapa de Progresso de Níveis
+            renderLevelMap();
+            
+            // Renderização do texto interativo
+            renderInteractiveText(levelData.text);
+            
+            // Atualiza os pontos de progresso de erros
+            updateErrorProgressDots();
+        }
+
+        // Renderiza o mapa de progresso lateral
+        function renderLevelMap() {
+            const currentCase = casesDatabase[currentCaseKey];
+            const maxUnlocked = gameProgress[currentCaseKey].maxLevelUnlocked;
+            const mapContainer = document.getElementById('levelProgressMap');
+            mapContainer.innerHTML = "";
+
+            currentCase.levels.forEach((lvl, idx) => {
+                const isCleared = idx < maxUnlocked - 1 || gameProgress[currentCaseKey].cleared;
+                const isCurrent = idx === currentLevelIndex;
+                const isLocked = idx + 1 > maxUnlocked;
+
+                let cardClass = "w-full text-left p-3 rounded-xl border text-xs flex items-center justify-between transition-all duration-200 ";
+                let indicator = "";
+
+                if (isCurrent) {
+                    cardClass += "bg-slate-900 border-yellow-500 text-yellow-500 font-bold shadow-md shadow-yellow-500/5";
+                    indicator = "🕵️‍♂️ EM CENA";
+                } else if (isLocked) {
+                    cardClass += "bg-slate-950/20 border-slate-900 text-slate-600 cursor-not-allowed";
+                    indicator = "🔒 BLOQUEADO";
+                } else if (isCleared) {
+                    cardClass += "bg-slate-950 border-green-900/40 text-green-500 hover:border-green-800";
+                    indicator = "✅ RESOLVIDO";
+                } else {
+                    cardClass += "bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700";
+                    indicator = "🔎 INVESTIGAR";
+                }
+
+                const btn = document.createElement('button');
+                btn.className = cardClass;
+                btn.disabled = isLocked;
+                if (!isLocked) {
+                    btn.onclick = () => loadLevel(idx);
+                }
+
+                btn.innerHTML = `
+                    <div class="flex flex-col">
+                        <span class="text-[9px] uppercase tracking-wider text-slate-500">Divisão 0${lvl.id}</span>
+                        <span class="font-vintage text-xs">${lvl.division}</span>
+                    </div>
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded ${isCurrent ? 'bg-yellow-500/10 text-yellow-500' : isCleared ? 'bg-green-500/10 text-green-500' : 'bg-slate-800 text-slate-400'}">${indicator}</span>
+                `;
+
+                mapContainer.appendChild(btn);
+            });
+        }
+
+        // Converte a string de texto especial com tags [errado]*correto|errado* em elementos interativos
+        function renderInteractiveText(rawText) {
+            const container = document.getElementById('textContainer');
+            container.innerHTML = "";
+
+            // Expressão regular para encontrar as marcações [erro]*correto|erro*
+            const regex = /\[([^\]]+)\]\*([^*]+)\*/g;
+            let lastIndex = 0;
+            let match;
+            let segmentId = 0;
+
+            // Criamos um parágrafo flexível para conter as palavras e textos do documento
+            const p = document.createElement('p');
+            p.className = "leading-relaxed inline";
+
+            while ((match = regex.exec(rawText)) !== null) {
+                // Texto normal antes do erro encontrado
+                if (match.index > lastIndex) {
+                    const txtNode = document.createTextNode(rawText.substring(lastIndex, match.index));
+                    p.appendChild(txtNode);
+                }
+
+                const wrongWord = match[1];
+                const optionsString = match[2]; // ex: "correto|erro"
+                
+                // Cria o span clicável do erro gramatical
+                const span = document.createElement('span');
+                span.innerText = wrongWord;
+                span.id = `error-word-${segmentId}`;
+                span.dataset.wrong = wrongWord;
+                span.dataset.options = optionsString;
+                span.dataset.resolved = "false";
+                
+                // Estilo inicial de suspeita clássica (sublinhado leve ou hover destacado)
+                span.className = "cursor-pointer border-b border-dashed border-slate-700 text-slate-300 hover:text-yellow-400 hover:border-yellow-500 px-1 transition duration-150 rounded";
+                
+                const currentSegment = segmentId;
+                span.onclick = (e) => openCorrectionMenu(e.target, currentSegment);
+
+                p.appendChild(span);
+
+                lastIndex = regex.lastIndex;
+                segmentId++;
+            }
+
+            // Adiciona o restante do texto se houver
+            if (lastIndex < rawText.length) {
+                const txtNode = document.createTextNode(rawText.substring(lastIndex));
+                p.appendChild(txtNode);
+            }
+
+            container.appendChild(p);
+        }
+
+        // Exibe o Modal de Correção de Erros ao clicar na palavra suspeita
+        function openCorrectionMenu(element, segmentId) {
+            if (element.dataset.resolved === "true") {
+                showToast("✨ JÁ CORRIGIDO", "Esta pista já foi corrigida com sucesso por si!", "success");
+                return;
+            }
+
+            const wrongText = element.dataset.wrong;
+            const options = element.dataset.options.split('|'); // [0] = correto, [1] = incorreto
+
+            // Baralhar as opções para o jogador não saber de imediato qual é a primeira
+            const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
+
+            document.getElementById('modalWrongText').innerText = `"${wrongText}"`;
+            
+            const optionsContainer = document.getElementById('modalOptionsContainer');
+            optionsContainer.innerHTML = "";
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 bg-slate-950 border border-slate-800 hover:border-yellow-500 rounded-xl text-xs text-slate-300 transition-all duration-150 hover:bg-slate-900 font-typewriter flex justify-between items-center";
+                btn.onclick = () => evaluateCorrection(opt, options[0], element, segmentId);
+                
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="text-slate-600 text-[10px] uppercase font-bold tracking-wider">Selecionar</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Exibir o modal de correção
+            const modal = document.getElementById('correctionModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Verifica se a resposta escolhida no modal está correta
+        function evaluateCorrection(chosen, correct, element, segmentId) {
+            closeCorrectionModal();
+
+            if (chosen === correct) {
+                // Acertou na correção!
+                playFeedbackSound('success');
+                element.innerText = correct;
+                element.className = "bg-green-500/10 text-green-400 border border-green-500/30 font-bold px-1.5 py-0.5 rounded transition duration-200";
+                element.dataset.resolved = "true";
+                
+                errorsFoundInCurrentLevel.push(correct);
+                showToast("🎯 ERRO CORRIGIDO!", `Excelente dedução! Corrigiu para: "${correct}".`, "success");
+                
+                updateErrorProgressDots();
+
+                // Verifica se corrigiu todos os 5 erros do nível atual
+                if (errorsFoundInCurrentLevel.length === 5) {
+                    completeCurrentLevel();
+                }
+            } else {
+                // Errou a correção gramatical
+                playFeedbackSound('error');
+                showToast("❌ DEDUÇÃO INCORRETA", `A palavra "${chosen}" ainda contém desvios ou não se enquadra na frase. Tente novamente!`, "error");
+            }
+        }
+
+        // Atualiza a barra de pontos de erro no fundo do documento
+        function updateErrorProgressDots() {
+            const dotsContainer = document.getElementById('errorDots');
+            dotsContainer.innerHTML = "";
+
+            for (let i = 0; i < 5; i++) {
+                const dot = document.createElement('span');
+                if (i < errorsFoundInCurrentLevel.length) {
+                    dot.className = "w-3 h-3 rounded-full bg-green-500 shadow-md shadow-green-500/20";
+                } else {
+                    dot.className = "w-3 h-3 rounded-full bg-slate-800 border border-slate-700";
+                }
+                dotsContainer.appendChild(dot);
+            }
+
+            document.getElementById('errorCounterText').innerText = `${errorsFoundInCurrentLevel.length} / 5 ENCONTRADOS`;
+        }
+
+        // Ações ao completar um nível com sucesso
+        function completeCurrentLevel() {
+            playFeedbackSound('bell');
+            const currentCase = casesDatabase[currentCaseKey];
+            const currentLevel = currentCase.levels[currentLevelIndex];
+            
+            // Guardar a nova pista descoberta no progresso do jogador
+            const clueDiscovered = currentLevel.clue;
+            if (!gameProgress[currentCaseKey].clues.includes(clueDiscovered)) {
+                gameProgress[currentCaseKey].clues.push(clueDiscovered);
+            }
+
+            // Atualizar o nível máximo desbloqueado
+            if (currentLevelIndex + 2 > gameProgress[currentCaseKey].maxLevelUnlocked) {
+                gameProgress[currentCaseKey].maxLevelUnlocked = Math.min(5, currentLevelIndex + 2);
+            }
+
+            // Se for o nível 5, o caso está pronto para ser encerrado
+            if (currentLevelIndex === 4) {
+                gameProgress[currentCaseKey].cleared = true;
+                showToast("🔓 PISTA FINAL DESBLOQUEADA!", "Concluiu a investigação na Sala de Estar. Analise os suspeitos e submeta a sua acusação final!", "success");
+            } else {
+                showToast("🔓 DIVISÃO CONCLUÍDA!", `Pista descoberta! Acesso desbloqueado para a divisão seguinte: ${currentCase.levels[currentLevelIndex+1].division}.`, "success");
+            }
+
+            updateClueDiary();
+            renderLevelMap();
+        }
+
+        // Atualiza o painel lateral do diário de pistas
+        function updateClueDiary() {
+            const diaryContainer = document.getElementById('clueDiary');
+            diaryContainer.innerHTML = "";
+
+            const activeClues = gameProgress[currentCaseKey].clues;
+
+            if (activeClues.length === 0) {
+                diaryContainer.innerHTML = `<p class="text-xs text-slate-500 italic">Nenhuma prova recolhida neste caso. Comece a examinar os documentos na Biblioteca para encontrar pistas do culpado.</p>`;
+                return;
+            }
+
+            activeClues.forEach((clue, idx) => {
+                const clueDiv = document.createElement('div');
+                clueDiv.className = "p-3 bg-slate-950 border border-slate-800 rounded-xl relative overflow-hidden flex gap-2.5 items-start";
+                clueDiv.innerHTML = `
+                    <span class="text-yellow-500 text-sm">📌</span>
+                    <div class="flex-grow">
+                        <span class="text-[9px] text-slate-500 font-bold uppercase block">Pista Gramatical #${idx+1}</span>
+                        <p class="text-xs text-slate-300 leading-relaxed font-typewriter mt-0.5">${clue}</p>
+                    </div>
+                `;
+                diaryContainer.appendChild(clueDiv);
+            });
+        }
+
+        // Interrogatório do Suspeito
+        function talkToSuspect(suspectIdx) {
+            const currentCase = casesDatabase[currentCaseKey];
+            const suspect = currentCase.suspects[suspectIdx];
+            
+            // Destacar o botão do suspeito selecionado na interface
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`btn-suspect-${i}`);
+                if (i === suspectIdx) {
+                    btn.className = "p-3 bg-slate-900 border border-yellow-500 text-yellow-500 rounded-xl text-center font-vintage text-xs shadow-md";
+                } else {
+                    btn.className = "p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-slate-700 transition text-center font-vintage text-xs";
+                }
+            }
+
+            // Exibir falas e pistas do suspeito
+            const speechBox = document.getElementById('suspectSpeech');
+            speechBox.innerText = `"${suspect.speech}"`;
+            speechBox.classList.remove('text-slate-400');
+            speechBox.classList.add('text-slate-200');
+
+            const clueContainer = document.getElementById('suspectClueUnlock');
+            
+            // O suspeito só revela a sua dica final se o jogador já tiver pistas suficientes (pelo menos nível 3 limpo)
+            if (gameProgress[currentCaseKey].clues.length >= 2) {
+                clueContainer.classList.remove('hidden');
+                const clueText = document.getElementById('clueText');
+                
+                if (suspect.hasViciousError) {
+                    clueText.innerText = "Este suspeito comete as mesmas redundâncias crónicas listadas na arma do crime!";
+                    clueText.className = "text-red-400 font-bold text-xs";
+                } else {
+                    clueText.innerText = "Este suspeito parece falar de forma diferente dos erros encontrados nas divisões da casa.";
+                    clueText.className = "text-slate-500 font-semibold text-xs";
+                }
+            } else {
+                clueContainer.classList.add('hidden');
+            }
+
+            playFeedbackSound('success');
+        }
+
+        // Submissão do Veredito / Acusação Final
+        function submitAccusation() {
+            const accused = document.getElementById('accusedSelect').value;
+            const weapon = document.getElementById('weaponSelect').value;
+            const currentCase = casesDatabase[currentCaseKey];
+
+            if (!accused || !weapon) {
+                showToast("⚠️ DETALHES INCOMPLETOS", "Deve apontar um suspeito e uma arma linguística para sustentar a sua acusação formal!", "error");
+                return;
+            }
+
+            // Para poder submeter o caso, o jogador idealmente deve ter percorrido as divisões
+            if (gameProgress[currentCaseKey].clues.length < 5) {
+                showToast("🕵️‍♂️ FALTA DE PROVAS", "Não reuniu as pistas das 5 divisões da mansão. Há alto risco de prender um inocente e arquivar o caso por falta de provas sólidas!", "error");
+                // Permite continuar, mas adverte
+            }
+
+            const isCorrectSuspect = accused === currentCase.correctSuspect;
+            const isCorrectWeapon = weapon === currentCase.correctWeapon;
+
+            const verdictModal = document.getElementById('verdictModal');
+            const verdictTitle = document.getElementById('verdictTitle');
+            const verdictEmoji = document.getElementById('verdictEmoji');
+            const verdictText = document.getElementById('verdictText');
+
+            if (isCorrectSuspect && isCorrectWeapon) {
+                // Vencedor absoluto do caso!
+                playFeedbackSound('bell');
+                verdictEmoji.innerText = "🏆";
+                verdictTitle.innerText = "Caso Arquivado com Sucesso!";
+                verdictText.innerHTML = `
+                    <p class="text-green-400 font-bold mb-3">CONGRATULAÇÕES, INSPETOR! O TRIBUNAL CONSTITUCIONAL DA LÍNGUA CONDENA O ACUSADO!</p>
+                    <p class="text-xs text-slate-300">Graças ao seu brilhante trabalho de detetive gramatical, conseguiu provar que o culpado é de facto o <strong>${getSuspectNameByKey(accused)}</strong>, usando a infração fatídica de <strong>${getWeaponNameByKey(weapon)}</strong>.</p>
+                    <p class="text-xs text-slate-400 mt-2">A pobre senhora Gramática Normativa foi salva e recolocada nas prateleiras sagradas da biblioteca escolar. O seu domínio sobre o Acordo Ortográfico e a coerência linguística provou ser uma barreira indestrutível contra os crimes gramaticais!</p>
+                    <p class="text-xs text-slate-500 mt-4 border-t border-slate-800 pt-3">Dificuldade Concluída: <strong>${currentCase.difficulty}</strong>. Sinta-se à vontade para selecionar outro caso na lista à esquerda e testar novas competências gramaticais!</p>
+                `;
+            } else {
+                // Errou a acusação ou a arma
+                playFeedbackSound('error');
+                verdictEmoji.innerText = "❌";
+                verdictTitle.innerText = "Erro Judicial Crasso!";
+                verdictText.innerHTML = `
+                    <p class="text-red-500 font-bold mb-3">O SUSPEITO FOI ABSOLVIDO POR FALTA DE COERÊNCIA NAS PROVAS!</p>
+                    <p class="text-xs text-slate-300">Acusou o suspeito <strong>${getSuspectNameByKey(accused)}</strong> de cometer o homicídio literário com a arma <strong>${getWeaponNameByKey(weapon)}</strong>.</p>
+                    <p class="text-xs text-slate-400 mt-2">Contudo, a defesa conseguiu provar em tribunal que a fisionomia gramatical das pistas encontradas nas divisões da casa não condiz com as infrações linguísticas deste acusado.</p>
+                    <p class="text-xs text-slate-500 mt-4 border-t border-slate-800 pt-3">Releia os depoimentos dos suspeitos e verifique se as correções que efetuou na folha de provas apontam de facto para este vício de linguagem. Não desista, inspetor!</p>
+                `;
+            }
+
+            verdictModal.classList.remove('hidden');
+            verdictModal.classList.add('flex');
+        }
+
+        // Converte as chaves internas para exibição elegante no veredicto
+        function getSuspectNameByKey(key) {
+            const names = {
+                pleonasmo: "Srn. Pleonasmo Vicioso",
+                ambiguidade: "Dra. Ambiguidade Dupla",
+                estrangeirismo: "Sr. Estrangeirismo Abusivo",
+                ortografico: "Dr. Ortográfico Troca-Letras"
+            };
+            return names[key] || key;
+        }
+
+        function getWeaponNameByKey(key) {
+            const weapons = {
+                redundancia: "Redundância Crônica (Pleonasmos)",
+                duplosentido: "Frases com Duplo Sentido Involuntário (Ambiguidade)",
+                estrangeirismo: "Uso Crónico de Termos Importados",
+                grafia: "Erros Sistemáticos de Grafia e Letras"
+            };
+            return weapons[key] || key;
+        }
+
+        // Reinicia o caso ativo atualmente
+        function restartCurrentCase() {
+            gameProgress[currentCaseKey] = { maxLevelUnlocked: 1, cleared: false, clues: [] };
+            closeVerdictModal();
+            selectCase(currentCaseKey);
+        }
+
+        // Funções Utilitárias de Interface
+        function closeCorrectionModal() {
+            document.getElementById('correctionModal').classList.add('hidden');
+        }
+
+        function closeVerdictModal() {
+            document.getElementById('verdictModal').classList.add('hidden');
+        }
+
+        // Exibe um alerta personalizado na lateral direita do ecrã
+        function showToast(title, message, type = "success") {
+            const toast = document.getElementById('customToast');
+            const icon = document.getElementById('toastIcon');
+            const tTitle = document.getElementById('toastTitle');
+            const tMessage = document.getElementById('toastMessage');
+
+            tTitle.innerText = title;
+            tMessage.innerText = message;
+
+            if (type === "success") {
+                toast.className = "fixed bottom-6 right-6 z-50 max-w-sm w-full bg-slate-900 border-2 border-green-500 rounded-2xl p-4 shadow-2xl flex items-start gap-3 transition-all duration-300";
+                icon.innerText = "🟢";
+            } else {
+                toast.className = "fixed bottom-6 right-6 z-50 max-w-sm w-full bg-slate-900 border-2 border-red-500 rounded-2xl p-4 shadow-2xl flex items-start gap-3 transition-all duration-300";
+                icon.innerText = "🔴";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            // Oculta automaticamente após 5 segundos
+            setTimeout(() => {
+                hideToast();
+            }, 5000);
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('customToast');
+            toast.classList.add('translate-y-20', 'opacity-0');
+        }
+    </script>
+</body>
+</html>
