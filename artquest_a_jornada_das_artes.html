@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtQuest: A Jornada das Artes</title>
+    <!-- Tailwind CSS para estilização moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter para interface e Playfair Display para títulos elegantes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,600;0,800;1,700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones das artes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Efeitos visuais e animações personalizadas */
+        .art-gradient {
+            background: linear-gradient(135deg, #0f0c20 0%, #15102a 50%, #220824 100%);
+        }
+        .glassmorphism {
+            background: rgba(15, 12, 30, 0.7);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px rgba(255, 255, 255, 0.1) solid;
+        }
+        .card-glow-blue:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.45);
+            transform: translateY(-4px);
+        }
+        .card-glow-purple:hover {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+            transform: translateY(-4px);
+        }
+        .card-glow-amber:hover {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+            transform: translateY(-4px);
+        }
+        .card-glow-emerald:hover {
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.45);
+            transform: translateY(-4px);
+        }
+        /* Animação de pulsação suave */
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; }
+        }
+        .pulse-soft {
+            animation: gentlePulse 3.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="art-gradient min-h-screen text-white flex flex-col justify-between overflow-x-hidden relative">
+
+    <header class="w-full px-6 py-4 flex justify-between items-center glassmorphism z-30 sticky top-0 border-b border-white/5">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
+            <div class="bg-gradient-to-tr from-amber-400 via-fuchsia-600 to-indigo-600 p-2.5 rounded-xl shadow-lg">
+                <i class="fa-solid fa-palette text-xl text-white"></i>
+            </div>
+            <div>
+                <h1 class="title-font text-2xl font-bold tracking-wide bg-gradient-to-r from-amber-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">ArtQuest</h1>
+                <p class="text-[10px] tracking-widest uppercase text-gray-400 font-semibold">A Jornada das Artes</p>
+            </div>
+        </div>
+        
+        <!-- Painel do Jogador / Progresso Geral -->
+        <div id="player-hud" class="hidden flex items-center space-x-4">
+            <div class="text-right hidden sm:block">
+                <p id="hud-name" class="text-sm font-semibold text-white">Viajante</p>
+                <p id="hud-level" class="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Fundamental</p>
+            </div>
+            <!-- Relíquias conquistadas -->
+            <div class="flex items-center space-x-2 bg-black/45 px-3.5 py-1.5 rounded-full border border-white/10 shadow-inner">
+                <span title="Relíquia das Artes Visuais"><i id="relic-visuais" class="fa-solid fa-brush text-gray-600 transition-colors duration-500"></i></span>
+                <span title="Relíquia da Música"><i id="relic-musica" class="fa-solid fa-music text-gray-600 transition-colors duration-500"></i></span>
+                <span title="Relíquia do Teatro"><i id="relic-teatro" class="fa-solid fa-masks-theater text-gray-600 transition-colors duration-500"></i></span>
+                <span title="Relíquia da Dança"><i id="relic-danca" class="fa-solid fa-shoe-prints text-gray-600 transition-colors duration-500 font-bold rotate-90"></i></span>
+            </div>
+            <button onclick="showInstructions()" class="text-white/70 hover:text-white transition-colors">
+                <i class="fa-regular fa-circle-question text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4 md:p-8 z-10 w-full max-w-7xl mx-auto">
+        
+        <!-- TELA 1: Boas-vindas e Configuração -->
+        <section id="screen-welcome" class="w-full max-w-2xl py-8 px-6 md:p-10 rounded-3xl glassmorphism flex flex-col items-center text-center space-y-8 animate-fade-in">
+            <div class="space-y-3">
+                <div class="inline-flex space-x-2 bg-white/10 px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold text-amber-300 uppercase tracking-widest pulse-soft">
+                    <i class="fa-solid fa-graduation-cap"></i> <span>Módulos de Ensino Estruturados</span>
+                </div>
+                <h2 class="title-font text-4xl md:text-5xl font-extrabold text-white leading-tight">Explore o Universo das Artes!</h2>
+                <p class="text-gray-300 max-w-md mx-auto text-sm md:text-base">
+                    Estude e teste seus conhecimentos em tópicos específicos de <strong>artes visuais, música, teatro e dança</strong>. Selecione sua categoria educacional abaixo:
+                </p>
+            </div>
+
+            <!-- Formulário de Entrada -->
+            <div class="w-full space-y-4 max-w-md">
+                <div class="text-left">
+                    <label class="block text-xs font-semibold uppercase text-gray-400 mb-1 ml-1 tracking-wider">Nome do Estudante / Artista</label>
+                    <input id="input-name" type="text" placeholder="Escreva seu nome artístico..." class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent outline-none transition-all text-sm">
+                </div>
+
+                <div class="text-left">
+                    <label class="block text-xs font-semibold uppercase text-gray-400 mb-2 ml-1 tracking-wider">Nível de Ensino</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="difficulty" value="fundamental" checked class="peer sr-only">
+                            <div class="p-4 border border-white/10 bg-black/35 hover:bg-white/5 rounded-2xl transition-all peer-checked:border-fuchsia-500 peer-checked:bg-fuchsia-950/25 flex flex-col items-center text-center h-full">
+                                <span class="text-2xl mb-1">🐣</span>
+                                <span class="font-bold text-sm block">Ensino Fundamental</span>
+                                <span class="text-[10px] text-gray-400 mt-1">Elementos constitutivos fundamentais, cores, notas e gestos básicos.</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="difficulty" value="medio" class="peer sr-only">
+                            <div class="p-4 border border-white/10 bg-black/35 hover:bg-white/5 rounded-2xl transition-all peer-checked:border-amber-500 peer-checked:bg-amber-950/25 flex flex-col items-center text-center h-full">
+                                <span class="text-2xl mb-1">🧠</span>
+                                <span class="font-bold text-sm block">Ensino Médio</span>
+                                <span class="text-[10px] text-gray-400 mt-1">História, correntes, sistemas fonadores, estética e produção cultural densa.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="w-full max-w-md bg-gradient-to-r from-amber-500 via-fuchsia-600 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition-transform hover:scale-[1.02] active:scale-95 text-lg">
+                Iniciar Aprendizado <i class="fa-solid fa-circle-play ml-2"></i>
+            </button>
+        </section>
+
+        <!-- TELA 2: Mapa de Templos Artísticos -->
+        <section id="screen-map" class="hidden w-full flex flex-col space-y-8 animate-fade-in">
+            <div class="text-center space-y-2">
+                <h3 class="title-font text-3xl md:text-4xl font-bold text-white">Selecione uma Linguagem Artística</h3>
+                <p class="text-gray-300 text-sm md:text-base max-w-xl mx-auto">Conclua todos os tópicos individuais em cada templo para resgatar sua Relíquia Sagrada!</p>
+            </div>
+
+            <!-- Grade de Templos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- TEMPLO 1: ARTES VISUAIS -->
+                <div onclick="enterTemplo('visuais')" class="cursor-pointer glassmorphism hover:bg-blue-950/10 rounded-2xl p-6 flex flex-col items-center text-center space-y-4 border-t-4 border-t-blue-500 card-glow-blue transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 w-24 h-24 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all"></div>
+                    <div class="w-16 h-16 bg-blue-500/20 text-blue-300 rounded-full flex items-center justify-center text-3xl border border-blue-500/30">
+                        <i class="fa-solid fa-brush"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Artes Visuais</h4>
+                        <p class="text-xs text-gray-400 mt-1">Pontos, linhas, grafia, monocromia/policromia e expressão cromática.</p>
+                    </div>
+                    <span id="badge-visuais" class="bg-gray-850 text-gray-400 text-[10px] px-3 py-1 rounded-full border border-white/5 uppercase tracking-wider font-semibold">Não Visitado</span>
+                </div>
+
+                <!-- TEMPLO 2: MÚSICA -->
+                <div onclick="enterTemplo('musica')" class="cursor-pointer glassmorphism hover:bg-purple-950/10 rounded-2xl p-6 flex flex-col items-center text-center space-y-4 border-t-4 border-t-purple-500 card-glow-purple transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 w-24 h-24 bg-purple-500/10 rounded-full blur-xl group-hover:bg-purple-500/20 transition-all"></div>
+                    <div class="w-16 h-16 bg-purple-500/20 text-purple-300 rounded-full flex items-center justify-center text-3xl border border-purple-500/30">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Música</h4>
+                        <p class="text-xs text-gray-400 mt-1">Notas, fonação, modalismo, quarteto de vozes, instrumentos e gravação.</p>
+                    </div>
+                    <span id="badge-musica" class="bg-gray-850 text-gray-400 text-[10px] px-3 py-1 rounded-full border border-white/5 uppercase tracking-wider font-semibold">Não Visitado</span>
+                </div>
+
+                <!-- TEMPLO 3: TEATRO -->
+                <div onclick="enterTemplo('teatro')" class="cursor-pointer glassmorphism hover:bg-amber-950/10 rounded-2xl p-6 flex flex-col items-center text-center space-y-4 border-t-4 border-t-amber-500 card-glow-amber transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all"></div>
+                    <div class="w-16 h-16 bg-amber-500/20 text-amber-300 rounded-full flex items-center justify-center text-3xl border border-amber-500/30">
+                        <i class="fa-solid fa-masks-theater"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Teatro</h4>
+                        <p class="text-xs text-gray-400 mt-1">Princípios cênicos, dramaturgia, história teatral, voz e expressividade.</p>
+                    </div>
+                    <span id="badge-teatro" class="bg-gray-850 text-gray-400 text-[10px] px-3 py-1 rounded-full border border-white/5 uppercase tracking-wider font-semibold">Não Visitado</span>
+                </div>
+
+                <!-- TEMPLO 4: DANÇA -->
+                <div onclick="enterTemplo('danca')" class="cursor-pointer glassmorphism hover:bg-emerald-950/10 rounded-2xl p-6 flex flex-col items-center text-center space-y-4 border-t-4 border-t-emerald-500 card-glow-emerald transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition-all"></div>
+                    <div class="w-16 h-16 bg-emerald-500/20 text-emerald-300 rounded-full flex items-center justify-center text-3xl border border-emerald-500/30">
+                        <i class="fa-solid fa-shoe-prints rotate-90"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Dança</h4>
+                        <p class="text-xs text-gray-400 mt-1">Estudo coreográfico, jogos de sentido, gestos e danças do mundo.</p>
+                    </div>
+                    <span id="badge-danca" class="bg-gray-850 text-gray-400 text-[10px] px-3 py-1 rounded-full border border-white/5 uppercase tracking-wider font-semibold">Não Visitado</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-4">
+                <button onclick="verifyFinalVictory()" id="btn-finish-journey" class="hidden px-8 py-3 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 hover:from-yellow-300 hover:to-red-500 text-white font-extrabold rounded-xl shadow-xl transition-transform hover:scale-105 active:scale-95 text-md animate-bounce">
+                    🏆 Coroar Mestre das Artes!
+                </button>
+            </div>
+        </section>
+
+        <!-- TELA BASE DO TEMPLO COM SELEÇÃO DE TÓPICOS -->
+        <section id="templo-container" class="hidden w-full max-w-4xl glassmorphism rounded-3xl p-6 md:p-8 space-y-6 animate-fade-in relative border border-white/10">
+            <!-- Botão Voltar -->
+            <button onclick="goMap()" class="absolute left-6 top-6 text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Mapa
+            </button>
+
+            <!-- Cabeçalho do Templo -->
+            <div class="text-center pt-6 pb-2">
+                <div id="templo-header-icon" class="inline-block rounded-full p-3 mb-2 border">
+                    <!-- Ícone Dinâmico -->
+                </div>
+                <h3 id="templo-title" class="title-font text-3xl font-bold">Título do Templo</h3>
+                <p id="templo-desc" class="text-gray-300 text-xs md:text-sm max-w-lg mx-auto mt-1">Descrição</p>
+            </div>
+
+            <!-- SUB-TELA A: Seletor de Tópicos do Templo -->
+            <div id="templo-subtopics-view" class="space-y-6">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 text-center">Trilhas Temáticas do Templo</h4>
+                <div id="templo-subtopics-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Gerado Dinamicamente -->
+                </div>
+            </div>
+
+            <!-- SUB-TELA B: Painel de Pergunta Ativa -->
+            <div id="templo-question-view" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <!-- Quadro Informativo/Mecânica -->
+                <div class="bg-black/35 p-5 rounded-2xl border border-white/5 space-y-4">
+                    <h4 id="question-topic-badge" class="font-bold text-sm flex items-center gap-2">
+                        <!-- Título do Tópico Ativo -->
+                    </h4>
+                    <p id="question-sub-description" class="text-[11px] leading-relaxed text-gray-400">
+                        Responda com atenção para comprovar domínio sobre o tema selecionado.
+                    </p>
+                    
+                    <!-- Bloco Interativo / Visual para Apoio da Pergunta -->
+                    <div id="interactive-display-box" class="flex flex-col items-center justify-center p-4 bg-white/5 rounded-xl border border-white/5 relative h-52 overflow-hidden">
+                        <!-- Conteúdo interativo dinâmico (Canvas, Teclado, Palco, Simon) -->
+                    </div>
+                </div>
+
+                <!-- Painel de Seleção de Resposta -->
+                <div class="space-y-4 flex flex-col justify-center">
+                    <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+                        <p class="text-[10px] uppercase tracking-widest opacity-60 font-semibold mb-1">Enigma Cênico</p>
+                        <h5 id="active-question-text" class="font-bold text-sm md:text-base text-white">Carregando pergunta...</h5>
+                    </div>
+
+                    <!-- Botões de Opções de Respostas (Embaralhados) -->
+                    <div id="active-question-options" class="grid grid-cols-1 gap-2.5">
+                        <!-- Opções dinâmicas -->
+                    </div>
+
+                    <!-- Barra de Progresso no Subtópico -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[10px] text-gray-400">
+                            <span>Progresso do Tópico</span>
+                            <span id="active-progress-text">1 de 3</span>
+                        </div>
+                        <div class="w-full bg-black/45 h-2 rounded-full overflow-hidden border border-white/5">
+                            <div id="active-progress-bar" class="h-full transition-all duration-300" style="width: 33%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 7: Vitória Final -->
+        <section id="screen-victory" class="hidden w-full max-w-2xl py-8 px-6 md:p-10 rounded-3xl glassmorphism flex flex-col items-center text-center space-y-8 animate-fade-in border border-white/10">
+            <div class="space-y-3">
+                <span class="text-7xl filter drop-shadow animate-bounce inline-block">👑</span>
+                <h2 class="title-font text-4xl md:text-5xl font-extrabold text-amber-300 leading-tight">Mestre Supremo das Artes!</h2>
+                <p class="text-white text-base max-w-md mx-auto">
+                    Parabéns, <strong id="victory-player-name" class="text-fuchsia-300">Artista</strong>! Você reuniu as quatro relíquias ancestrais, decifrou todos os tópicos e provou ser um(a) verdadeiro(a) conhecedor(a) da estética!
+                </p>
+            </div>
+
+            <!-- Resumo da jornada -->
+            <div class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl max-w-md text-left space-y-3">
+                <h4 class="font-bold text-sm text-gray-200 uppercase tracking-widest border-b border-white/10 pb-2 flex justify-between">
+                    <span>Relatório de Conquistas</span>
+                    <span id="victory-level-badge" class="text-amber-300 text-xs">Ensino Médio</span>
+                </h4>
+                <div class="space-y-2 text-sm text-gray-300">
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-palette text-blue-400"></i> Artes Visuais:</span>
+                        <span class="font-semibold text-white">100% Concluído <i class="fa-solid fa-circle-check text-green-500 ml-1"></i></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-music text-purple-400"></i> Música:</span>
+                        <span class="font-semibold text-white">100% Concluído <i class="fa-solid fa-circle-check text-green-500 ml-1"></i></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-masks-theater text-amber-400"></i> Teatro:</span>
+                        <span class="font-semibold text-white">100% Concluído <i class="fa-solid fa-circle-check text-green-500 ml-1"></i></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-shoe-prints text-emerald-400 rotate-90"></i> Dança:</span>
+                        <span class="font-semibold text-white">100% Concluído <i class="fa-solid fa-circle-check text-green-500 ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+                <button onclick="restartGame()" class="flex-1 px-6 py-3 bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 text-white font-bold rounded-xl transition-transform active:scale-95 text-sm">
+                    Jogar Novamente
+                </button>
+                <button onclick="shareConquest()" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-semibold rounded-xl transition-all text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-share-nodes"></i> Copiar Certificado
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal do Feedback do Usuário -->
+    <div id="modal-feedback" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div class="bg-indigo-950/95 border border-white/20 p-6 rounded-3xl max-w-md w-full text-center space-y-4 shadow-2xl">
+            <span id="feedback-emoji" class="text-6xl block">🌟</span>
+            <h4 id="feedback-title" class="title-font text-2xl font-bold">Excelente!</h4>
+            <p id="feedback-message" class="text-sm text-gray-300">Você acertou a resposta e ganhou um bônus!</p>
+            <button onclick="closeFeedback()" id="feedback-btn" class="w-full py-2.5 bg-fuchsia-600 hover:bg-fuchsia-500 font-bold rounded-xl text-white transition-colors">
+                Continuar
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Instruções -->
+    <div id="modal-instructions" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div class="bg-indigo-950 border border-white/25 p-6 md:p-8 rounded-3xl max-w-lg w-full space-y-4 shadow-2xl relative text-left">
+            <button onclick="closeInstructions()" class="absolute right-6 top-6 text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="title-font text-2xl font-bold text-amber-300 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Guia do Jogo
+            </h3>
+            <p class="text-sm text-gray-300 leading-relaxed">
+                Bem-vindo ao <strong>ArtQuest</strong>! Seu objetivo é visitar os <strong>4 Templos das Artes</strong> e conseguir as relíquias sagradas resolvendo enigmas teóricos e interativos estruturados de acordo com o nível escolar.
+            </p>
+            <div class="space-y-3 text-xs text-gray-400">
+                <div class="flex gap-3"><span class="text-blue-400 font-bold text-sm">1</span> <p><strong>Estrutura Modular:</strong> Cada templo é separado por temas específicos (cores, partitura, história, coreografia). Você estuda e resolve as matérias de forma independente!</p></div>
+                <div class="flex gap-3"><span class="text-purple-400 font-bold text-sm">2</span> <p><strong>Interatividade Real:</strong> Use o teclado de sintetizador virtual e o painel de coreografia (Simon) para apoiar seu raciocínio pedagógico.</p></div>
+                <div class="flex gap-3"><span class="text-emerald-400 font-bold text-sm">3</span> <p><strong>Opções Dinâmicas:</strong> As alternativas do quiz mudam de posição a cada tentativa. Preste atenção no conceito teórico, não no botão!</p></div>
+            </div>
+            <button onclick="closeInstructions()" class="w-full py-3 bg-fuchsia-600 hover:bg-fuchsia-500 font-bold rounded-xl text-white text-sm">
+                Entendi, vamos lá!
+            </button>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="w-full py-4 text-center text-[11px] text-gray-500 border-t border-white/5 bg-black/30 z-20">
+        <p>&copy; 2026 ArtQuest. Criado para aproximar jovens da expressividade humana por meio da tecnologia.</p>
+    </footer>
+
+    <script>
+        /* === BANCO DE DADOS INTEGRAL DE PERGUNTAS E TRILHAS === */
+        const database = {
+            visuais: {
+                title: "Templo de Artes Visuais",
+                description: "Estudo formal da imagem: do ponto e da linha às complexidades cromáticas e movimentos modernos.",
+                themeColor: "blue",
+                icon: "fa-brush",
+                fundamental: [
+                    {
+                        title: "Representação do Ponto e Linha",
+                        description: "O ponto como a menor unidade gráfica e os tipos de linha como elementos de direção e ritmo.",
+                        questions: [
+                            {
+                                question: "Qual tipo de linha é ideal para desenhar e transmitir sensação de estabilidade, calmaria, paz e horizonte?",
+                                options: ["Linha horizontal", "Linha diagonal inclinada", "Linha espiral ou curva fechada", "Linha quebrada ou zigue-zague"],
+                                answer: "Linha horizontal",
+                                preview: "➖",
+                                label: "Linha e Efeito"
+                            },
+                            {
+                                question: "Na técnica de grafia, se agruparmos muitos pontos muito próximos uns dos outros, qual efeito visual criamos na imagem?",
+                                options: ["Sensação de sombra e volume denso", "Sensação de vácuo ou transparência total", "Apenas uma linha reta infinita", "Inversão automática de cores da tela"],
+                                answer: "Sensação de sombra e volume denso",
+                                preview: "░▒▓",
+                                label: "Agrupamento de Pontos"
+                            },
+                            {
+                                question: "A técnica artística baseada na criação de imagens inteiras usando apenas pontos coloridos adjacentes chama-se:",
+                                options: ["Pontilhismo", "Hachura", "Afresco", "Aquarela lírica"],
+                                answer: "Pontilhismo",
+                                preview: "📍",
+                                label: "Técnica de Grafia"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Expressão e Simbolismo das Cores",
+                        description: "Como as cores expressam sensações, representam símbolos culturais e mudam o humor visual.",
+                        questions: [
+                            {
+                                question: "Na representação simbólica das cores, qual cor é comumente associada à natureza, à ecologia, à esperança e ao equilíbrio?",
+                                options: ["Verde", "Vermelho", "Preto", "Cinza fosco"],
+                                answer: "Verde",
+                                preview: "🟢",
+                                label: "Simbolismo Cromático"
+                            },
+                            {
+                                question: "Quando um artista utiliza a cor de forma expressiva e subjetiva pura (ex: pintar o céu de verde e a pele de azul), qual é o seu objetivo principal?",
+                                options: ["Expressar sentimentos e emoções interiores, acima do realismo visual", "Enganar o observador fazendo-o achar que está em outro planeta", "Pintar rápido para economizar tintas mais caras", "Imitar perfeitamente uma fotografia digital"],
+                                answer: "Expressar sentimentos e emoções interiores, acima do realismo visual",
+                                preview: "🎨",
+                                label: "A Cor Expressiva"
+                            },
+                            {
+                                question: "Quais cores são tradicionalmente classificadas como cores 'quentes' por transmitirem proximidade, calor e dinamismo?",
+                                options: ["Vermelho, Laranja e Amarelo", "Azul, Verde e Violeta", "Preto, Branco e Cinza", "Rosa, Marrom e Verde-musgo"],
+                                answer: "Vermelho, Laranja e Amarelo",
+                                preview: "🔥",
+                                label: "Cores Quentes"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Monocromia e Policromia",
+                        description: "A composição visual por meio de harmonia tonal única contra paletas cheias de contraste.",
+                        questions: [
+                            {
+                                question: "O que caracteriza rigorosamente uma obra de arte executada em Monocromia?",
+                                options: ["Utilizar apenas uma cor básica (matiz) variando apenas seus tons, brilhos e saturações", "Pintar exclusivamente com as cores preto e branco em fundos lisos", "Mesclar todas as cores primárias em partes iguais sem diluir", "Utilizar todas as cores disponíveis na paleta do artista para dar contraste"],
+                                answer: "Utilizar apenas uma cor básica (matiz) variando apenas seus tons, brilhos e saturações",
+                                preview: "🟦",
+                                label: "Estudo Monocromático"
+                            },
+                            {
+                                question: "Como chamamos uma composição visual alegre, vibrante e que utiliza muitas cores e matizes variadas e contrastantes simultaneamente?",
+                                options: ["Policromia", "Monocromia", "Bicromia harmônica", "Acromia fotográfica"],
+                                answer: "Policromia",
+                                preview: "🌈",
+                                label: "Estudo Policromático"
+                            },
+                            {
+                                question: "Pintores realistas e acadêmicos criavam volumes desenhando linhas paralelas ou cruzadas muito finas para sombrear. Qual o nome dessa técnica de grafia?",
+                                options: ["Hachura", "Pontilhismo geométrico", "Mosaico de azulejo", "Aquarela úmida"],
+                                answer: "Hachura",
+                                preview: "✍️",
+                                label: "Técnicas de Grafia"
+                            }
+                        ]
+                    }
+                ],
+                medio: [
+                    {
+                        title: "Ponto, Linha e Técnicas de Grafia Avançadas",
+                        description: "Geometrias cênicas, hachuras complexas, ilusão de óptica e grafias expressivas nas artes visuais.",
+                        questions: [
+                            {
+                                question: "Qual tipo de linha é utilizada na perspectiva linear renascentista para criar a sensação de profundidade tridimensional, apontando para o Ponto de Fuga?",
+                                options: ["Linhas convergentes ou ortogonais", "Linhas perfeitamente concêntricas", "Linhas orgânicas onduladas espontâneas", "Linhas curvas sinuosas paralelas"],
+                                answer: "Linhas convergentes ou ortogonais",
+                                preview: "📐",
+                                label: "Perspectiva Cênica"
+                            },
+                            {
+                                question: "No desenho técnico e na representação artística bidimensional, como se gera o efeito de volume físico tridimensional usando linhas (técnica de grafia)?",
+                                options: ["Variando a espessura, o espaçamento e o cruzamento das linhas (hachuras)", "Apenas apagando o contorno exterior com uma borracha macia", "Usando sempre uma régua de metal e canetas hidrocor foscas", "Aplicando tinta branca sobre toda a superfície"],
+                                answer: "Variando a espessura, o espaçamento e o cruzamento das linhas (hachuras)",
+                                preview: "✏️",
+                                label: "Técnica de Grafia"
+                            },
+                            {
+                                question: "Qual corrente artística de vanguarda usava linhas sinuosas, dinâmicas e de formato espiral para traduzir a velocidade das máquinas, carros e indústrias modernas?",
+                                options: ["Futurismo", "Neoclassicismo clássico", "Realismo Social", "Art Nouveau"],
+                                answer: "Futurismo",
+                                preview: "🏎️",
+                                label: "Movimentos Estéticos"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Estética e Simbolismo Avançado das Cores",
+                        description: "Significado histórico dos pigmentos, cor-luz, cor-pigmento e a expressividade subjetiva contemporânea.",
+                        questions: [
+                            {
+                                question: "Por que o pigmento Azul Ultramar e o Roxo/Púrpura eram historicamente associados à realeza e à riqueza na Idade Média e Antiguidade?",
+                                options: ["Devido à extrema raridade e alto custo de extração de seus minerais e fontes animais", "Porque o rei decretou que camponeses que usassem roxo seriam banidos", "Porque essas cores eram sintetizadas facilmente com carvão vegetal comum", "Porque eram cores que brilhavam no escuro nas velas das cortes"],
+                                answer: "Devido à extrema raridade e alto custo de extração de seus minerais e fontes animais",
+                                preview: "🔮",
+                                label: "História dos Pigmentos"
+                            },
+                            {
+                                question: "Na física das cores, o sistema RGB (Vermelho, Verde e Azul) representa a mistura aditiva de qual elemento?",
+                                options: ["Mistura de Cor-Luz (telas digitais e iluminação)", "Mistura de Cor-Pigmento Opaco (tintas e telas de pintura)", "Método de gravação química em negativo fotográfico", "Técnica de gravura em madeira com tintas acrílicas"],
+                                answer: "Mistura de Cor-Luz (telas digitais e iluminação)",
+                                preview: "💻",
+                                label: "Física da Cor"
+                            },
+                            {
+                                question: "Qual movimento artístico do século XX usou as cores puras direto do tubo de tinta sem misturas, de forma totalmente subjetiva e selvagem, liderado por Henri Matisse?",
+                                options: ["Fauvismo", "Cubismo Geométrico", "Minimalismo", "Naturalismo"],
+                                answer: "Fauvismo",
+                                preview: "🦁",
+                                label: "Cor-Expressão"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Estruturas de Monocromia e Policromia Crítica",
+                        description: "A composição sob rígidas regras cromáticas nas artes modernas e contemporâneas.",
+                        questions: [
+                            {
+                                question: "No Modernismo e na Arte Conceitual, como o artista Kazimir Malevich usou o extremo da monocromia para romper com a arte figurativa em 1915?",
+                                options: ["Ao pintar a obra suprematista 'Quadrado Negro sobre Fundo Branco'", "Ao criar uma aquarela translúcida de paisagem nublada", "Ao esculpir um bloco de gelo sobre uma base de ferro", "Ao desenhar uma estátua grega usando apenas lápis grafite"],
+                                answer: "Ao pintar a obra suprematista 'Quadrado Negro sobre Fundo Branco'",
+                                preview: "⬛",
+                                label: "Suprematismo"
+                            },
+                            {
+                                question: "Qual movimento artístico norte-americano dos anos 1960 abusou de uma policromia artificial, industrial e de cores fluorescentes inspiradas nas propagandas e gibis?",
+                                options: ["Pop Art", "Expressionismo Abstrato", "Dadaísmo", "Romantismo Literário"],
+                                answer: "Pop Art",
+                                preview: "🥫",
+                                label: "Cultura de Massa"
+                            },
+                            {
+                                question: "Na teoria das cores de Ostwald e Munsell, o círculo cromático divide as cores em análogas e complementares. O que são cores complementares?",
+                                options: ["Cores que se encontram diametralmente opostas no círculo cromático e geram alto contraste visual se colocadas juntas", "Cores que estão lado a lado no círculo e possuem quase o mesmo matiz básico", "Misturas feitas unicamente com pigmentação cinza e preta", "Cores neutras de baixa intensidade que só servem para pintar sombras"],
+                                answer: "Cores que se encontram diametralmente opostas no círculo cromático e geram alto contraste visual se colocadas juntas",
+                                preview: "🔄",
+                                label: "Harmonias Cromáticas"
+                            }
+                        ]
+                    }
+                ]
+            },
+            musica: {
+                title: "Templo da Música",
+                description: "Domine as notas, o sistema fonador e a audição. Explore instrumentos, estilos, produção e história musical.",
+                themeColor: "purple",
+                icon: "fa-music",
+                fundamental: [
+                    {
+                        title: "Notas Musicais e Memória Auditiva",
+                        description: "Conhecendo as 7 notas básicas, a escala e treinando os ouvidos para memorizar frequências.",
+                        questions: [
+                            {
+                                question: "Qual é a sequência natural correta das sete notas musicais na escala clássica ascendente?",
+                                options: ["Dó, Ré, Mi, Fá, Sol, Lá, Si", "Dó, Ré, Fá, Mi, Sol, Si, Lá", "Lá, Si, Dó, Ré, Sol, Fá, Mi", "Sol, Lá, Si, Dó, Ré, Mi, Fá"],
+                                answer: "Dó, Ré, Mi, Fá, Sol, Lá, Si",
+                                preview: "🎼",
+                                label: "A Escala Natural"
+                            },
+                            {
+                                question: "Como chamamos a nossa capacidade de reconhecer um som que já ouvimos no passado e identificar o instrumento ou a nota musical correspondente?",
+                                options: ["Memória Auditiva", "Ecolocalização biológica", "Visão harmônica digital", "Análise de ruído"],
+                                answer: "Memória Auditiva",
+                                preview: "🧠",
+                                label: "Treinamento de Ouvidos"
+                            },
+                            {
+                                question: "Que sinal gráfico é colocado no início de uma partitura para dar nome e posição para as notas musicais na pauta?",
+                                options: ["Clave (como Clave de Sol ou Fá)", "Compasso de barra dupla", "Sustenido de afinação", "Ponto de aumento de tom"],
+                                answer: "Clave (como Clave de Sol ou Fá)",
+                                preview: "𝄞",
+                                label: "Escrita Musical"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Vozes e o Instrumento Humano",
+                        description: "Como a nossa voz funciona através do sistema fonador e as classificações de corais básicos.",
+                        questions: [
+                            {
+                                question: "Qual é o nome das estruturas musculares flexíveis localizadas na nossa laringe que vibram com a passagem do ar, gerando o som da nossa voz?",
+                                options: ["Pregas (ou cordas) vocais", "Células ciliadas", "Traqueias sonoras", "Bronquíolos ressonantes"],
+                                answer: "Pregas (ou cordas) vocais",
+                                preview: "🗣️",
+                                label: "Sistema Fonador"
+                            },
+                            {
+                                question: "Em um coral musical clássico infantil ou adulto, as vozes mais agudas das mulheres são chamadas de:",
+                                options: ["Soprano", "Contralto", "Tenor", "Baixo"],
+                                answer: "Soprano",
+                                preview: "👩‍🎤",
+                                label: "Vozes Clássicas"
+                            },
+                            {
+                                question: "O que ajuda a nossa voz a soar de forma mais encorpada, bonita e alta, funcionando como uma 'caixa de som natural'?",
+                                options: ["As cavidades de ressonância (boca, nariz e peito)", "O sistema digestivo superior", "O músculo do tríceps e do ombro", "As amígdalas do pescoço"],
+                                answer: "As cavidades de ressonância (boca, nariz e peito)",
+                                preview: "📻",
+                                label: "Amplificação de Voz"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Instrumentos das Culturas do Mundo",
+                        description: "Exploração de instrumentos folclóricos e ritmos típicos de diferentes povos e períodos.",
+                        questions: [
+                            {
+                                question: "Qual instrumento de percussão, trazido pelos escravizados africanos e feito de madeira em forma de caixa, é o símbolo de ritmos como o Flamenco e o Criollo?",
+                                options: ["Cajón", "Xilofone", "Harpa clássica", "Trompete de jazz"],
+                                answer: "Cajón",
+                                preview: "📦",
+                                label: "Instrumento Étnico"
+                            },
+                            {
+                                question: "Qual instrumento rítmico indígena, feito com caroços secos ou sementes dentro de uma cabaça, é sacudido para acompanhar rituais e canções tradicionais?",
+                                options: ["Maracá", "Pandeiro", "Violino de cabaça", "Berimbau"],
+                                answer: "Maracá",
+                                preview: "🪘",
+                                label: "Cultura Indígena"
+                            },
+                            {
+                                question: "A música vocal em que o cantor é acompanhado apenas por um único instrumento (como um violão ou piano) é classificada como:",
+                                options: ["Música com acompanhamento instrumental", "Música Puramente Vocal A Cappella", "Música Instrumental Solo", "Sinfonia Orquestral Cheia"],
+                                answer: "Música com acompanhamento instrumental",
+                                preview: "🎤",
+                                label: "Tipologias Musicais"
+                            }
+                        ]
+                    }
+                ],
+                medio: [
+                    {
+                        title: "Notas, Intervalos e Memória Auditiva Fina",
+                        description: "Física acústica, intervalos, ouvido absoluto e processos fisiológicos da fonação humana.",
+                        questions: [
+                            {
+                                question: "Como chamamos o fenômeno cognitivo raro em que uma pessoa consegue identificar a nota exata de qualquer som sem precisar de tom de referência?",
+                                options: ["Ouvido Absoluto", "Ouvido Relativo Clássico", "Audição Espacial Ativa", "Sons Vestibulares"],
+                                answer: "Ouvido Absoluto",
+                                preview: "🧠",
+                                label: "Análise Psicoacústica"
+                            },
+                            {
+                                question: "Qual elemento anatômico do sistema fonador atua como gerador de fluxo de ar estável (pressão subglótica) indispensável para a sustentação de notas longas de um cantor de ópera?",
+                                options: ["Os pulmões auxiliados pelo músculo diafragma", "As fossas nasais internas", "O osso hioide no pescoço", "A úvula na boca"],
+                                answer: "Os pulmões auxiliados pelo músculo diafragma",
+                                preview: "🫁",
+                                label: "Fisiologia da Voz"
+                            },
+                            {
+                                question: "Na escala temperada ocidental, qual o nome do menor intervalo de distância física de frequência entre duas notas musicais adjacentes?",
+                                options: ["Semitom", "Tom completo", "Quinta justa", "Oitava ascendente"],
+                                answer: "Semitom",
+                                preview: "📐",
+                                label: "Teoria de Intervalos"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Música Modal, Quarteto de Cordas e Vozes",
+                        description: "Modos gregos/eclesiásticos, quarteto clássico vocal e instrumental e análise de arranjo.",
+                        questions: [
+                            {
+                                question: "O que diferencia essencialmente a Música Modal (predominante na Idade Média) da Música Tonal (surgida no Barroco)?",
+                                options: ["A música modal organiza as notas em torno de escalas gregas/eclesiásticas sem as relações de tensão e resolução tônica-dominante clássicas", "A música modal proíbe completamente o uso de notas agudas e instrumentos de sopro", "A música modal só pode ser tocada por quatro cantores homens sem sapatos", "A música tonal dispensa o uso de notas afinadas e pauta musical"],
+                                answer: "A música modal organiza as notas em torno de escalas gregas/eclesiásticas sem as relações de tensão e resolução tônica-dominante clássicas",
+                                preview: "⛪",
+                                label: "Música Modal"
+                            },
+                            {
+                                question: "Quais os instrumentos exatos que compõem a formação tradicional de um Quarteto de Cordas do período Clássico (ex: de Haydn ou Mozart)?",
+                                options: ["Dois violinos, uma viola e um violoncelo", "Um violino, um violoncelo, um contrabaixo e um piano", "Quatro violinos tocando em uníssono afinados", "Dois violoncelos, uma harpa e um violino soprano"],
+                                answer: "Dois violinos, uma viola e um violoncelo",
+                                preview: "🎻",
+                                label: "Quarteto de Cordas"
+                            },
+                            {
+                                question: "Em um quarteto de vozes mistas clássico (SATB), qual a classificação das quatro vozes da mais aguda para a mais grave?",
+                                options: ["Soprano, Contralto, Tenor e Baixo", "Soprano, Tenor, Barítono e Contralto", "Contralto, Soprano, Baixo e Tenor", "Baixo, Tenor, Soprano e Contralto"],
+                                answer: "Soprano, Contralto, Tenor e Baixo",
+                                preview: "🎭",
+                                label: "Quarteto de Vozes"
+                            }
+                        ]
+                    },
+                    {
+                        title: "História dos Instrumentos, Gravação e Produção",
+                        description: "Das cordas antigas aos meios de gravação mecânica e a produção moderna de áudio digital.",
+                        questions: [
+                            {
+                                question: "Qual instrumento histórico de cordas dedilhadas e caixa acústica arredondada, trazido para a Europa pelos árabes (Ud), foi o maior símbolo de música instrumental no Renascimento?",
+                                options: ["Alaúde", "Sintetizador", "Cítara clássica indiana", "Violão de sete cordas"],
+                                answer: "Alaúde",
+                                preview: "🎼",
+                                label: "Instrumentos Históricos"
+                            },
+                            {
+                                question: "Qual foi o primeiro meio de gravação física de som inventado por Thomas Edison em 1877 que revolucionou a produção e consumo de música?",
+                                options: ["Fonógrafo (cilindros de cera)", "Gramofone (discos de vinil planos)", "Fita Magnética K7", "Compact Disc (CD digital)"],
+                                answer: "Fonógrafo (cilindros de cera)",
+                                preview: "📻",
+                                label: "Meios de Gravação"
+                            },
+                            {
+                                question: "No processo de produção musical moderna, o que constitui a etapa de Masterização?",
+                                options: ["O ajuste final de volume geral, brilho e dinâmica do arquivo estéreo de áudio para distribuição comercial", "A gravação do instrumento solista na sala de acústica isolada", "O processo de afinação digital manual da voz do cantor principal", "A criação de arranjos de metais para orquestra clássica"],
+                                answer: "O ajuste final de volume geral, brilho e dinâmica do arquivo estéreo de áudio para distribuição comercial",
+                                preview: "🎛️",
+                                label: "Produção Musical"
+                            }
+                        ]
+                    }
+                ]
+            },
+            teatro: {
+                title: "Templo do Teatro",
+                description: "Estude o palco, a dramaturgia histórica, a voz do ator e os princípios cênicos que dão vida ao espetáculo.",
+                themeColor: "amber",
+                icon: "fa-masks-theater",
+                fundamental: [
+                    {
+                        title: "Princípios Cênicos e o Palco",
+                        description: "Identificação das partes do palco e os termos que definem o cenário e a iluminação.",
+                        questions: [
+                            {
+                                question: "Como chamamos a parte do palco italiano clássico que se estende para além da cortina principal, ficando mais perto do público?",
+                                options: ["Proscênio", "Coxia lateral", "Urdimento de teto", "Rotunda de fundo"],
+                                answer: "Proscênio",
+                                preview: "🎭",
+                                label: "Partes do Palco"
+                            },
+                            {
+                                question: "O conjunto de móveis, telas pintadas, objetos e decorações que recriam no palco o ambiente onde a história teatral acontece é o:",
+                                options: ["Cenário", "Figurino", "Sonoplastia", "Texto cênico"],
+                                answer: "Cenário",
+                                preview: "🖼️",
+                                label: "Princípios Cênicos"
+                            },
+                            {
+                                question: "Como chamamos os corredores escondidos nas laterais do palco onde os atores aguardam silenciosamente a sua deixa para entrar em cena?",
+                                options: ["Coxias", "Bastidores de fundo", "Fosso de orquestra", "Geral de plateia"],
+                                answer: "Coxias",
+                                preview: "🚪",
+                                label: "Espaço Cênico"
+                            }
+                        ]
+                    },
+                    {
+                        title: "História e Gêneros Teatrais Básicos",
+                        description: "As origens do teatro na Grécia, as máscaras de símbolos e os primeiros contadores de histórias.",
+                        questions: [
+                            {
+                                question: "Na Grécia Antiga, o deus protetor e inspirador das festas teatrais, do vinho e do entusiasmo era:",
+                                options: ["Dionísio", "Apolo", "Zeus", "Atena"],
+                                answer: "Dionísio",
+                                preview: "🍇",
+                                label: "Origens Teatrais"
+                            },
+                            {
+                                question: "Quais eram os dois gêneros teatrais básicos mais famosos representados pelas duas clássicas máscaras gregas?",
+                                options: ["Tragédia e Comédia", "Romance e Aventura", "Terror e Suspense", "Melodrama e Mímica"],
+                                answer: "Tragédia e Comédia",
+                                preview: "🎭",
+                                label: "Gêneros Gregos"
+                            },
+                            {
+                                question: "Em uma apresentação de teatro de rua, qual o maior desafio espacial dos atores para capturar a atenção das pessoas?",
+                                options: ["Projetar bem a voz e usar gestos amplos em um palco de 360 graus cercado pelo público", "Montar cenários gigantescos de concreto e vidro no asfalto", "Sussurrar para que o público precise ficar em silêncio absoluto", "Cobrar ingressos antes do início do primeiro ato de cena"],
+                                answer: "Projetar bem a voz e usar gestos amplos em um palco de 360 graus cercado pelo público",
+                                preview: "⛺",
+                                label: "Teatro de Rua"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Voz e Expressão Corporal",
+                        description: "A importância de falar de forma clara e o controle dos movimentos e respiração no palco.",
+                        questions: [
+                            {
+                                question: "O processo de pronunciar as palavras de forma muito clara, esticando as sílabas e movendo bem os lábios para que todos na plateia compreendam o texto, chama-se:",
+                                options: ["Articulação ou Dicção", "Respiração costal", "Improvisação corporal", "Canto sussurrado"],
+                                answer: "Articulação ou Dicção",
+                                preview: "🗣️",
+                                label: "Voz do Ator"
+                            },
+                            {
+                                question: "O que o ator deve fazer para que sua voz soe forte e estável durante toda a peça de teatro sem machucar suas pregas vocais?",
+                                options: ["Respirar usando o apoio do músculo diafragma de forma controlada", "Gritar o máximo de ar possível de uma vez só", "Falar prendendo a respiração e empurrando o ar pelo nariz", "Beber água gelada logo antes de entrar correndo no palco"],
+                                answer: "Respirar usando o apoio do músculo diafragma de forma controlada",
+                                preview: "🧘",
+                                label: "Saúde Vocal"
+                            },
+                            {
+                                question: "No texto de teatro, como chamamos as anotações do autor escritas em itálico ou parênteses que descrevem os sentimentos ou ações físicas dos atores?",
+                                options: ["Rubricas (ou Didascálias)", "Prólogos", "Monólogos dramáticos", "Atos cênicos"],
+                                answer: "Rubricas (ou Didascálias)",
+                                preview: "📝",
+                                label: "O Texto Teatral"
+                            }
+                        ]
+                    }
+                ],
+                medio: [
+                    {
+                        title: "Princípios Cênicos Avançados",
+                        description: "Cenografia contemporânea, iluminação cênica, marcação de cena e estética do espaço.",
+                        questions: [
+                            {
+                                question: "Como chamamos o desenho estético da iluminação cênica que cria focos de atenção, gera sombra expressiva e define a atmosfera emocional da peça teatral?",
+                                options: ["Desenho de Luz ou Iluminação Cênica", "Sonoplastia de palco", "Fisicalidade de contrarregra", "Cenografia de projeção"],
+                                answer: "Desenho de Luz ou Iluminação Cênica",
+                                preview: "💡",
+                                label: "Estética da Luz"
+                            },
+                            {
+                                question: "Qual o nome do processo de criação de marcação física onde o diretor planeja detalhadamente onde cada ator deve pisar, mover-se e olhar no espaço cênico?",
+                                options: ["Marcação de Cena", "Escrita dramatúrgica", "Sonorização de coxias", "Leitura branca"],
+                                answer: "Marcação de Cena",
+                                preview: "👣",
+                                label: "Marcação Espacial"
+                            },
+                            {
+                                question: "No teatro contemporâneo de palco de arena, em que a plateia cerca os atores por todos os lados, qual a maior mudança nos princípios cênicos?",
+                                options: ["A cenografia deve ser baixa e vazada para não obstruir a visão de nenhum setor da plateia", "Os atores precisam obrigatoriamente atuar imóveis e sentados", "A iluminação deve focar apenas em uma parede plana fixa", "Não há uso de sonorização ou figurinos específicos"],
+                                answer: "A cenografia deve ser baixa e vazada para não obstruir a visão de nenhum setor da plateia",
+                                preview: "🏟️",
+                                label: "Teatro de Arena"
+                            }
+                        ]
+                    },
+                    {
+                        title: "História do Teatro e Dramaturgia",
+                        description: "Das tragédias isabelinas ao teatro épico de Brecht e o Teatro do Oprimido de Augusto Boal.",
+                        questions: [
+                            {
+                                question: "No Teatro Elisabetano (Inglaterra, séc. XVI), qual dramaturgo destacou-se por criar tragédias psicológicas complexas como 'Hamlet' e 'Macbeth'?",
+                                options: ["William Shakespeare", "Molière", "Bertolt Brecht", "Eurípedes"],
+                                answer: "William Shakespeare",
+                                preview: "💀",
+                                label: "Teatro Elisabetano"
+                            },
+                            {
+                                question: "O dramaturgo Bertolt Brecht propôs o 'Teatro Épico' no século XX. Qual era o seu principal objetivo político e estético?",
+                                options: ["Evitar a catarse emocional cega, estimulando o distanciamento crítico e a reflexão social do espectador", "Criar espetáculos de ópera gigantescos com decorações de luxo", "Escrever peças teatrais inteiramente infantis sobre fábulas antigas", "Eliminar por completo a presença de atores profissionais no palco"],
+                                answer: "Evitar a catarse emocional cega, estimulando o distanciamento crítico e a reflexão social do espectador",
+                                preview: "🧱",
+                                label: "Teatro Épico"
+                            },
+                            {
+                                question: "O diretor brasileiro Augusto Boal criou uma metodologia teatral que transformava o espectador passivo em 'espect-ator' ativo. Como se chama esse sistema?",
+                                options: ["Teatro do Oprimido", "Movimento Armorial", "Teatro Oficina", "Teatro de Revista"],
+                                answer: "Teatro do Oprimido",
+                                preview: "✊",
+                                label: "Pedagogia Teatral"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Voz, Fonação e Corpo do Ator",
+                        description: "Sistema fonador e as teorias de Stanislavski de realismo biológico psicológico.",
+                        questions: [
+                            {
+                                question: "No método desenvolvido por Constantin Stanislavski, qual elemento estimula o ator a buscar uma verdade psicológica interna para sua personagem?",
+                                options: ["Memória Afetiva (ou sensorial)", "Mímica de gestos técnicos rígidos", "Canto lírico de improvisação", "Maquiagem de máscara neutra"],
+                                answer: "Memória Afetiva (ou sensorial)",
+                                preview: "🧠",
+                                label: "Sistema Stanislavski"
+                            },
+                            {
+                                question: "Qual preceito físico do sistema fonador e de saúde do ator é fundamental para garantir a projeção vocal em teatros de acústica difícil sem causar fono-traumas?",
+                                options: ["O controle correto do fluxo de ar pulmonar associado ao relaxamento das tensões cervicais e laríngeas", "Pressionar a garganta para espremer as cordas vocais", "Gritar forçando o peito e segurando a mandíbula tensa", "Falar o texto sussurrado utilizando amplificação digital externa no ouvido"],
+                                answer: "O controle correto do fluxo de ar pulmonar associado ao relaxamento das tensões cervicais e laríngeas",
+                                preview: "🗣️",
+                                label: "Técnica Fonoaudiológica"
+                            },
+                            {
+                                question: "A linguagem teatral contemporânea que dispensa o uso de diálogos falados para focar exclusivamente na narrativa física, gestos e expressão corporal chama-se:",
+                                options: ["Teatro Físico ou Mímica Corporal Dramática", "Teatro do Absurdo", "Auto de Natal Tradicional", "Teatro Musical de Corte"],
+                                answer: "Teatro Físico ou Mímica Corporal Dramática",
+                                preview: "🤸",
+                                label: "Expressão Corporal"
+                            }
+                        ]
+                    }
+                ]
+            },
+            danca: {
+                title: "Templo da Dança",
+                description: "Compreenda o movimento humano, a composição coreográfica, a diversidade gestual e os jogos de sentido.",
+                themeColor: "emerald",
+                icon: "fa-shoe-prints",
+                fundamental: [
+                    {
+                        title: "Estudo da Coreografia e Espaço",
+                        description: "Noções espaciais básicas (alto, médio, baixo), ritmo, tempo e a criação de sequências de dança.",
+                        questions: [
+                            {
+                                question: "Como chamamos o profissional que planeja, inventa e ensina os passos e movimentos que os bailarinos executam em uma apresentação?",
+                                options: ["Coreógrafo(a)", "Diretor de teatro", "Sonoplasta", "Cenotécnico"],
+                                answer: "Coreógrafo(a)",
+                                preview: "💃",
+                                label: "Criação Coreográfica"
+                            },
+                            {
+                                question: "Ao estudarmos o espaço na dança, quais são os três níveis de altura básicos em que os movimentos podem ser realizados?",
+                                options: ["Alto, Médio e Baixo", "Frente, Trás e Diagonais", "Rápido, Lento e Pausado", "Esticado, Encolhido e Girado"],
+                                answer: "Alto, Médio e Baixo",
+                                preview: "🔝",
+                                label: "Níveis Espaciais"
+                            },
+                            {
+                                question: "Qual elemento básico da dança dita o ritmo dos movimentos, garantindo que os dançarinos acompanhem o andamento da música?",
+                                options: ["O Tempo (Andamento/Métrica)", "O Peso corporal do dançarino", "O Espaço plano da pista de dança", "O Figurino elástico dos bailarinos"],
+                                answer: "O Tempo (Andamento/Métrica)",
+                                preview: "⏱️",
+                                label: "Tempo e Ritmo"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Jogos de Sentido e Gestos",
+                        description: "Expressar ideias, sentimentos e histórias através de mímicas e gestos livres do corpo.",
+                        questions: [
+                            {
+                                question: "Como a dança contemporânea utiliza a nossa 'diversidade gestual' cotidiana para criar coreografias?",
+                                options: ["Incorporando gestos simples do dia a dia (como acenar, caminhar e abraçar) ressignificados de forma artística", "Exigindo apenas os passos rígidos do balé clássico nas pontas dos pés", "Pintando a pele dos dançarinos com cores quentes primárias", "Proibindo os bailarinos de piscar ou mover os dedos das mãos"],
+                                answer: "Incorporando gestos simples do dia a dia (como acenar, caminhar e abraçar) ressignificados de forma artística",
+                                preview: "👋",
+                                label: "Diversidade Gestual"
+                            },
+                            {
+                                question: "Na dança dramática, o que são os 'jogos de sentido'?",
+                                options: ["A exploração de passos corporais para criar sentimentos, expressar ideias ou contar uma história sem precisar falar palavras", "Um jogo de tabuleiro que os bailarinos jogam antes de dançar", "A técnica de dançar vendado guiando-se pelo som de estalos de dedos", "A repetição mecânica de saltos olímpicos de costas"],
+                                answer: "A exploração de passos corporais para criar sentimentos, expressar ideias ou contar uma história sem precisar falar palavras",
+                                preview: "🎭",
+                                label: "Jogos de Sentido"
+                            },
+                            {
+                                question: "Qual estilo de dança de rua urbana nasceu em Nova York, usando batalhas de movimentos rápidos no solo e saltos rítmicos acrobáticos?",
+                                options: ["Breakdance (Hip Hop)", "Balé clássico de pontas", "Samba de gafieira carioca", "Quadrilha folclórica junina"],
+                                answer: "Breakdance (Hip Hop)",
+                                preview: "👟",
+                                label: "Danças Urbanas"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Danças do Brasil e do Mundo",
+                        description: "Festividades folclóricas brasileiras: capoeira, frevo, maracatu e quadrilhas.",
+                        questions: [
+                            {
+                                question: "Qual manifestação artística e corporal brasileira mistura luta, esporte, dança, jogo, música e ritmos de berimbau em roda?",
+                                options: ["Capoeira", "Quadrilha junina de corte", "Fandango do sul", "Bumba meu boi"],
+                                answer: "Capoeira",
+                                preview: "🤸",
+                                label: "Patrimônio Cultural"
+                            },
+                            {
+                                question: "Qual dança carnavalesca de Pernambuco é dançada de forma muito rápida e acrobática por passistas que carregam pequenas sombrinhas coloridas?",
+                                options: ["Frevo", "Maracatu de nação", "Samba enredo clássico", "Jongo do sudeste"],
+                                answer: "Frevo",
+                                preview: "☂️",
+                                label: "Frevo"
+                            },
+                            {
+                                question: "A dança folclórica de pares típica do mês de Junho que representa casamentos camponeses e festividades de colheita chama-se:",
+                                options: ["Quadrilha", "Bossa Nova de salão", "Maracatu rural", "Xote nordestino clássico"],
+                                answer: "Quadrilha",
+                                preview: "🌽",
+                                label: "Festa Junina"
+                            }
+                        ]
+                    }
+                ],
+                medio: [
+                    {
+                        title: "Coreografia e Espaço Teórico (Laban)",
+                        description: "Análise sistemática do movimento de Rudolf Laban: cinesfera, peso, tempo, espaço e fluência.",
+                        questions: [
+                            {
+                                question: "No sistema de análise de movimento de Rudolf Laban, como se chama a esfera imaginária tridimensional que engloba todo o espaço que o corpo alcança sem deslocar os pés?",
+                                options: ["Cinesfera (ou Kinesfera)", "Espaço de proscênio teatral", "Esfera de gravitação corporal", "Plano sagital fixo"],
+                                answer: "Cinesfera (ou Kinesfera)",
+                                preview: "🌐",
+                                label: "Teoria de Laban"
+                            },
+                            {
+                                question: "Quais são os quatro fatores essenciais do esforço humano que determinam as qualidades físicas do movimento segundo Laban?",
+                                options: ["Espaço, Tempo, Peso e Fluência", "Ritmo, Impulso, Salto e Queda", "Cinesfera, Força, Alongamento e Estética", "Direção, Velocidade, Equilíbrio e Tensão"],
+                                answer: "Espaço, Tempo, Peso e Fluência",
+                                preview: "🔄",
+                                label: "Fatores de Esforço"
+                            },
+                            {
+                                question: "Como se chama a técnica de notação gráfica inventada para registrar no papel, por meio de símbolos geométricos, os movimentos e coreografias de uma dança?",
+                                options: ["Labanotação", "Partitura harmônica digital", "Grafia de palco linear", "Dramaturgia coreográfica"],
+                                answer: "Labanotação",
+                                preview: "📝",
+                                label: "Notação de Dança"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Jogos de Sentido e Dança-Teatro",
+                        description: "Conceitos conceituais da Dança-Teatro alemã, Pina Bausch, contato e improvisação contemporânea.",
+                        questions: [
+                            {
+                                question: "A coreógrafa alemã Pina Bausch revolucionou a arte do movimento ao consolidar um conceito artístico híbrido. Qual é o nome desse conceito?",
+                                options: ["Dança-Teatro (Tanztheater)", "Balé de Vanguarda Concreto", "Performance de Mímica Corporal", "Instalação Cinética Orgânica"],
+                                answer: "Dança-Teatro (Tanztheater)",
+                                preview: "🎭",
+                                label: "Teatro-Dança"
+                            },
+                            {
+                                question: "Na dança contemporânea, o método de criação em que os bailarinos geram movimentos em tempo real através do contato físico mútuo, transferindo peso e explorando a gravidade, chama-se:",
+                                options: ["Contato-Improvisação", "Pas de Deux Clássico Acadêmico", "Coreografia rígida de solo", "Dança de Salão de Salão"],
+                                answer: "Contato-Improvisação",
+                                preview: "🤝",
+                                label: "Contato-Improvisação"
+                            },
+                            {
+                                question: "Como os 'jogos de sentido' agem na dança conceitual moderna para afastar-se da mera exibição técnica de saltos?",
+                                options: ["Ao introduzir metáforas, quebras de expectativa e ações absurdas cotidianas que convidam o público a interpretar subjetivamente a cena", "Ao banir instrumentos musicais obrigando o bailarino a dançar em silêncio", "Ao obrigar os dançarinos a repetir o mesmo salto simétrico exaustivamente", "Ao criar regras matemáticas onde cada gesto equivale a uma letra do alfabeto"],
+                                answer: "Ao introduzir metáforas, quebras de expectativa e ações absurdas cotidianas que convidam o público a interpretar subjetivamente a cena",
+                                preview: "👁️",
+                                label: "Jogos de Sentido"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Danças Étnicas, Históricas e Sociais",
+                        description: "Evolução histórica do balé nas cortes absolutistas às danças regionais de matriz africana.",
+                        questions: [
+                            {
+                                question: "Na história da dança ocidental, qual monarca absolutista francês utilizou o balé clássico como ferramenta política para demonstrar poder, consolidando a fundação da Real Academia de Dança?",
+                                options: ["Rei Luís XIV (Rei Sol)", "Rei Henrique VIII da Inglaterra", "Rei Carlos Magno", "Czar Nicolau II da Rússia"],
+                                answer: "Rei Luís XIV (Rei Sol)",
+                                preview: "☀️",
+                                label: "Balé de Corte"
+                            },
+                            {
+                                question: "Qual dança de salão dramática e de forte improvisação, nascida nos bairros de classe operária de Buenos Aires e Montevidéu, recebeu influência direta do Candombe africano?",
+                                options: ["Tango", "Salsa cubana clássica", "Valsa vienense tradicional", "Bolero espanhol"],
+                                answer: "Tango",
+                                preview: "🌹",
+                                label: "Danças das Américas"
+                            },
+                            {
+                                question: "Qual dança tradicional afro-brasileira praticada no Sudeste é considerada uma das matrizes fundamentais do Samba e é executada ao som de tambores rústicos em roda com o gesto da 'umbigada'?",
+                                options: ["Jongo (ou Caxambu)", "Fandango caiçara", "Maracatu rural nordestino", "Quadrilha matuta caipira"],
+                                answer: "Jongo (ou Caxambu)",
+                                preview: "🥁",
+                                label: "Matriz Africana"
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        /* === ESTADO DO JOGO === */
+        const gameState = {
+            playerName: "Viajante",
+            difficulty: "fundamental", // 'fundamental' ou 'medio'
+            relics: {
+                visuais: false,
+                musica: false,
+                teatro: false,
+                danca: false
+            },
+            currentTemple: null,
+            currentSubTopicIndex: null,
+            currentQuestionIndex: 0,
+            shuffledOptions: [],
+            // Registro de conclusão de cada subtópico por templo
+            completedSubTopics: {
+                visuais: [false, false, false],
+                musica: [false, false, false],
+                teatro: [false, false, false],
+                danca: [false, false, false]
+            },
+            // Mini-game Simon da Dança (desafio alternativo)
+            danceSimonSequence: [],
+            danceUserSequence: [],
+            danceIsPlaying: false,
+            danceTurn: 'simon'
+        };
+
+        // Sintetizador Web Audio API para efeitos de aprendizagem musical
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playNote(frequency, name, duration = 0.5) {
+            initAudio();
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.warn("AudioContext bloqueado ou indisponível:", e);
+            }
+        }
+
+        // Função utilitária para embaralhar arrays de alternativas (Shuffle)
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        /* === CONTROLE DE TELAS === */
+        function showScreen(screenId) {
+            ['screen-welcome', 'screen-map', 'templo-container', 'screen-victory'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* === FLUXO INICIAL === */
+        function startGame() {
+            const nameInput = document.getElementById('input-name').value.trim();
+            gameState.playerName = nameInput ? nameInput : "Estudante Criativo";
+
+            const difficulties = document.getElementsByName('difficulty');
+            for (let d of difficulties) {
+                if (d.checked) {
+                    gameState.difficulty = d.value;
+                }
+            }
+
+            // Atualiza HUD
+            document.getElementById('hud-name').innerText = gameState.playerName;
+            document.getElementById('hud-level').innerText = gameState.difficulty === 'fundamental' ? 'Fundamental' : 'Ensino Médio';
+            document.getElementById('player-hud').classList.remove('hidden');
+
+            resetRelics();
+            showScreen('screen-map');
+            
+            showFeedback(
+                "🎨", 
+                `Olá, ${gameState.playerName}!`, 
+                `Sua expedição pelos segredos acadêmicos e expressivos das artes começou no nível <strong>${gameState.difficulty === 'fundamental' ? 'Ensino Fundamental' : 'Ensino Médio'}</strong>.`
+            );
+        }
+
+        function restartGame() {
+            gameState.relics = { visuais: false, musica: false, teatro: false, danca: false };
+            gameState.completedSubTopics = {
+                visuais: [false, false, false],
+                musica: [false, false, false],
+                teatro: [false, false, false],
+                danca: [false, false, false]
+            };
+            document.getElementById('input-name').value = "";
+            document.getElementById('player-hud').classList.add('hidden');
+            showScreen('screen-welcome');
+        }
+
+        function goHome() {
+            if (confirm("Quer voltar à tela inicial? Seu progresso atual do jogo será reiniciado.")) {
+                restartGame();
+            }
+        }
+
+        function goMap() {
+            showScreen('screen-map');
+        }
+
+        /* === GESTÃO DE RELÍQUIAS === */
+        function resetRelics() {
+            const types = ['visuais', 'musica', 'teatro', 'danca'];
+            types.forEach(type => {
+                const icon = document.getElementById(`relic-${type}`);
+                icon.className = icon.className.replace('text-amber-400', 'text-gray-600')
+                                              .replace('text-blue-400', 'text-gray-600')
+                                              .replace('text-purple-400', 'text-gray-600')
+                                              .replace('text-emerald-400', 'text-gray-600');
+                
+                const badge = document.getElementById(`badge-${type}`);
+                badge.innerText = "Não Visitado";
+                badge.className = "bg-gray-850 text-gray-400 text-[10px] px-3 py-1 rounded-full border border-white/5 uppercase tracking-wider font-semibold";
+            });
+            document.getElementById('btn-finish-journey').classList.add('hidden');
+        }
+
+        function earnRelic(type) {
+            gameState.relics[type] = true;
+            
+            const icon = document.getElementById(`relic-${type}`);
+            icon.classList.remove('text-gray-600');
+            if (type === 'visuais') icon.classList.add('text-blue-400');
+            if (type === 'musica') icon.classList.add('text-purple-400');
+            if (type === 'teatro') icon.classList.add('text-amber-400');
+            if (type === 'danca') icon.classList.add('text-emerald-400');
+
+            const badge = document.getElementById(`badge-${type}`);
+            badge.innerText = "Mestre";
+            badge.className = "bg-green-950/40 text-green-300 text-[10px] px-3 py-1 rounded-full border border-green-500/30 uppercase tracking-wider font-bold";
+
+            if (Object.values(gameState.relics).every(val => val === true)) {
+                document.getElementById('btn-finish-journey').classList.remove('hidden');
+            }
+        }
+
+        /* === SISTEMA DE MODAL/FEEDBACK === */
+        let feedbackCallback = null;
+
+        function showFeedback(emoji, title, message, btnText = "Continuar", callback = null) {
+            document.getElementById('feedback-emoji').innerText = emoji;
+            document.getElementById('feedback-title').innerText = title;
+            document.getElementById('feedback-message').innerHTML = message;
+            document.getElementById('feedback-btn').innerText = btnText;
+            document.getElementById('modal-feedback').classList.remove('hidden');
+            feedbackCallback = callback;
+        }
+
+        function closeFeedback() {
+            document.getElementById('modal-feedback').classList.add('hidden');
+            if (feedbackCallback) {
+                feedbackCallback();
+                feedbackCallback = null;
+            }
+        }
+
+        function showInstructions() {
+            document.getElementById('modal-instructions').classList.remove('hidden');
+        }
+
+        function closeInstructions() {
+            document.getElementById('modal-instructions').classList.add('hidden');
+        }
+
+        /* === MOTOR DO TEMPLO DE SUBTÓPICOS === */
+        function enterTemplo(type) {
+            gameState.currentTemple = type;
+            const data = database[type];
+
+            // Ajustar visual do cabeçalho do templo baseado na disciplina
+            const iconBox = document.getElementById('templo-header-icon');
+            iconBox.innerHTML = `<i class="fa-solid ${data.icon} text-3xl"></i>`;
+            
+            iconBox.className = "inline-block rounded-full p-4 mb-2 border ";
+            if (type === 'visuais') iconBox.className += "bg-blue-500/10 text-blue-300 border-blue-500/30";
+            if (type === 'musica') iconBox.className += "bg-purple-500/10 text-purple-300 border-purple-500/30";
+            if (type === 'teatro') iconBox.className += "bg-amber-500/10 text-amber-300 border-amber-500/30";
+            if (type === 'danca') iconBox.className += "bg-emerald-500/10 text-emerald-300 border-emerald-500/30";
+
+            document.getElementById('templo-title').innerText = data.title;
+            document.getElementById('templo-desc').innerText = data.description;
+
+            // Retornar para a seleção de subtópicos dentro do templo
+            document.getElementById('templo-subtopics-view').classList.remove('hidden');
+            document.getElementById('templo-question-view').classList.add('hidden');
+
+            renderSubTopics();
+            showScreen('templo-container');
+        }
+
+        function renderSubTopics() {
+            const listContainer = document.getElementById('templo-subtopics-list');
+            listContainer.innerHTML = "";
+
+            const type = gameState.currentTemple;
+            const subtopics = database[type][gameState.difficulty];
+
+            subtopics.forEach((sub, idx) => {
+                const isCompleted = gameState.completedSubTopics[type][idx];
+                const card = document.createElement('div');
+                
+                // Estilização do card baseado no estado de conclusão
+                let borderStyle = "border-white/10 bg-black/35";
+                let badge = `<span class="text-[10px] uppercase font-bold text-gray-400 bg-white/5 px-2 py-0.5 rounded border border-white/5"><i class="fa-regular fa-circle"></i> Disponível</span>`;
+                if (isCompleted) {
+                    borderStyle = "border-green-500/30 bg-green-950/10";
+                    badge = `<span class="text-[10px] uppercase font-bold text-green-400 bg-green-500/15 px-2 py-0.5 rounded border border-green-500/20"><i class="fa-solid fa-circle-check"></i> Concluído</span>`;
+                }
+
+                card.className = `p-5 rounded-2xl border ${borderStyle} flex flex-col justify-between space-y-4 hover:border-white/30 transition-all shadow-md`;
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-start">
+                            ${badge}
+                        </div>
+                        <h5 class="font-bold text-sm text-white">${sub.title}</h5>
+                        <p class="text-xs text-gray-400 leading-relaxed">${sub.description}</p>
+                    </div>
+                    <button onclick="startSubTopic(${idx})" class="w-full py-2 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-semibold border border-white/10 hover:border-white/20 transition-all text-white">
+                        ${isCompleted ? 'Praticar Novamente' : 'Iniciar Tópico'}
+                    </button>
+                `;
+                listContainer.appendChild(card);
+            });
+
+            // Verificar se o templo todo está concluído
+            const allDone = gameState.completedSubTopics[type].every(val => val === true);
+            if (allDone && !gameState.relics[type]) {
+                earnRelic(type);
+                showFeedback(
+                    "👑", 
+                    "Templo Concluído!", 
+                    `Incrível! Você dominou todas as frentes de <strong>${database[type].title}</strong>. Relíquia sagrada desbloqueada!`
+                );
+            }
+        }
+
+        function startSubTopic(subTopicIdx) {
+            gameState.currentSubTopicIndex = subTopicIdx;
+            gameState.currentQuestionIndex = 0;
+
+            document.getElementById('templo-subtopics-view').classList.add('hidden');
+            document.getElementById('templo-question-view').classList.remove('hidden');
+
+            loadActiveQuestion();
+        }
+
+        function loadActiveQuestion() {
+            const temple = gameState.currentTemple;
+            const sub = database[temple][gameState.difficulty][gameState.currentSubTopicIndex];
+            const q = sub.questions[gameState.currentQuestionIndex];
+
+            // Configurar cabeçalho da questão ativa
+            const badgeBox = document.getElementById('question-topic-badge');
+            badgeBox.innerText = sub.title;
+            if (temple === 'visuais') badgeBox.className = "font-bold text-sm flex items-center gap-2 text-blue-400";
+            if (temple === 'musica') badgeBox.className = "font-bold text-sm flex items-center gap-2 text-purple-400";
+            if (temple === 'teatro') badgeBox.className = "font-bold text-sm flex items-center gap-2 text-amber-400";
+            if (temple === 'danca') badgeBox.className = "font-bold text-sm flex items-center gap-2 text-emerald-400";
+
+            document.getElementById('active-question-text').innerText = q.question;
+
+            // Configurar painel interativo de apoio com base na matéria
+            const interactiveBox = document.getElementById('interactive-display-box');
+            interactiveBox.innerHTML = ""; // Limpar antigo
+
+            if (temple === 'visuais') {
+                // Exibe obra ou conceito estético
+                interactiveBox.innerHTML = `
+                    <div class="text-center animate-pulse">
+                        <span class="text-7xl filter drop-shadow">${q.preview}</span>
+                        <p class="text-[11px] font-semibold mt-2 text-blue-300 italic">${q.label}</p>
+                    </div>
+                `;
+            } else if (temple === 'musica') {
+                // Teclado musical interativo
+                interactiveBox.innerHTML = `
+                    <div class="w-full text-center space-y-2">
+                        <span class="text-[10px] text-purple-300 block font-bold uppercase tracking-wide">Teclado de Sintetizador</span>
+                        <div class="flex justify-center space-x-1 py-1">
+                            <button onclick="playNote(261.63, 'C')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Dó</button>
+                            <button onclick="playNote(293.66, 'D')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Ré</button>
+                            <button onclick="playNote(329.63, 'E')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Mi</button>
+                            <button onclick="playNote(349.23, 'F')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Fá</button>
+                            <button onclick="playNote(392.00, 'G')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Sol</button>
+                            <button onclick="playNote(440.00, 'A')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Lá</button>
+                            <button onclick="playNote(493.88, 'B')" class="px-2.5 py-5 bg-white text-black font-bold rounded-b text-xs hover:bg-gray-200 shadow">Si</button>
+                        </div>
+                        <button onclick="playSampleSequence()" class="mt-1 px-3 py-1 bg-purple-600 hover:bg-purple-500 text-white font-bold text-[9px] rounded-lg flex items-center gap-1.5 mx-auto transition-transform active:scale-95 shadow">
+                            <i class="fa-solid fa-volume-high"></i> Ouvir Memória Auditiva (Dó Maior)
+                        </button>
+                    </div>
+                `;
+            } else if (temple === 'teatro') {
+                // Diagrama de Palco Italiano Interativo
+                interactiveBox.innerHTML = `
+                    <div class="w-full space-y-1">
+                        <div class="text-center text-[8px] font-bold text-amber-300 uppercase">Fundo do Palco (Bastidores)</div>
+                        <div class="grid grid-cols-3 gap-1 text-[10px] text-center">
+                            <div onclick="playNote(220, 'Esq')" class="p-2 bg-black/50 rounded border border-white/5 hover:bg-amber-500/20 cursor-pointer">Coxia Esq.</div>
+                            <div onclick="playNote(240, 'Cent')" class="p-2 bg-amber-500/10 rounded border border-amber-500/30 hover:bg-amber-500/20 cursor-pointer">Cenário Central</div>
+                            <div onclick="playNote(260, 'Dir')" class="p-2 bg-black/50 rounded border border-white/5 hover:bg-amber-500/20 cursor-pointer">Coxia Dir.</div>
+                            <div class="col-span-3 py-1.5 bg-amber-500/20 rounded border border-amber-400/40 font-bold pulse-soft">PROSCÊNIO (Frente)</div>
+                        </div>
+                        <div class="text-center text-[8px] font-bold text-amber-300 uppercase">Plateia (Público)</div>
+                    </div>
+                `;
+            } else if (temple === 'danca') {
+                // Simon Says / Pad de Coreografia
+                interactiveBox.innerHTML = `
+                    <div class="w-full space-y-2">
+                        <div class="flex justify-between items-center px-2">
+                            <span class="text-[9px] text-emerald-300 font-semibold">Desafio Coreográfico Opcional</span>
+                            <span id="dance-simon-status" class="text-[8px] bg-emerald-900/40 text-emerald-200 px-2 py-0.5 rounded border border-emerald-500/20 uppercase">Parado</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 max-w-[240px] mx-auto">
+                            <button id="dance-btn-1" onclick="handleDancePadPress(1)" class="p-2 bg-emerald-900/30 border border-emerald-500/20 rounded-xl flex flex-col items-center text-emerald-400 active:scale-95 transition-all">
+                                <i class="fa-solid fa-child-reaching text-lg"></i>
+                                <span class="text-[8px] font-bold mt-1">Salto</span>
+                            </button>
+                            <button id="dance-btn-2" onclick="handleDancePadPress(2)" class="p-2 bg-emerald-900/30 border border-emerald-500/20 rounded-xl flex flex-col items-center text-emerald-400 active:scale-95 transition-all">
+                                <i class="fa-solid fa-street-view text-lg"></i>
+                                <span class="text-[8px] font-bold mt-1">Giro</span>
+                            </button>
+                            <button id="dance-btn-3" onclick="handleDancePadPress(3)" class="p-2 bg-emerald-900/30 border border-emerald-500/20 rounded-xl flex flex-col items-center text-emerald-400 active:scale-95 transition-all">
+                                <i class="fa-solid fa-person-walking-arrow-right text-lg"></i>
+                                <span class="text-[8px] font-bold mt-1">Girar</span>
+                            </button>
+                            <button id="dance-btn-4" onclick="handleDancePadPress(4)" class="p-2 bg-emerald-900/30 border border-emerald-500/20 rounded-xl flex flex-col items-center text-emerald-400 active:scale-95 transition-all">
+                                <i class="fa-solid fa-person-rays text-lg"></i>
+                                <span class="text-[8px] font-bold mt-1">Pose</span>
+                            </button>
+                        </div>
+                        <button id="btn-start-dance" onclick="startDanceSequenceGame()" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[9px] rounded-lg mx-auto flex items-center gap-1">
+                            <i class="fa-solid fa-shoe-prints"></i> Iniciar Jogo de Sentido
+                        </button>
+                    </div>
+                `;
+            }
+
+            // EMBARALHAR AS OPÇÕES ANTES DE RENDERIZAR (Garante que a resposta correta mude de posição!)
+            gameState.shuffledOptions = shuffleArray(q.options);
+
+            // Gerar botões de alternativas
+            const container = document.getElementById('active-question-options');
+            container.innerHTML = "";
+            gameState.shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all text-xs font-medium flex justify-between items-center hover:scale-[1.01]";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-solid fa-chevron-right text-xs opacity-30"></i>`;
+                btn.onclick = () => submitAnswer(opt, q.answer);
+                container.appendChild(btn);
+            });
+
+            // Atualizar barra de progresso no subtópico
+            const total = sub.questions.length;
+            const percentage = ((gameState.currentQuestionIndex + 1) / total) * 100;
+            document.getElementById('active-progress-text').innerText = `${gameState.currentQuestionIndex + 1} de ${total}`;
+            
+            const pBar = document.getElementById('active-progress-bar');
+            pBar.style.width = `${percentage}%`;
+            if (temple === 'visuais') pBar.className = "bg-blue-500 h-full transition-all duration-300";
+            if (temple === 'musica') pBar.className = "bg-purple-500 h-full transition-all duration-300";
+            if (temple === 'teatro') pBar.className = "bg-amber-500 h-full transition-all duration-300";
+            if (temple === 'danca') pBar.className = "bg-emerald-500 h-full transition-all duration-300";
+        }
+
+        function submitAnswer(selected, correct) {
+            if (selected === correct) {
+                // Som de acerto didático
+                playNote(523.25, 'C5', 0.15);
+                setTimeout(() => playNote(659.25, 'E5', 0.2), 120);
+
+                gameState.currentQuestionIndex++;
+                const temple = gameState.currentTemple;
+                const sub = database[temple][gameState.difficulty][gameState.currentSubTopicIndex];
+
+                if (gameState.currentQuestionIndex >= sub.questions.length) {
+                    // Tópico concluído!
+                    gameState.completedSubTopics[temple][gameState.currentSubTopicIndex] = true;
+                    showFeedback(
+                        "🎉", 
+                        "Tópico Finalizado com Sucesso!", 
+                        `Excelente! Você respondeu corretamente a todos os enigmas teóricos deste tópico.`,
+                        "Ver Trilhas do Templo",
+                        () => {
+                            enterTemplo(temple);
+                        }
+                    );
+                } else {
+                    // Próxima pergunta do subtópico
+                    showFeedback(
+                        "⚡", 
+                        "Certo!", 
+                        "Excelente raciocínio conceitual. Prossiga para o próximo desafio!",
+                        "Próximo Desafio",
+                        () => {
+                            loadActiveQuestion();
+                        }
+                    );
+                }
+            } else {
+                // Som de erro didático
+                playNote(220.00, 'A3', 0.4);
+                showFeedback(
+                    "❌", 
+                    "Ops! Quase lá...", 
+                    "Sua linha de pensamento estético falhou nesta alternativa. Revise as propriedades da linguagem e tente de novo!"
+                );
+            }
+        }
+
+        /* === MINI JOGO DA DANÇA (SIMON SAYS COREOGRÁFICO) === */
+        function startDanceSequenceGame() {
+            if (gameState.danceIsPlaying) return;
+            gameState.danceIsPlaying = true;
+            gameState.danceSimonSequence = [];
+            gameState.danceUserSequence = [];
+            
+            // Gerar 4 sequências rítmicas
+            for (let i = 0; i < 4; i++) {
+                gameState.danceSimonSequence.push(Math.floor(Math.random() * 4) + 1);
+            }
+
+            document.getElementById('dance-simon-status').innerText = "Observe o Passo...";
+            document.getElementById('dance-simon-status').className = "text-[8px] bg-amber-900/50 text-amber-200 px-2 py-0.5 rounded border border-amber-500/20 uppercase";
+            
+            playDanceSequence(0);
+        }
+
+        function playDanceSequence(index) {
+            if (index >= gameState.danceSimonSequence.length) {
+                gameState.danceTurn = 'user';
+                document.getElementById('dance-simon-status').innerText = "Repita o Ritmo!";
+                document.getElementById('dance-simon-status').className = "text-[8px] bg-green-950/50 text-green-300 px-2 py-0.5 rounded border border-green-500/20 uppercase font-bold animate-pulse";
+                return;
+            }
+
+            const step = gameState.danceSimonSequence[index];
+            highlightDancePad(step);
+
+            setTimeout(() => {
+                playDanceSequence(index + 1);
+            }, 750);
+        }
+
+        function highlightDancePad(num) {
+            const btn = document.getElementById(`dance-btn-${num}`);
+            if (!btn) return;
+            btn.classList.add('bg-emerald-400', 'text-black');
+            btn.classList.remove('bg-emerald-900/30', 'text-emerald-400');
+            
+            // Frequências para notas do jogo rítmico
+            const frequencies = [261.63, 329.63, 392.00, 523.25];
+            playNote(frequencies[num - 1], 'DanceTone', 0.25);
+
+            setTimeout(() => {
+                btn.classList.remove('bg-emerald-400', 'text-black');
+                btn.classList.add('bg-emerald-900/30', 'text-emerald-400');
+            }, 400);
+        }
+
+        function handleDancePadPress(num) {
+            if (gameState.danceTurn !== 'user' || !gameState.danceIsPlaying) return;
+            
+            highlightDancePad(num);
+            gameState.danceUserSequence.push(num);
+
+            const currentIndex = gameState.danceUserSequence.length - 1;
+            if (gameState.danceUserSequence[currentIndex] !== gameState.danceSimonSequence[currentIndex]) {
+                // Errou coreografia
+                playNote(150, 'Erro', 0.5);
+                document.getElementById('dance-simon-status').innerText = "Ritmo Perdido!";
+                document.getElementById('dance-simon-status').className = "text-[8px] bg-red-950/50 text-red-300 px-2 py-0.5 rounded border border-red-500/20 uppercase";
+                gameState.danceIsPlaying = false;
+                gameState.danceTurn = 'simon';
+                showFeedback("🤕", "Fora de Ritmo!", "A sua coordenação rítmica falhou nos passos. Escute a pulsação e tente novamente!");
+                return;
+            }
+
+            // Completou com sucesso total
+            if (gameState.danceUserSequence.length === gameState.danceSimonSequence.length) {
+                gameState.danceIsPlaying = false;
+                gameState.danceTurn = 'simon';
+                document.getElementById('dance-simon-status').innerText = "Sucesso!";
+                document.getElementById('dance-simon-status').className = "text-[8px] bg-blue-950/50 text-blue-300 px-2 py-0.5 rounded border border-blue-500/20 uppercase font-bold";
+                
+                playNote(523.25, 'C5', 0.2);
+                setTimeout(() => playNote(659.25, 'E5', 0.2), 150);
+                setTimeout(() => playNote(783.99, 'G5', 0.25), 300);
+
+                showFeedback(
+                    "🎉", 
+                    "Jogos de Sentido Dominados!", 
+                    "Você uniu tempo, peso e cinesfera perfeitamente. Como recompensa, o sistema validou o tópico ativo de Dança!", 
+                    "Uau, Obrigado!", 
+                    () => {
+                        gameState.completedSubTopics.danca[gameState.currentSubTopicIndex] = true;
+                        enterTemplo('danca');
+                    }
+                );
+            }
+        }
+
+        /* === EXTRA SINTETIZADOR DE MÚSICA === */
+        function playSampleSequence() {
+            const notes = [
+                { f: 261.63, d: 0.3 }, // Dó
+                { f: 293.66, d: 0.3 }, // Ré
+                { f: 329.63, d: 0.3 }, // Mi
+                { f: 349.23, d: 0.3 }, // Fá
+                { f: 392.00, d: 0.5 }  // Sol
+            ];
+            notes.forEach((note, index) => {
+                setTimeout(() => {
+                    playNote(note.f, 'Seq', note.d);
+                }, index * 350);
+            });
+        }
+
+        /* === TELA DE VITÓRIA FINAL === */
+        function verifyFinalVictory() {
+            if (Object.values(gameState.relics).every(val => val === true)) {
+                document.getElementById('victory-player-name').innerText = gameState.playerName;
+                document.getElementById('victory-level-badge').innerText = gameState.difficulty === 'fundamental' ? 'Ensino Fundamental' : 'Ensino Médio';
+                
+                showScreen('screen-victory');
+                
+                // Melodia de Vitória Real
+                playNote(261.63, 'C4', 0.25);
+                setTimeout(() => playNote(329.63, 'E4', 0.25), 180);
+                setTimeout(() => playNote(392.00, 'G4', 0.25), 360);
+                setTimeout(() => playNote(523.25, 'C5', 0.5), 540);
+            }
+        }
+
+        function shareConquest() {
+            const certText = `🎓 CERTIFICADO DE EXCELÊNCIA - ARTQUEST 🎨\n\nCertifico solenemente que ${gameState.playerName} concluiu com sucesso todos os módulos pedagógicos do ArtQuest no nível de ${gameState.difficulty === 'fundamental' ? 'Ensino Fundamental' : 'Ensino Médio'}.\n\nRelíquias Conquistadas:\n🖌️ Artes Visuais: 100%\n🎵 Música: 100%\n🎭 Teatro: 100%\n🩰 Dança: 100%\n\nDomine o conhecimento estético também!`;
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = certText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showFeedback("📋", "Certificado Copiado!", "O relatório de competências estéticas foi gravado na sua área de transferência para envio a professores ou amigos!");
+            } catch (err) {
+                console.error("Falha ao copiar documento:", err);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Abre modal de instruções para orientar o estudante na primeira carga
+        window.onload = function() {
+            setTimeout(() => {
+                showInstructions();
+            }, 600);
+        };
+    </script>
+</body>
+</html>
