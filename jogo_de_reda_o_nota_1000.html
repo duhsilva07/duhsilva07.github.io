@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mestre da Redação: Estrutura Infalível Nota 1000</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.7);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(0.99); }
+        }
+        .pulse-subtle { animation: pulse-subtle 3s infinite ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased custom-scrollbar">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid me-0 fa-feather-pointed text-xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg md:text-xl bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
+                        Redação Nota 1000
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Guia Prático da Estrutura Infalível com Correção por IA</p>
+                </div>
+            </div>
+
+            <!-- Header Gamification Stats & Nav -->
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <!-- User XP & Level -->
+                <div class="flex items-center space-x-2 bg-slate-900/80 px-3 py-1.5 rounded-full border border-slate-800">
+                    <span class="text-amber-400 text-sm"><i class="fa-solid fa-trophy"></i></span>
+                    <span id="user-level" class="text-xs font-bold text-slate-200">Nível 1</span>
+                    <div class="w-16 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
+                        <div id="user-xp-bar" class="bg-gradient-to-r from-amber-500 to-indigo-500 h-full w-1/4 transition-all duration-500"></div>
+                    </div>
+                    <span id="user-xp-text" class="text-[10px] text-slate-400 font-mono">120 XP</span>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center space-x-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800/80">
+                    <button onclick="switchTab('guided')" id="nav-guided" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 text-indigo-400 bg-indigo-950/60 border border-indigo-800/50">
+                        <i class="fa-solid fa-route mr-1.5"></i>Passo a Passo
+                    </button>
+                    <button onclick="switchTab('full')" id="nav-full" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 text-slate-400 hover:text-slate-200">
+                        <i class="fa-solid fa-pen-nib mr-1.5"></i>Simulado Completo
+                    </button>
+                    <button onclick="switchTab('guide')" id="nav-guide" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 text-slate-400 hover:text-slate-200">
+                        <i class="fa-solid fa-book-bookmark mr-1.5"></i>Guia da Estrutura
+                    </button>
+                    <button onclick="switchTab('minigames')" id="nav-minigames" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 text-slate-400 hover:text-slate-200">
+                        <i class="fa-solid fa-gamepad mr-1.5"></i>Treino Gamificado
+                    </button>
+                </nav>
+
+                <!-- Settings / API key toggle -->
+                <button onclick="toggleSettingsModal()" class="p-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors" title="Configurações">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Bar -->
+        <div class="flex md:hidden items-center justify-around mt-2 pt-2 border-t border-slate-800/60 text-xs">
+            <button onclick="switchTab('guided')" id="mobile-nav-guided" class="flex flex-col items-center py-1 text-indigo-400">
+                <i class="fa-solid fa-route text-base mb-0.5"></i>
+                <span>Passo a Passo</span>
+            </button>
+            <button onclick="switchTab('full')" id="mobile-nav-full" class="flex flex-col items-center py-1 text-slate-400">
+                <i class="fa-solid fa-pen-nib text-base mb-0.5"></i>
+                <span>Simulado</span>
+            </button>
+            <button onclick="switchTab('guide')" id="mobile-nav-guide" class="flex flex-col items-center py-1 text-slate-400">
+                <i class="fa-solid fa-book-bookmark text-base mb-0.5"></i>
+                <span>Estrutura</span>
+            </button>
+            <button onclick="switchTab('minigames')" id="mobile-nav-minigames" class="flex flex-col items-center py-1 text-slate-400">
+                <i class="fa-solid fa-gamepad text-base mb-0.5"></i>
+                <span>Treino</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-6">
+
+        <!-- Topic Banner Selector -->
+        <section class="glass-panel p-5 rounded-2xl border border-indigo-900/40 relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                        <span class="px-2 py-0.5 rounded bg-indigo-950 border border-indigo-800/60"><i class="fa-solid fa-bullseye mr-1"></i>Tema de Redação Ativo</span>
+                        <span id="theme-category-badge" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Sociedade & Tecnologia</span>
+                    </div>
+                    <h2 id="current-theme-title" class="text-lg sm:text-xl font-bold text-white leading-snug">
+                        Desafios para a democratização do acesso à tecnologia e inteligência artificial no Brasil
+                    </h2>
+                    <p id="current-theme-prompt" class="text-xs sm:text-sm text-slate-300 line-clamp-2">
+                        A partir da leitura dos textos motivadores e com base nos conhecimentos construídos ao longo de sua formação, redija um texto dissertativo-argumentativo apresentando uma tese clara e proposta de intervenção.
+                    </p>
+                </div>
+                <div class="flex items-center space-x-2 shrink-0">
+                    <button onclick="generateNewTheme()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition-all flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-rotate-right text-indigo-400"></i>
+                        <span>Gerar Novo Tema</span>
+                    </button>
+                    <button onclick="toggleThemeModal()" class="px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700/80" title="Ver textos de apoio">
+                        <i class="fa-solid fa-file-text mr-1"></i>Apoio
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 1: GUIDED BUILDER MODE (PASSO A PASSO) -->
+        <section id="tab-guided" class="flex flex-col gap-6">
+            
+            <!-- Step Navigation Stepper -->
+            <div class="glass-card p-4 rounded-2xl grid grid-cols-2 md:grid-cols-4 gap-3 border border-slate-800">
+                <button onclick="setStep(1)" id="step-btn-1" class="step-btn p-3 rounded-xl border text-left transition-all flex flex-col justify-between border-indigo-500 bg-indigo-950/40">
+                    <div class="flex items-center justify-between text-xs mb-1">
+                        <span class="font-bold text-indigo-400">ETAPA 1</span>
+                        <i class="fa-solid fa-circle-dot text-indigo-400 text-xs"></i>
+                    </div>
+                    <div class="font-bold text-sm text-white">Introdução</div>
+                    <div class="text-[11px] text-slate-400 truncate">Apresentação & Tese</div>
+                </button>
+
+                <button onclick="setStep(2)" id="step-btn-2" class="step-btn p-3 rounded-xl border text-left transition-all flex flex-col justify-between border-slate-800 bg-slate-900/40 text-slate-400 hover:border-slate-700">
+                    <div class="flex items-center justify-between text-xs mb-1">
+                        <span class="font-bold">ETAPA 2</span>
+                        <i class="fa-regular fa-circle text-xs"></i>
+                    </div>
+                    <div class="font-bold text-sm text-slate-200">Desenvolvimento 1</div>
+                    <div class="text-[11px] text-slate-400 truncate">Argumentação & Repertório</div>
+                </button>
+
+                <button onclick="setStep(3)" id="step-btn-3" class="step-btn p-3 rounded-xl border text-left transition-all flex flex-col justify-between border-slate-800 bg-slate-900/40 text-slate-400 hover:border-slate-700">
+                    <div class="flex items-center justify-between text-xs mb-1">
+                        <span class="font-bold">ETAPA 3</span>
+                        <i class="fa-regular fa-circle text-xs"></i>
+                    </div>
+                    <div class="font-bold text-sm text-slate-200">Desenvolvimento 2</div>
+                    <div class="text-[11px] text-slate-400 truncate">Aprofundamento & Transição</div>
+                </button>
+
+                <button onclick="setStep(4)" id="step-btn-4" class="step-btn p-3 rounded-xl border text-left transition-all flex flex-col justify-between border-slate-800 bg-slate-900/40 text-slate-400 hover:border-slate-700">
+                    <div class="flex items-center justify-between text-xs mb-1">
+                        <span class="font-bold">ETAPA 4</span>
+                        <i class="fa-regular fa-circle text-xs"></i>
+                    </div>
+                    <div class="font-bold text-sm text-slate-200">Conclusão</div>
+                    <div class="text-[11px] text-slate-400 truncate">Proposta de Intervenção</div>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left Column: Writing Area for current step -->
+                <div class="lg:col-span-7 flex flex-col gap-4">
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col gap-4 relative">
+                        
+                        <!-- Header for active step -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div>
+                                <h3 id="step-title" class="font-bold text-base text-white flex items-center gap-2">
+                                    <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs">1</span>
+                                    Introdução - Apresentação & Tese
+                                </h3>
+                                <p id="step-description" class="text-xs text-slate-400 mt-1">
+                                    Apresente o tema com contextualização, explicite sua Tese Clara e projete a estrutura dos seus dois argumentos principais.
+                                </p>
+                            </div>
+                            <span id="step-word-count" class="text-xs font-mono bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 text-slate-400">
+                                0 palavras
+                            </span>
+                        </div>
+
+                        <!-- Sub-structure requirements indicators -->
+                        <div id="step-checklist" class="grid grid-cols-2 gap-2 text-xs">
+                            <!-- Populated dynamically via JavaScript -->
+                        </div>
+
+                        <!-- Textarea Editor -->
+                        <div class="relative">
+                            <textarea id="step-textarea" rows="8" placeholder="Digite seu parágrafo seguindo a Estrutura Infalível..." class="w-full bg-slate-950/80 text-slate-100 p-4 rounded-xl border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-sm leading-relaxed resize-y font-sans transition-all custom-scrollbar"></textarea>
+                            <div class="absolute bottom-3 right-3 flex items-center space-x-2">
+                                <button onclick="insertConnectorHelper()" class="text-xs bg-slate-800 hover:bg-slate-700 text-indigo-300 px-2.5 py-1 rounded border border-slate-700 transition-colors">
+                                    <i class="fa-solid fa-link text-[10px] mr-1"></i>Inserir Conectivo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center justify-between pt-2">
+                            <button onclick="prevStep()" id="prev-step-btn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed">
+                                <i class="fa-solid fa-arrow-left mr-1.5"></i>Anterior
+                            </button>
+
+                            <div class="flex items-center space-x-2">
+                                <button onclick="evaluateCurrentStep()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition-all flex items-center space-x-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <span>Analisar Parágrafo com IA</span>
+                                </button>
+
+                                <button onclick="nextStep()" id="next-step-btn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700">
+                                    <span>Próximo</span>
+                                    <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Complete Essay Preview Box -->
+                    <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <i class="fa-solid fa-align-left mr-1.5 text-indigo-400"></i>Visão Geral do Texto Acumulado
+                            </h4>
+                            <span id="total-essay-words" class="text-xs font-mono text-slate-400">Total: 0 palavras</span>
+                        </div>
+                        <div id="full-essay-preview" class="p-3 bg-slate-950/60 rounded-xl text-xs leading-relaxed text-slate-300 max-h-40 overflow-y-auto custom-scrollbar italic border border-slate-900">
+                            Seu texto aparecerá reunido aqui à medida que você avança pelas etapas...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: AI Live Feedback & Infallible Checklist -->
+                <div class="lg:col-span-5 flex flex-col gap-4">
+                    
+                    <!-- AI Assessment Feedback Card -->
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col gap-3 min-h-[280px]">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 rounded-lg bg-indigo-950 text-indigo-400 border border-indigo-800/50">
+                                    <i class="fa-solid fa-brain"></i>
+                                </span>
+                                <h4 class="font-bold text-sm text-slate-100">Feedback do Corretor IA</h4>
+                            </div>
+                            <span id="ai-status-tag" class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                                Aguardando envio
+                            </span>
+                        </div>
+
+                        <!-- Feedback Output Area -->
+                        <div id="step-ai-feedback" class="text-xs space-y-3 leading-relaxed text-slate-300 py-2">
+                            <div class="p-4 bg-slate-900/50 rounded-xl border border-slate-800/60 text-center text-slate-400 my-auto">
+                                <i class="fa-solid fa-lightbulb text-amber-400 text-2xl mb-2 block"></i>
+                                Escreva seu parágrafo ao lado e clique em <strong>"Analisar Parágrafo com IA"</strong> para receber uma verificação detalhada dos critérios da Estrutura Infalível.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formula Cheat Box for the active step -->
+                    <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                        <h4 id="cheat-title" class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2 flex items-center">
+                            <i class="fa-solid fa-compass mr-1.5"></i>Fórmula Infalível para esta Etapa
+                        </h4>
+                        <div id="cheat-content" class="text-xs text-slate-300 space-y-2">
+                            <!-- Populated dynamically via JavaScript -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: FULL ESSAY SIMULATOR (SIMULADO COMPLETO) -->
+        <section id="tab-full" class="hidden flex-col gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left Editor Column -->
+                <div class="lg:col-span-7 flex flex-col gap-4">
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col gap-3">
+                        
+                        <!-- Editor Toolbar -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
+                            <div class="flex items-center space-x-3">
+                                <span class="font-bold text-white flex items-center gap-1.5">
+                                    <i class="fa-solid fa-pen-fancy text-indigo-400"></i> Editor do Simulado
+                                </span>
+                                <span id="full-word-counter" class="text-slate-400 font-mono bg-slate-900 px-2 py-0.5 rounded">0 palavras</span>
+                            </div>
+
+                            <!-- Timer & Controls -->
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-1 text-slate-300 font-mono bg-slate-900/80 px-2.5 py-1 rounded border border-slate-800">
+                                    <i class="fa-regular fa-clock text-indigo-400"></i>
+                                    <span id="timer-display">00:00:00</span>
+                                </div>
+                                <button onclick="toggleTimer()" id="timer-toggle-btn" class="p-1 px-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px]">
+                                    Iniciar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Full Essay Textarea -->
+                        <textarea id="full-essay-textarea" rows="18" placeholder="Escreva sua redação completa aqui (Introdução, D1, D2 e Conclusão)...&#10;&#10;Dica: Siga a Estrutura Infalível e mantenha entre 25 a 30 linhas para melhor pontuação no ENEM." class="w-full bg-slate-950/80 text-slate-100 p-4 rounded-xl border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-sm leading-relaxed resize-y font-sans transition-all custom-scrollbar"></textarea>
+
+                        <!-- Action Bar -->
+                        <div class="flex items-center justify-between pt-2">
+                            <button onclick="clearFullEssay()" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 text-xs border border-slate-800">
+                                <i class="fa-solid fa-trash-can mr-1"></i>Limpar
+                            </button>
+
+                            <button onclick="evaluateFullEssay()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-award text-sm"></i>
+                                <span>Avaliação Completa Nota 1000</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Structural Checklist & Detailed Score Breakdown -->
+                <div class="lg:col-span-5 flex flex-col gap-4">
+                    
+                    <!-- Overall Score & Competencies Box -->
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col gap-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <h4 class="font-bold text-sm text-slate-100 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-indigo-400"></i> Pontuação & Competências
+                            </h4>
+                            <div id="full-score-badge" class="px-3 py-1 rounded-full bg-slate-900 text-indigo-400 border border-indigo-800/60 font-mono font-bold text-sm">
+                                -- / 1000
+                            </div>
+                        </div>
+
+                        <!-- Competencies Progress Grid -->
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300 font-medium">C1: Norma Culta e Gramática</span>
+                                    <span id="score-c1" class="font-mono text-slate-400">---/200</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
+                                    <div id="bar-c1" class="bg-indigo-500 h-full w-0 transition-all duration-700"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300 font-medium">C2: Tema e Repertório Sociocultural</span>
+                                    <span id="score-c2" class="font-mono text-slate-400">---/200</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
+                                    <div id="bar-c2" class="bg-indigo-500 h-full w-0 transition-all duration-700"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300 font-medium">C3: Projeto de Texto e Tese</span>
+                                    <span id="score-c3" class="font-mono text-slate-400">---/200</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
+                                    <div id="bar-c3" class="bg-indigo-500 h-full w-0 transition-all duration-700"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300 font-medium">C4: Coesão e Conectivos Lógicos</span>
+                                    <span id="score-c4" class="font-mono text-slate-400">---/200</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
+                                    <div id="bar-c4" class="bg-indigo-500 h-full w-0 transition-all duration-700"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300 font-medium">C5: Proposta de Intervenção (5 Elementos)</span>
+                                    <span id="score-c5" class="font-mono text-slate-400">---/200</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
+                                    <div id="bar-c5" class="bg-indigo-500 h-full w-0 transition-all duration-700"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Full Analysis Report Box -->
+                        <div id="full-ai-report" class="mt-2 p-3 bg-slate-950/60 rounded-xl text-xs text-slate-300 leading-relaxed max-h-56 overflow-y-auto custom-scrollbar border border-slate-900">
+                            Aguardando você finalizar seu texto para gerar o diagnóstico completo...
+                        </div>
+                    </div>
+
+                    <!-- Interactive Live Structural Checklist -->
+                    <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3 flex items-center justify-between">
+                            <span><i class="fa-solid fa-list-check mr-1.5 text-indigo-400"></i>Checklist da Estrutura Infalível</span>
+                            <button onclick="updateFullChecklist()" class="text-[10px] text-indigo-400 hover:underline">Atualizar</button>
+                        </h4>
+                        <div class="space-y-2 text-xs" id="interactive-checklist">
+                            <!-- Populated dynamically via Javascript -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: THE INFALLIBLE STRUCTURE GUIDE & CHEATSHEET -->
+        <section id="tab-guide" class="hidden flex-col gap-6">
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-6">
+                <div>
+                    <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-indigo-400"></i> Guia Prático para Redação Nota 1000
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">
+                        Siga esta anatomia infalível passo a passo para construir textos coerentes, coesos e de alta pontuação em vestibulares e no ENEM.
+                    </p>
+                </div>
+
+                <!-- 4 Structural Pillars Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- Introdução Card -->
+                    <div class="glass-card p-4 rounded-xl border border-indigo-900/40 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <h3 class="font-bold text-sm text-indigo-400 flex items-center gap-2">
+                                <span class="w-5 h-5 rounded bg-indigo-900 text-indigo-200 flex items-center justify-center text-xs">1</span>
+                                INTRODUÇÃO
+                            </h3>
+                            <span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded">Apresentação & Tese</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Contextualização:</strong> Apresente o tema usando repertório sociocultural (filosofia, história, literatura ou dados).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Tese Clara:</strong> Posicione-se explicitamente diante da temática sem rodeios.</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Roteiro dos Conectivos:</strong> Articule as orações com conectivos adequados (ex: <em>Nesse contexto, Portanto, No entanto</em>).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Argumentos Iniciais:</strong> Projete os fatores A1 (Desenvolvimento 1) e A2 (Desenvolvimento 2).</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Desenvolvimento 1 Card -->
+                    <div class="glass-card p-4 rounded-xl border border-indigo-900/40 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <h3 class="font-bold text-sm text-indigo-400 flex items-center gap-2">
+                                <span class="w-5 h-5 rounded bg-indigo-900 text-indigo-200 flex items-center justify-center text-xs">2</span>
+                                DESENVOLVIMENTO 1
+                            </h3>
+                            <span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded">Argumentação I</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Tópico Frasal:</strong> Afirmação direta introduzindo o argumento A1 com conectivo interparágrafo (ex: <em>Em primeira análise,...</em>).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Repertório Sociocultural:</strong> Citação, lei, conceito ou dado legítimo e produtivo ligado ao A1.</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Análise Crítica & Exemplificação:</strong> Explique COMO o repertório comprova o problema da realidade atual.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Desenvolvimento 2 Card -->
+                    <div class="glass-card p-4 rounded-xl border border-indigo-900/40 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <h3 class="font-bold text-sm text-indigo-400 flex items-center gap-2">
+                                <span class="w-5 h-5 rounded bg-indigo-900 text-indigo-200 flex items-center justify-center text-xs">3</span>
+                                DESENVOLVIMENTO 2
+                            </h3>
+                            <span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded">Argumentação II</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Segundo Argumento:</strong> Apresentação do argumento A2 com conectivo de adição ou oposição (ex: <em>Ademais,... / Por outro lado,...</em>).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Articulação & Aprofundamento:</strong> Aprofundar as causas sociais/históricas/políticas do obstáculo.</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-indigo-400 text-xs mt-0.5"></i>
+                                <div><strong>Relação com a Tese:</strong> Amarrar a conclusão do parágrafo de volta com a Tese Central.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Conclusão Card -->
+                    <div class="glass-card p-4 rounded-xl border border-indigo-900/40 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <h3 class="font-bold text-sm text-indigo-400 flex items-center gap-2">
+                                <span class="w-5 h-5 rounded bg-indigo-900 text-indigo-200 flex items-center justify-center text-xs">4</span>
+                                CONCLUSÃO
+                            </h3>
+                            <span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded">Proposta de Intervenção (5 Elementos)</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-star text-amber-400 text-xs mt-0.5"></i>
+                                <div><strong>1. Agente:</strong> Quem executará a ação? (Ex: <em>Ministério da Educação, ONGs, Governo Federal</em>).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-star text-amber-400 text-xs mt-0.5"></i>
+                                <div><strong>2. Ação:</strong> O que deve ser feito para combater o problema?</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-star text-amber-400 text-xs mt-0.5"></i>
+                                <div><strong>3. Meio / Modo:</strong> Como a ação será realizada? (Ex: <em>por meio de campanhas, via investimentos público-privados</em>).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-star text-amber-400 text-xs mt-0.5"></i>
+                                <div><strong>4. Efeito / Finalidade:</strong> Para que serve a ação? (Ex: <em>com o fito de garantir a equidade social</em>).</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-star text-amber-400 text-xs mt-0.5"></i>
+                                <div><strong>5. Detalhamento:</strong> Explicação extra ou exemplo de um dos 4 elementos acima.</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Connectives Reference Cheatsheet -->
+                <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                        <i class="fa-solid fa-link text-indigo-400"></i> Banco de Conectivos Infalíveis por Função
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <div class="font-bold text-indigo-300 mb-1">Início / Introdução</div>
+                            <p class="text-slate-400 leading-relaxed">Em consonância com, Historicamente, No contexto contemporâneo, Sob a perspectiva de...</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <div class="font-bold text-indigo-300 mb-1">Adição / Continuidade</div>
+                            <p class="text-slate-400 leading-relaxed">Ademais, Outrossim, Além disso, Vale ressaltar também que, Paralelamente a isso...</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <div class="font-bold text-indigo-300 mb-1">Oposição / Raciocínio</div>
+                            <p class="text-slate-400 leading-relaxed">Contudo, No entanto, Em contrapartida, Entretanto, Por outro lado, Não obstante...</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <div class="font-bold text-indigo-300 mb-1">Conclusão / Efeito</div>
+                            <p class="text-slate-400 leading-relaxed">Portanto, Infere-se, portanto, que, Com o intuito de, Dessa forma, Em suma, Assim sendo...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: GAMIFIED MINIGAMES (TREINO GAMIFICADO) -->
+        <section id="tab-minigames" class="hidden flex-col gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <!-- Game Selection Card 1: Conectivo Certo -->
+                <button onclick="startMinigame('connectors')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500 text-left transition-all group flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-950 text-indigo-400 border border-indigo-800 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-link"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-white">Desafio dos Conectivos</h3>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                            Complete as lacunas das frases com o conector lógico perfeito para garantir nota máxima na C4.
+                        </p>
+                    </div>
+                    <span class="inline-flex items-center text-xs text-indigo-400 font-semibold group-hover:translate-x-1 transition-transform">
+                        Jogar Agora <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </span>
+                </button>
+
+                <!-- Game Selection Card 2: Detetive da Intervenção -->
+                <button onclick="startMinigame('intervention')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500 text-left transition-all group flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-purple-950 text-purple-400 border border-purple-800 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-white">Detetive de Intervenção</h3>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                            Identifique qual dos 5 elementos (Agente, Ação, Modo, Efeito, Detalhamento) está faltando na proposta.
+                        </p>
+                    </div>
+                    <span class="inline-flex items-center text-xs text-purple-400 font-semibold group-hover:translate-x-1 transition-transform">
+                        Jogar Agora <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </span>
+                </button>
+
+                <!-- Game Selection Card 3: Laboratório de Repertórios -->
+                <button onclick="startMinigame('repertory')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500 text-left transition-all group flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-950 text-amber-400 border border-amber-800 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-white">Match de Repertório</h3>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                            Conecte pensadores, leis e conceitos históricos aos temas socioculturais correspondentes.
+                        </p>
+                    </div>
+                    <span class="inline-flex items-center text-xs text-amber-400 font-semibold group-hover:translate-x-1 transition-transform">
+                        Jogar Agora <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Active Minigame Arena Display -->
+            <div id="minigame-arena" class="glass-panel p-6 rounded-2xl border border-slate-800 min-h-[320px] flex flex-col items-center justify-center text-center">
+                <i class="fa-solid fa-gamepad text-4xl text-slate-700 mb-3"></i>
+                <h3 class="font-bold text-slate-300 text-sm">Selecione um dos modos acima para praticar!</h3>
+                <p class="text-xs text-slate-500 max-w-sm mt-1">Ganhe XP e desbloqueie conquistas treinando as mecânicas fundamentais da redação.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: Settings / Gemini API Key -->
+    <div id="settings-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-panel max-w-md w-full p-6 rounded-2xl border border-slate-800 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="font-bold text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-400"></i> Configurações do Sistema
+                </h3>
+                <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-slate-200">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Chave API Personalizada (Opcional)</label>
+                    <input type="password" id="custom-api-key" placeholder="Insira sua chave API do Gemini (deixe em branco para usar a padrão)" class="w-full bg-slate-950 text-slate-100 p-3 rounded-xl border border-slate-800 focus:border-indigo-500 outline-none font-mono">
+                    <p class="text-[11px] text-slate-500 mt-1">Por padrão, o aplicativo utiliza a integração automática com o modelo `gemini-3-flash-preview`.</p>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Nível de Rigor da Correção</label>
+                    <select id="setting-rigor" class="w-full bg-slate-950 text-slate-200 p-2.5 rounded-xl border border-slate-800 outline-none">
+                        <option value="enem">Estrito ENEM / Vestibulares (Padrão)</option>
+                        <option value="constructive">Iniciante / Didático e Encorajador</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="pt-2 flex justify-end space-x-2">
+                <button onclick="saveSettings()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all">
+                    Salvar e Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Supporting Texts (Textos Motivadores) -->
+    <div id="theme-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-panel max-w-2xl w-full p-6 rounded-2xl border border-slate-800 space-y-4 shadow-2xl max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="font-bold text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-text text-indigo-400"></i> Coletânea de Textos Motivadores
+                </h3>
+                <button onclick="toggleThemeModal()" class="text-slate-400 hover:text-slate-200">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="theme-support-texts" class="flex-1 overflow-y-auto space-y-3 text-xs text-slate-300 leading-relaxed pr-2 custom-scrollbar">
+                <!-- Populated dynamically via Javascript -->
+            </div>
+
+            <div class="pt-2 border-t border-slate-800 flex justify-end">
+                <button onclick="toggleThemeModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs">
+                    Entendi, Voltar à Escrita
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* APP STATE MANAGEMENT */
+        const state = {
+            activeTab: 'guided',
+            currentStep: 1,
+            userXP: 120,
+            userLevel: 1,
+            apiKey: '',
+            theme: {
+                title: "Desafios para a democratização do acesso à tecnologia e inteligência artificial no Brasil",
+                category: "Sociedade & Tecnologia",
+                prompt: "A partir da leitura dos textos motivadores, redija um texto dissertativo-argumentativo apresentando uma tese clara e proposta de intervenção.",
+                supportTexts: [
+                    "<strong>Texto I:</strong> A rápida expansão das ferramentas de inteligência artificial tem redefinido o mercado de trabalho global. Contudo, dados do IBGE apontam que milhões de cidadãos brasileiros ainda enfrentam barreiras básicas de conexão à internet e analfabetismo digital, aprofundando o fosso socioeconômico.",
+                    "<strong>Texto II:</strong> 'A tecnologia não é neutra; ela reflete as estruturas sociais de quem a constrói e consome.' — Análise sociológica sobre a inclusão digital no século XXI."
+                ]
+            },
+            stepsData: {
+                1: { text: '', aiFeedback: null },
+                2: { text: '', aiFeedback: null },
+                3: { text: '', aiFeedback: null },
+                4: { text: '', aiFeedback: null }
+            },
+            fullEssay: '',
+            timer: {
+                seconds: 0,
+                interval: null,
+                running: false
+            }
+        };
+
+        /* PRE-CONFIGURED ESSAY THEMES */
+        const THEMES_DATABASE = [
+            {
+                title: "Desafios para a democratização do acesso à tecnologia e inteligência artificial no Brasil",
+                category: "Sociedade & Tecnologia",
+                prompt: "Discuta como garantir o acesso equitativo à IA e combater a exclusão digital no país.",
+                supportTexts: [
+                    "<strong>Texto I:</strong> A inteligência artificial remodelou setores produtivos, contudo a desigualdade no acesso à infraestrutura de conectividade limita os benefícios da inovação às classes mais abastadas.",
+                    "<strong>Texto II:</strong> A inclusão digital não se resume a ter um dispositivo móvel, mas abrange o letramento crítico para uso ético e produtivo das novas mídias."
+                ]
+            },
+            {
+                title: "Caminhos para combater o estigma associado às doenças mentais na sociedade brasileira",
+                category: "Saúde & Sociedade",
+                prompt: "Proponha medidas para a conscientização e garantia de direitos de saúde mental na contemporaneidade.",
+                supportTexts: [
+                    "<strong>Texto I:</strong> Segundo a OMS, o Brasil lidera os índices de ansiedade na América Latina, todavia o preconceito impede a busca por tratamento adequado.",
+                    "<strong>Texto II:</strong> A herança cultural de tratar a saúde mental com invisibilidade ou tabu dificulta políticas públicas efetivas de acolhimento."
+                ]
+            },
+            {
+                title: "Impactos da inteligência artificial na segurança dos dados e privacidade dos cidadãos",
+                category: "Direito & Tecnologia",
+                prompt: "Analise a proteção de dados pessoais e os limites éticos do uso de algorítmicos no cotidiano.",
+                supportTexts: [
+                    "<strong>Texto I:</strong> A LGPD representa um avanço normativo, porém o rastreamento ostensivo e a mineração de dados por plataformas privadas demandam fiscalização contínua.",
+                    "<strong>Texto II:</strong> 'O homem contemporâneo troca sua privacidade por conveniência digital sem mensurar o alcance do controle algorítmico.'"
+                ]
+            }
+        ];
+
+        /* STEP CONFIGURATION & INFALLIBLE CHECKLIST DATA */
+        const STEP_CONFIG = {
+            1: {
+                title: "Introdução - Apresentação & Tese",
+                description: "Apresente o tema com contextualização, explicite sua Tese Clara e projete a estrutura dos seus dois argumentos principais.",
+                checklist: [
+                    { id: 'c_ctx', label: 'Contextualização Histórica/Filosófica' },
+                    { id: 'c_tese', label: 'Tese Clara e Direta' },
+                    { id: 'c_conn1', label: 'Conectivos Interoracionais' },
+                    { id: 'c_args', label: 'Projeção dos Argumentos (A1 e A2)' }
+                ],
+                cheat: `
+                    <p class="mb-1"><strong>Estrutura Recomendada:</strong></p>
+                    <p class="italic bg-slate-900 p-2 rounded border border-slate-800 text-[11px]">
+                        [Contextualização / Repertório] + <strong>No entanto / Todavia</strong>, no Brasil contemporâneo, [Apresentação do Tema]. Isso ocorre seja por [Argumento 1], seja por [Argumento 2]. Dessa forma, torna-se premente discutir [Tese Central].
+                    </p>
+                `
+            },
+            2: {
+                title: "Desenvolvimento 1 - Argumentação I",
+                description: "Trabalhe o primeiro argumento da tese usando Tópico Frasal, Repertório Sociocultural Legítimo e Análise Crítica.",
+                checklist: [
+                    { id: 'c_tf1', label: 'Tópico Frasal Direto (A1)' },
+                    { id: 'c_rep1', label: 'Repertório Sociocultural Legítimo' },
+                    { id: 'c_ana1', label: 'Análise Crítica e Causalidade' },
+                    { id: 'c_ex1', label: 'Exemplificação da Realidade' }
+                ],
+                cheat: `
+                    <p class="mb-1"><strong>Estrutura Recomendada:</strong></p>
+                    <p class="italic bg-slate-900 p-2 rounded border border-slate-800 text-[11px]">
+                        <strong>Em primeira análise / Em primeiro lugar</strong>, cabe pontuar que [Argumento 1]. Sobre isso, o filósofo/pesquisador [Nome] postula que [Conceito/Repertório]. Analogamente, observa-se que no Brasil [Análise Crítica do Problema]. Logo, [Fechamento do Parágrafo].
+                    </p>
+                `
+            },
+            3: {
+                title: "Desenvolvimento 2 - Argumentação II",
+                description: "Aprofunde o segundo argumento da tese com articulação lógica rigorosa, conectivos de transição e relação explícita com a tese.",
+                checklist: [
+                    { id: 'c_tf2', label: 'Segundo Argumento (A2)' },
+                    { id: 'c_art', label: 'Articulação e Aprofundamento Social' },
+                    { id: 'c_tese2', label: 'Relação Direta com a Tese' },
+                    { id: 'c_trans', label: 'Conectivos Inter e Intraparágrafos' }
+                ],
+                cheat: `
+                    <p class="mb-1"><strong>Estrutura Recomendada:</strong></p>
+                    <p class="italic bg-slate-900 p-2 rounded border border-slate-800 text-[11px]">
+                        <strong>Ademais / Outrossim</strong>, é imperioso ressaltar que [Argumento 2]. A esse respeito, [Repertório ou Fato Histórico]. Com efeito, [Aprofundamento da consequência na sociedade]. Desse modo, perpetua-se [Reiteração da Tese].
+                    </p>
+                `
+            },
+            4: {
+                title: "Conclusão - Proposta de Intervenção",
+                description: "Elabore uma proposta completa contendo os 5 Elementos Obrigatórios do ENEM (Agente, Ação, Meio/Modo, Efeito e Detalhamento).",
+                checklist: [
+                    { id: 'c_agente', label: '1. Agente (Quem fará?)' },
+                    { id: 'c_acao', label: '2. Ação (O que fará?)' },
+                    { id: 'c_modo', label: '3. Meio/Modo (Como fará?)' },
+                    { id: 'c_efeito', label: '4. Efeito (Para que fará?)' },
+                    { id: 'c_det', label: '5. Detalhamento (Explicação extra)' }
+                ],
+                cheat: `
+                    <p class="mb-1"><strong>Estrutura Completa (5 Elementos):</strong></p>
+                    <p class="italic bg-slate-900 p-2 rounded border border-slate-800 text-[11px]">
+                        <strong>Infere-se, portanto, que</strong> medidas são necessárias. Cabe, pois, ao <strong>[Agente]</strong> promover <strong>[Ação]</strong>, por meio de <strong>[Meio/Modo]</strong>, com o intuito de <strong>[Efeito]</strong>. Essa iniciativa pode contar com <strong>[Detalhamento]</strong>.
+                    </p>
+                `
+            }
+        };
+
+        /* INITIALIZATION & DOM EVENTS */
+        window.onload = function() {
+            renderStepUI();
+            updateSupportTextsUI();
+            updateFullChecklist();
+        };
+
+        function switchTab(tabName) {
+            state.activeTab = tabName;
+            ['guided', 'full', 'guide', 'minigames'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`nav-${t}`);
+                const mBtn = document.getElementById(`mobile-nav-${t}`);
+                
+                if (t === tabName) {
+                    el.classList.remove('hidden');
+                    el.classList.add('flex');
+                    if (btn) {
+                        btn.className = "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 text-indigo-400 bg-indigo-950/60 border border-indigo-800/50";
+                    }
+                    if (mBtn) {
+                        mBtn.className = "flex flex-col items-center py-1 text-indigo-400 font-bold";
+                    }
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                    if (btn) {
+                        btn.className = "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 text-slate-400 hover:text-slate-200";
+                    }
+                    if (mBtn) {
+                        mBtn.className = "flex flex-col items-center py-1 text-slate-400 font-normal";
+                    }
+                }
+            });
+        }
+
+        /* STEP NAVIGATION & UI UPDATE */
+        function setStep(stepNumber) {
+            // Save current textarea content
+            const curTextArea = document.getElementById('step-textarea');
+            if (curTextArea) {
+                state.stepsData[state.currentStep].text = curTextArea.value;
+            }
+
+            state.currentStep = stepNumber;
+            renderStepUI();
+        }
+
+        function prevStep() {
+            if (state.currentStep > 1) {
+                setStep(state.currentStep - 1);
+            }
+        }
+
+        function nextStep() {
+            if (state.currentStep < 4) {
+                setStep(state.currentStep + 1);
+            } else {
+                switchTab('full');
+                showToast("Etapas concluídas! Texto unificado no Simulado Completo.", "success");
+                syncFullTextFromSteps();
+            }
+        }
+
+        function renderStepUI() {
+            const cfg = STEP_CONFIG[state.currentStep];
+            
+            // Stepper buttons styling
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById(`step-btn-${i}`);
+                if (i === state.currentStep) {
+                    btn.className = "step-btn p-3 rounded-xl border text-left transition-all flex flex-col justify-between border-indigo-500 bg-indigo-950/40 text-indigo-300";
+                } else {
+                    btn.className = "step-btn p-3 rounded-xl border text-left transition-all flex flex-col justify-between border-slate-800 bg-slate-900/40 text-slate-400 hover:border-slate-700";
+                }
+            }
+
+            // Title & Description
+            document.getElementById('step-title').innerHTML = `<span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs mr-2">${state.currentStep}</span> ${cfg.title}`;
+            document.getElementById('step-description').innerText = cfg.description;
+
+            // Textarea
+            const textarea = document.getElementById('step-textarea');
+            textarea.value = state.stepsData[state.currentStep].text || '';
+            textarea.oninput = function() {
+                state.stepsData[state.currentStep].text = textarea.value;
+                updateWordCounts();
+                updateAccumulatedEssayPreview();
+            };
+
+            // Checklist
+            const checkListEl = document.getElementById('step-checklist');
+            checkListEl.innerHTML = cfg.checklist.map(item => `
+                <div class="flex items-center space-x-2 bg-slate-900/60 p-2 rounded-lg border border-slate-800/80">
+                    <i class="fa-solid fa-circle-check text-slate-600 text-xs" id="icon-${item.id}"></i>
+                    <span class="text-slate-300 font-medium">${item.label}</span>
+                </div>
+            `).join('');
+
+            // Formula Cheat
+            document.getElementById('cheat-content').innerHTML = cfg.cheat;
+
+            // Nav buttons disabled status
+            document.getElementById('prev-step-btn').disabled = (state.currentStep === 1);
+
+            // AI feedback display restore
+            const feedbackEl = document.getElementById('step-ai-feedback');
+            const cachedFeedback = state.stepsData[state.currentStep].aiFeedback;
+            if (cachedFeedback) {
+                feedbackEl.innerHTML = cachedFeedback;
+            } else {
+                feedbackEl.innerHTML = `
+                    <div class="p-4 bg-slate-900/50 rounded-xl border border-slate-800/60 text-center text-slate-400 my-auto">
+                        <i class="fa-solid fa-lightbulb text-amber-400 text-2xl mb-2 block"></i>
+                        Escreva seu parágrafo ao lado e clique em <strong>"Analisar Parágrafo com IA"</strong> para receber uma verificação detalhada dos critérios da Estrutura Infalível.
+                    </div>
+                `;
+            }
+
+            updateWordCounts();
+            updateAccumulatedEssayPreview();
+        }
+
+        /* WORD COUNT AND TEXT SYNCHRONIZATION */
+        function countWords(str) {
+            if (!str || !str.trim()) return 0;
+            return str.trim().split(/\s+/).length;
+        }
+
+        function updateWordCounts() {
+            const currentStepWords = countWords(state.stepsData[state.currentStep].text);
+            document.getElementById('step-word-count').innerText = `${currentStepWords} palavras`;
+
+            const fullText = (state.stepsData[1].text + ' ' + state.stepsData[2].text + ' ' + state.stepsData[3].text + ' ' + state.stepsData[4].text).trim();
+            const totalWords = countWords(fullText);
+            document.getElementById('total-essay-words').innerText = `Total: ${totalWords} palavras`;
+
+            const fullTextArea = document.getElementById('full-essay-textarea');
+            if (fullTextArea && fullTextArea.value) {
+                document.getElementById('full-word-counter').innerText = `${countWords(fullTextArea.value)} palavras`;
+            }
+        }
+
+        function updateAccumulatedEssayPreview() {
+            const parts = [
+                state.stepsData[1].text.trim(),
+                state.stepsData[2].text.trim(),
+                state.stepsData[3].text.trim(),
+                state.stepsData[4].text.trim()
+            ].filter(Boolean);
+
+            const previewEl = document.getElementById('full-essay-preview');
+            if (parts.length === 0) {
+                previewEl.innerText = "Seu texto aparecerá reunido aqui à medida que você avança pelas etapas...";
+            } else {
+                previewEl.innerHTML = parts.map(p => `<p class="mb-2">${p}</p>`).join('');
+            }
+        }
+
+        function syncFullTextFromSteps() {
+            const parts = [
+                state.stepsData[1].text.trim(),
+                state.stepsData[2].text.trim(),
+                state.stepsData[3].text.trim(),
+                state.stepsData[4].text.trim()
+            ].filter(Boolean);
+            
+            const fullEditor = document.getElementById('full-essay-textarea');
+            if (fullEditor) {
+                fullEditor.value = parts.join('\n\n');
+                updateWordCounts();
+                updateFullChecklist();
+            }
+        }
+
+        async function callGeminiAPI(systemInstruction, userQuery) {
+            const apiKey = state.apiKey || "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            let attempts = 0;
+            let maxAttempts = 3;
+            let delay = 1000;
+
+            while (attempts < maxAttempts) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Erro na API Gemini: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (resultText) return resultText;
+
+                    throw new Error("Resposta inválida da IA");
+                } catch (err) {
+                    attempts++;
+                    if (attempts >= maxAttempts) throw err;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        /* EVALUATE SINGLE STEP WITH IA */
+        async function evaluateCurrentStep() {
+            const text = state.stepsData[state.currentStep].text;
+            if (!text || text.trim().length < 15) {
+                showToast("Por favor, escreva um parágrafo mais completo para ser analisado.", "error");
+                return;
+            }
+
+            const feedbackEl = document.getElementById('step-ai-feedback');
+            const statusTag = document.getElementById('ai-status-tag');
+
+            statusTag.innerText = "Analisando com IA...";
+            statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-indigo-900 text-indigo-300 animate-pulse";
+            
+            feedbackEl.innerHTML = `
+                <div class="p-6 text-center text-slate-400">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl text-indigo-400 mb-2"></i>
+                    <p class="text-xs">O corretor especialista está avaliando seu parágrafo segundo a <strong>Estrutura Infalível</strong>...</p>
+                </div>
+            `;
+
+            const stepNames = { 1: 'Introdução', 2: 'Desenvolvimento 1', 3: 'Desenvolvimento 2', 4: 'Conclusão' };
+            const systemPrompt = `Você é um corretor e professor especialista de redação no modelo ENEM e vestibulares de alta performance.
+Sua missão é avaliar especificamente a etapa de '${stepNames[state.currentStep]}' de um texto sobre o tema: '${state.theme.title}'.
+
+Critérios de análise obrigatórios para '${stepNames[state.currentStep]}':
+${JSON.stringify(STEP_CONFIG[state.currentStep].checklist)}
+
+Formato da resposta:
+Retorne a resposta estruturada em HTML simples (divs, badges e listas com ícones FontAwesome).
+1. Nota / Diagnóstico Geral da Etapa (Ex: Excelente, Necessita Ajustes, Incompleto).
+2. Análise dos Elementos da Estrutura Infalível (Mencione presença/ausência de Tese, Repertório, Conectivos, Proposta de Intervenção, etc).
+3. 2 Dicas Concretas de Aprimoramento Refletivo (Como melhorar a fluidez, argumentos ou repertório).
+4. Indique se o aluno ganha XP (Se o parágrafo estiver bem feito, inclua [XP_BOOST:50]).`;
+
+            try {
+                const responseText = await callGeminiAPI(systemPrompt, `Parágrafo do Aluno:\n"${text}"`);
+                
+                // Process XP award
+                if (responseText.includes('[XP_BOOST:50]')) {
+                    addXP(50);
+                }
+
+                const cleanedHtml = responseText.replace(/\[XP_BOOST:50\]/g, '');
+                feedbackEl.innerHTML = `<div class="space-y-3">${cleanedHtml}</div>`;
+                state.stepsData[state.currentStep].aiFeedback = feedbackEl.innerHTML;
+
+                statusTag.innerText = "Análise Concluída";
+                statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800";
+                
+                showToast("Feedback gerado com sucesso!", "success");
+            } catch (err) {
+                console.error(err);
+                statusTag.innerText = "Erro na análise";
+                statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-rose-950 text-rose-400";
+                
+                feedbackEl.innerHTML = `
+                    <div class="p-4 bg-rose-950/40 rounded-xl border border-rose-900/60 text-slate-300">
+                        <i class="fa-solid fa-triangle-exclamation text-rose-400 mb-1 block"></i>
+                        Não foi possível se conectar à IA no momento. Tente novamente em alguns instantes.
+                    </div>
+                `;
+            }
+        }
+
+        /* FULL ESSAY EVALUATION MODE */
+        async function evaluateFullEssay() {
+            const text = document.getElementById('full-essay-textarea').value;
+            if (!text || text.trim().split(/\s+/).length < 50) {
+                showToast("Sua redação precisa ter no mínimo 50 palavras para uma avaliação completa.", "error");
+                return;
+            }
+
+            const reportEl = document.getElementById('full-ai-report');
+            const scoreBadge = document.getElementById('full-score-badge');
+
+            scoreBadge.innerText = "... / 1000";
+            reportEl.innerHTML = `
+                <div class="p-6 text-center text-slate-400">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl text-indigo-400 mb-2"></i>
+                    <p class="text-xs">Avaliando Competências C1, C2, C3, C4 e C5 da Redação...</p>
+                </div>
+            `;
+
+            const systemPrompt = `Você é uma banca avaliadora oficial do ENEM. Corrija a redação completa com base no Tema: '${state.theme.title}'.
+
+Sua resposta DEVE ser estritamente no formato JSON com o seguinte schema:
+{
+  "c1_score": 0 a 200 (número inteiro múltiplo de 40),
+  "c2_score": 0 a 200 (número inteiro múltiplo de 40),
+  "c3_score": 0 a 200 (número inteiro múltiplo de 40),
+  "c4_score": 0 a 200 (número inteiro múltiplo de 40),
+  "c5_score": 0 a 200 (número inteiro múltiplo de 40),
+  "total_score": soma das 5 notas,
+  "summary": "Resumo geral pedagógico da redação",
+  "strengths": ["Ponto forte 1", "Ponto forte 2"],
+  "improvements": ["Melhoria necessária 1", "Melhoria necessária 2"],
+  "intervention_check": {
+    "agente": true ou false,
+    "acao": true ou false,
+    "modo": true ou false,
+    "efeito": true ou false,
+    "detalhamento": true ou false
+  }
+}`;
+
+            try {
+                const apiKey = state.apiKey || "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: `Texto Completo da Redação:\n\n${text}` }] }],
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    },
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                const result = JSON.parse(jsonText);
+
+                // Update UI Scores & Bars
+                updateCompetencyScore('c1', result.c1_score);
+                updateCompetencyScore('c2', result.c2_score);
+                updateCompetencyScore('c3', result.c3_score);
+                updateCompetencyScore('c4', result.c4_score);
+                updateCompetencyScore('c5', result.c5_score);
+
+                scoreBadge.innerText = `${result.total_score} / 1000`;
+
+                // Render Report
+                reportEl.innerHTML = `
+                    <div class="space-y-2">
+                        <p class="font-semibold text-indigo-300">${result.summary}</p>
+                        
+                        <div class="mt-2">
+                            <span class="font-bold text-emerald-400 block mb-1">Pontos Fortes:</span>
+                            <ul class="list-disc list-inside space-y-0.5 text-slate-300">
+                                ${result.strengths.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="mt-2">
+                            <span class="font-bold text-amber-400 block mb-1">Onde Melhorar:</span>
+                            <ul class="list-disc list-inside space-y-0.5 text-slate-300">
+                                ${result.improvements.map(i => `<li>${i}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+
+                addXP(100);
+                showToast("Correção Nota 1000 finalizada com sucesso!", "success");
+
+            } catch (err) {
+                console.error(err);
+                reportEl.innerHTML = `<div class="text-rose-400 p-2">Erro ao processar a avaliação em formato JSON. Tente novamente.</div>`;
+            }
+        }
+
+        function updateCompetencyScore(compKey, score) {
+            const textEl = document.getElementById(`score-${compKey}`);
+            const barEl = document.getElementById(`bar-${compKey}`);
+            if (textEl && barEl) {
+                textEl.innerText = `${score}/200`;
+                const percentage = (score / 200) * 100;
+                barEl.style.width = `${percentage}%`;
+                
+                if (percentage >= 80) barEl.className = "bg-emerald-500 h-full transition-all duration-700";
+                else if (percentage >= 50) barEl.className = "bg-indigo-500 h-full transition-all duration-700";
+                else barEl.className = "bg-amber-500 h-full transition-all duration-700";
+            }
+        }
+
+        /* CHECKLIST & CONNECTORS HELPERS */
+        function updateFullChecklist() {
+            const text = document.getElementById('full-essay-textarea')?.value || '';
+            const checklistContainer = document.getElementById('interactive-checklist');
+            
+            const checks = [
+                { label: 'Uso de Conectivos Interparágrafos', pass: /(em primeira análise|ademais|outrossim|por outro lado|infere-se, portanto|portanto)/i.test(text) },
+                { label: 'Repertório Sociocultural Identificado', pass: /(segundo|conforme|filósofo|de acordo com|história|constituição|sociólogo)/i.test(text) },
+                { label: 'Presença de Agente de Intervenção', pass: /(ministério|governo|ong|sociedade|escolas|mídia)/i.test(text) },
+                { label: 'Tese de Conclusão / Finalidade', pass: /(com o intuito de|a fim de|com o fito de|para que)/i.test(text) }
+            ];
+
+            checklistContainer.innerHTML = checks.map(c => `
+                <div class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                    <span class="text-slate-300">${c.label}</span>
+                    <span class="${c.pass ? 'text-emerald-400 font-bold' : 'text-slate-600'}">
+                        <i class="fa-solid ${c.pass ? 'fa-check-circle' : 'fa-circle'}"></i>
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function insertConnectorHelper() {
+            const connectors = ["Em primeira análise,", "Ademais,", "Contudo,", "Infere-se, portanto, que", "Em consonância com", "Por conseguinte,"];
+            const chosen = connectors[Math.floor(Math.random() * connectors.length)];
+            
+            const textarea = document.getElementById('step-textarea');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            
+            textarea.value = textarea.value.substring(0, start) + chosen + " " + textarea.value.substring(end);
+            state.stepsData[state.currentStep].text = textarea.value;
+            updateWordCounts();
+            updateAccumulatedEssayPreview();
+            showToast(`Conectivo inserido: "${chosen}"`, "info");
+        }
+
+        /* GAMIFICATION SYSTEM */
+        function addXP(amount) {
+            state.userXP += amount;
+            const xpForNextLevel = state.userLevel * 200;
+            if (state.userXP >= xpForNextLevel) {
+                state.userLevel++;
+                showToast(`🎉 PARABÉNS! Você subiu para o Nível ${state.userLevel}!`, "gold");
+            }
+            
+            document.getElementById('user-level').innerText = `Nível ${state.userLevel}`;
+            document.getElementById('user-xp-text').innerText = `${state.userXP} XP`;
+            
+            const progressPct = Math.min(100, (state.userXP / xpForNextLevel) * 100);
+            document.getElementById('user-xp-bar').style.width = `${progressPct}%`;
+        }
+
+        function startMinigame(type) {
+            const arena = document.getElementById('minigame-arena');
+            
+            if (type === 'connectors') {
+                arena.innerHTML = `
+                    <div class="w-full max-w-lg space-y-4 text-left">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="font-bold text-sm text-indigo-400"><i class="fa-solid fa-link mr-1"></i> Desafio dos Conectivos</span>
+                            <span class="text-xs bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded">+30 XP</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            "A tecnologia expandiu a comunicação global. __________, gerou novos desafios em relação à privacidade dos dados dos usuários."
+                        </p>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <button onclick="answerMinigame(true)" class="p-2.5 rounded-xl bg-slate-900 hover:bg-indigo-950 hover:border-indigo-700 border border-slate-800 text-slate-200">
+                                Contudo / No entanto
+                            </button>
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 hover:bg-indigo-950 hover:border-indigo-700 border border-slate-800 text-slate-200">
+                                Ademais / Além disso
+                            </button>
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 hover:bg-indigo-950 hover:border-indigo-700 border border-slate-800 text-slate-200">
+                                Portanto / Dessa forma
+                            </button>
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 hover:bg-indigo-950 hover:border-indigo-700 border border-slate-800 text-slate-200">
+                                Porquanto / Já que
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'intervention') {
+                arena.innerHTML = `
+                    <div class="w-full max-w-lg space-y-4 text-left">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="font-bold text-sm text-purple-400"><i class="fa-solid fa-magnifying-glass mr-1"></i> Detetive de Intervenção</span>
+                            <span class="text-xs bg-purple-950 text-purple-300 px-2 py-0.5 rounded">+30 XP</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            "O Ministério da Educação deve promover palestras nas escolas públicas por meio de verbas federais para combater o analfabetismo digital."
+                        </p>
+                        <p class="text-[11px] text-amber-400 font-semibold">Qual dos 5 elementos da proposta está FALTANDO na frase acima?</p>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">Agente</button>
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">Meio/Modo</button>
+                            <button onclick="answerMinigame(true)" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">Efeito / Finalidade</button>
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">Ação</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                arena.innerHTML = `
+                    <div class="w-full max-w-lg space-y-4 text-left">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="font-bold text-sm text-amber-400"><i class="fa-solid fa-lightbulb mr-1"></i> Match de Repertório</span>
+                            <span class="text-xs bg-amber-950 text-amber-300 px-2 py-0.5 rounded">+30 XP</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            Qual conceito se encaixa perfeitamente para fundamentar a tese de <strong>passividade social diante das redes de controle de dados</strong>?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 text-xs">
+                            <button onclick="answerMinigame(true)" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-left">
+                                <strong>Modernidade Líquida & Servidão Voluntária</strong> (Zygmunt Bauman)
+                            </button>
+                            <button onclick="answerMinigame(false)" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-left">
+                                <strong>Contrato Social Primário</strong> (Thomas Hobbes)
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function answerMinigame(isCorrect) {
+            if (isCorrect) {
+                addXP(30);
+                showToast("Resposta Correta! +30 XP ganhos!", "success");
+            } else {
+                showToast("Ops! Tente novamente.", "error");
+            }
+            startMinigame('connectors');
+        }
+
+        /* TIMER LOGIC FOR FULL ESSAY SIMULATOR */
+        function toggleTimer() {
+            const btn = document.getElementById('timer-toggle-btn');
+            if (state.timer.running) {
+                clearInterval(state.timer.interval);
+                state.timer.running = false;
+                btn.innerText = "Retomar";
+            } else {
+                state.timer.running = true;
+                btn.innerText = "Pausar";
+                state.timer.interval = setInterval(() => {
+                    state.timer.seconds++;
+                    const h = String(Math.floor(state.timer.seconds / 3600)).padStart(2, '0');
+                    const m = String(Math.floor((state.timer.seconds % 3600) / 60)).padStart(2, '0');
+                    const s = String(state.timer.seconds % 60).padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${h}:${m}:${s}`;
+                }, 1000);
+            }
+        }
+
+        /* THEME GENERATION & MODALS */
+        function generateNewTheme() {
+            const randomIndex = Math.floor(Math.random() * THEMES_DATABASE.length);
+            state.theme = THEMES_DATABASE[randomIndex];
+            
+            document.getElementById('current-theme-title').innerText = state.theme.title;
+            document.getElementById('current-theme-prompt').innerText = state.theme.prompt;
+            document.getElementById('theme-category-badge').innerText = state.theme.category;
+            
+            updateSupportTextsUI();
+            showToast("Novo tema carregado!", "info");
+        }
+
+        function updateSupportTextsUI() {
+            const container = document.getElementById('theme-support-texts');
+            if (container) {
+                container.innerHTML = state.theme.supportTexts.map(t => `
+                    <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">${t}</div>
+                `).join('');
+            }
+        }
+
+        function toggleSettingsModal() {
+            const modal = document.getElementById('settings-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleThemeModal() {
+            const modal = document.getElementById('theme-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function saveSettings() {
+            const customKey = document.getElementById('custom-api-key').value;
+            state.apiKey = customKey.trim();
+            toggleSettingsModal();
+            showToast("Configurações salvas!", "success");
+        }
+
+        function clearFullEssay() {
+            document.getElementById('full-essay-textarea').value = '';
+            updateWordCounts();
+            updateFullChecklist();
+        }
+
+        /* TOAST NOTIFICATION UTILITY */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColors = {
+                success: 'bg-emerald-900/90 border-emerald-700 text-emerald-100',
+                error: 'bg-rose-900/90 border-rose-700 text-rose-100',
+                info: 'bg-indigo-900/90 border-indigo-700 text-indigo-100',
+                gold: 'bg-amber-900/90 border-amber-600 text-amber-100'
+            };
+
+            toast.className = `px-4 py-2.5 rounded-xl border backdrop-blur-md shadow-xl text-xs font-medium flex items-center space-x-2 transition-all duration-300 transform translate-y-2 pointer-events-auto ${bgColors[type] || bgColors.info}`;
+            toast.innerHTML = `<span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
