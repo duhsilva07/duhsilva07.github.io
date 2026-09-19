@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada Literária PREVUPE 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        parnasiano: '#4f46e5',
+                        simbolismo: '#7c3aed',
+                        premod: '#d97706',
+                        vanguarda: '#e11d48',
+                        modernismo: '#059669',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-short': 'bounce 0.8s ease-in-out 1',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbars and styling tweaks */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1b4b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4338ca;
+            border-radius: 4px;
+        }
+        .glass-card {
+            background: rgba(30, 27, 75, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .glow-purple {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
+        }
+        .glow-amber {
+            box-shadow: 0 0 25px rgba(217, 119, 6, 0.4);
+        }
+        .glow-emerald {
+            box-shadow: 0 0 25px rgba(5, 150, 105, 0.4);
+        }
+        .text-shadow-sm {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+
+    <!-- TOP NAVBAR -->
+    <header class="sticky top-0 z-50 bg-slate-900/90 border-b border-slate-800 backdrop-blur px-4 py-3 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goToMenu()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-amber-500 flex items-center justify-center font-serif text-2xl font-bold text-white shadow-lg">
+                    📚
+                </div>
+                <div>
+                    <h1 class="font-bold text-base md:text-lg tracking-wide leading-tight bg-gradient-to-r from-purple-300 via-pink-300 to-amber-300 bg-clip-text text-transparent">PREVUPE 2026</h1>
+                    <p class="text-xs text-slate-400">Jornada Literária Interativa</p>
+                </div>
+            </div>
+
+            <!-- Header Indicators -->
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <!-- Sound Toggle -->
+                <button id="soundBtn" onclick="toggleAudio()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Alternar som">
+                    <i id="soundIcon" class="fas fa-volume-up text-purple-400"></i>
+                </button>
+
+                <!-- Study Summary Modal Toggle -->
+                <button onclick="openStudyModal()" class="px-3 py-1.5 rounded-lg bg-indigo-900/60 hover:bg-indigo-800/80 border border-indigo-500/40 text-indigo-200 text-xs md:text-sm font-semibold flex items-center gap-1.5 transition">
+                    <i class="fas fa-book-open"></i> <span class="hidden sm:inline">Resumo dos</span> Slides
+                </button>
+
+                <!-- Score & Streak Badge -->
+                <div class="flex items-center space-x-3 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
+                    <div class="flex items-center space-x-1 text-amber-400 font-bold text-sm" title="XP Acumulado">
+                        <i class="fas fa-star text-xs"></i>
+                        <span id="playerXP">0</span> <span class="text-xs font-normal text-slate-400">XP</span>
+                    </div>
+                    <div class="w-px h-4 bg-slate-700"></div>
+                    <div class="flex items-center space-x-1 text-emerald-400 font-bold text-sm" title="Combos Sequenciais">
+                        <i class="fas fa-bolt text-xs"></i>
+                        <span id="playerStreak">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APPLICATION CONTAINER -->
+    <main id="appContainer" class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- SCREEN 0: MAIN MENU / LEVEL SELECT -->
+        <div id="screenMenu" class="space-y-8 py-4">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-900/60 via-slate-900 to-indigo-950/80 border border-purple-500/30 p-6 md:p-8 shadow-2xl">
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-semibold rounded-full border border-purple-500/30">
+                        Aulas 15, 16, 17, 18 e 19 • Literatura Brasileira
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-extrabold text-white leading-tight">
+                        A Grande Batalha das Escolas Literárias
+                    </h2>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                        Embarque em uma jornada de 5 fases interativas! Do apuro formal dos Parnasianos ao sincretismo devorador dos Modernistas de 22. Teste seus conhecimentos e prepare-se para o vestibular!
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="startLevel(1)" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-purple-600/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fas fa-play"></i> Iniciar Jornada
+                        </button>
+                        <button onclick="openStudyModal()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition">
+                            <i class="fas fa-graduation-cap text-purple-400"></i> Estudar Fichamento
+                        </button>
+                    </div>
+                </div>
+                <!-- Background decorative elements -->
+                <div class="absolute -right-8 -bottom-10 opacity-20 text-9xl font-serif text-purple-300 pointer-events-none select-none">
+                    🏺
+                </div>
+            </div>
+
+            <!-- Level Map Selection Grid -->
+            <div>
+                <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
+                    <i class="fas fa-map-marked-alt text-amber-400"></i> Mapa das Fases
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="levelGrid">
+                    <!-- Levels will be injected dynamically by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Conquistas / Stats summary -->
+            <div class="glass-card rounded-2xl p-5 flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl">
+                        🏆
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-200 text-sm">Seu Progresso de Mestre</h4>
+                        <p class="text-xs text-slate-400" id="progressStatusText">0 de 5 Fases Concluídas</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="w-32 bg-slate-800 rounded-full h-3 overflow-hidden border border-slate-700">
+                        <div id="overallProgressBar" class="bg-gradient-to-r from-purple-500 to-emerald-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                    <span id="overallProgressPercent" class="text-xs font-bold text-purple-300">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 1: ACTIVE LEVEL / GAMEPLAY VIEW -->
+        <div id="screenGame" class="hidden space-y-6">
+            <!-- Level Header / Breadcrumb -->
+            <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                <div class="flex items-center space-x-3">
+                    <button onclick="goToMenu()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-xs flex items-center gap-1">
+                        <i class="fas fa-arrow-left"></i> Menu
+                    </button>
+                    <div>
+                        <span id="levelBadge" class="text-xs uppercase tracking-wider font-bold text-purple-400">Fase 1</span>
+                        <h3 id="levelTitle" class="text-xl md:text-2xl font-serif font-bold text-white">O Atelier da Perfeição</h3>
+                    </div>
+                </div>
+                <!-- Progress steps inside current level -->
+                <div class="text-right">
+                    <span class="text-xs text-slate-400">Etapa <span id="currentStepNum">1</span>/<span id="totalStepsNum">3</span></span>
+                    <div class="w-24 bg-slate-800 h-2 rounded-full overflow-hidden mt-1 border border-slate-700">
+                        <div id="levelStepProgressBar" class="bg-purple-500 h-full w-1/3 transition-all"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Challenge Area -->
+            <div id="gameChallengeCard" class="glass-card rounded-2xl p-6 shadow-xl relative min-h-[360px] flex flex-col justify-between">
+                <!-- Content will be rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- SCREEN 2: LEVEL COMPLETED CELEBRATION -->
+        <div id="screenVictory" class="hidden text-center py-8 space-y-6">
+            <div class="inline-block p-6 bg-purple-500/20 rounded-full border border-purple-500/40 animate-bounce-short">
+                <span class="text-6xl">🎉</span>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">Fase Concluída com Sucesso!</h2>
+                <p id="victorySubtitle" class="text-slate-300 max-w-md mx-auto text-sm">Você dominou os conceitos do Parnasianismo e Simbolismo!</p>
+            </div>
+
+            <div class="max-w-sm mx-auto glass-card rounded-2xl p-5 space-y-3">
+                <div class="flex justify-between text-sm py-1 border-b border-slate-800">
+                    <span class="text-slate-400">XP Adquirido:</span>
+                    <span id="vicXP" class="font-bold text-amber-400">+150 XP</span>
+                </div>
+                <div class="flex justify-between text-sm py-1 border-b border-slate-800">
+                    <span class="text-slate-400">Precisão dos Enigmas:</span>
+                    <span id="vicAccuracy" class="font-bold text-emerald-400">100%</span>
+                </div>
+                <div class="flex justify-between text-sm py-1">
+                    <span class="text-slate-400">Emblema Desbloqueado:</span>
+                    <span id="vicBadge" class="font-bold text-purple-300">🏺 Escultor das Palavras</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 pt-2">
+                <button onclick="goToMenu()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition">
+                    <i class="fas fa-list"></i> Menu de Fases
+                </button>
+                <button id="nextLevelBtn" onclick="startNextLevel()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white text-sm font-bold shadow-lg transition">
+                    Próxima Fase <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- STUDY MODAL (REVISÃO RÁPIDA DOS SLIDES) -->
+    <div id="studyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card bg-slate-900 max-w-3xl w-full max-h-[85vh] rounded-2xl flex flex-col shadow-2xl border border-indigo-500/30 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/90">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-book text-amber-400 text-lg"></i>
+                    <h3 class="font-serif font-bold text-lg text-white">Guia de Estudo • PREVUPE 2026</h3>
+                </div>
+                <button onclick="closeStudyModal()" class="text-slate-400 hover:text-white transition p-1">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-800 bg-slate-950/50 text-xs md:text-sm font-semibold overflow-x-auto">
+                <button onclick="switchTab('tab1')" id="tab1Btn" class="px-4 py-3 border-b-2 border-purple-500 text-purple-300 whitespace-nowrap">
+                    🟣 Aula 1: Parnasianismo & Simbolismo
+                </button>
+                <button onclick="switchTab('tab2')" id="tab2Btn" class="px-4 py-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
+                    🟠 Aula 2: Pré-Modernismo & Vanguardas
+                </button>
+                <button onclick="switchTab('tab3')" id="tab3Btn" class="px-4 py-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
+                    🟢 Aula 3: Modernismo 1922
+                </button>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="p-6 overflow-y-auto space-y-4 text-slate-300 text-sm leading-relaxed" id="studyModalContent">
+                <!-- Content injected dynamically -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-3 border-t border-slate-800 bg-slate-950/80 text-right">
+                <button onclick="closeStudyModal()" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition">
+                    Entendi, voltar ao jogo!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-4 text-center text-xs text-slate-500">
+        <p>PREVUPE 2026 — Plataforma Pedagógica Gamificada de Literatura • Carga horária: 3 aulas de 1h</p>
+    </footer>
+
+    <script>
+        /* -------------------------------------------------------------
+           GAME DATA & CURRICULUM DATABASE (PREVUPE SLIDES CONTENT)
+           ------------------------------------------------------------- */
+        
+        // Study guide contents for modal
+        const studyGuides = {
+            tab1: `
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-purple-950/40 border border-purple-500/30">
+                        <h4 class="font-serif font-bold text-purple-300 text-base mb-1">🏺 PARNASIANISMO (Aula 15)</h4>
+                        <p class="text-xs text-purple-200 mb-2"><strong>Pergunta-guia:</strong> E se o poema fosse uma obra de arte perfeitamente construída como um vaso?</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                            <li><strong>Fórmula:</strong> Romantismo = Sentimento vs Parnasianismo = Forma</li>
+                            <li><strong>Características:</strong> Culto à forma, rigor métrico, rimas ricas, vocabulário preciso, objetividade, "Arte pela arte".</li>
+                            <li><strong>Tríade Parnasiana:</strong> Olavo Bilac ("Profissão de Fé", "Via Láctea"), Alberto de Oliveira, Raimundo Correia.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30">
+                        <h4 class="font-serif font-bold text-indigo-300 text-base mb-1">🌙 SIMBOLISMO (Aula 16)</h4>
+                        <p class="text-xs text-indigo-200 mb-2"><strong>Estratégia:</strong> O Parnasianismo constrói a forma; o Simbolismo sugere o mistério por trás dela.</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                            <li><strong>Características:</strong> Subjetividade, musicalidade, espiritualidade, sonho, sugestão, sinestesia.</li>
+                            <li><strong>Sinestesia:</strong> Cruzamento de sentidos físicos (ex: "Silêncio azul" = audição + visão; "Voz aveludada" = audição + tato).</li>
+                            <li><strong>Autores:</strong> Cruz e Sousa (Broquéis, Missal), Alphonsus de Guimaraens.</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            tab2: `
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-amber-950/40 border border-amber-500/30">
+                        <h4 class="font-serif font-bold text-amber-300 text-base mb-1">🇧🇷 PRÉ-MODERNISMO (Aula 17)</h4>
+                        <p class="text-xs text-amber-200 mb-2">Período de transição (início do séc. XX). Revela o Brasil real e marginalizado.</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                            <li><strong>Euclides da Cunha:</strong> <em>Os Sertões</em> (Guerra de Canudos: A Terra, O Homem, A Luta).</li>
+                            <li><strong>Lima Barreto:</strong> <em>Triste Fim de Policarpo Quaresma</em> (Crítica social, burocracia, choque do ideal patriótico com a realidade).</li>
+                            <li><strong>Monteiro Lobato:</strong> <em>Urupês</em> (Jeca Tatu - denúncia das condições do homem do campo).</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-500/30">
+                        <h4 class="font-serif font-bold text-rose-300 text-base mb-1">🌍 VANGUARDAS EUROPEIAS (Aula 18)</h4>
+                        <p class="text-xs text-rose-200 mb-2">Ruptura com a tradição acadêmica no início do século XX.</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                            <li>🚗 <strong>Futurismo:</strong> Velocidade, máquinas, tecnologia e movimento.</li>
+                            <li>🧩 <strong>Cubismo:</strong> Fragmentação e múltiplas perspectivas concomitantes.</li>
+                            <li>💤 <strong>Surrealismo:</strong> Sonho, inconsciente e livre associação.</li>
+                            <li>😱 <strong>Expressionismo:</strong> Emoção intensa, angústia e deformação do real.</li>
+                            <li>🤪 <strong>Dadaísmo:</strong> Ilogicidade, absurdo, deboche e provogação.</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            tab3: `
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30">
+                        <h4 class="font-serif font-bold text-emerald-300 text-base mb-1">🇧🇷 MODERNISMO — 1ª GERAÇÃO (Aula 19)</h4>
+                        <p class="text-xs text-emerald-200 mb-2">Fase Heroica (1922-1930) • Ruptura e busca de identidade brasileira.</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                            <li><strong>Semana de Arte Moderna (Fev/1922):</strong> Teatro Municipal de SP. Liberdade estética e provocação.</li>
+                            <li><strong>Mário de Andrade:</strong> <em>Macunaíma</em> ("o herói sem nenhum caráter" - síntese plural da cultura brasileira).</li>
+                            <li><strong>Oswald de Andrade:</strong> <em>Manifesto Antropófago</em> ("devorar" influências estrangeiras para recriar arte genuinamente nacional).</li>
+                            <li><strong>Linguagem:</strong> Valorização do coloquial, oralidade, humor, paródia e fragmentação.</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        };
+
+        // Levels Definitions
+        const levelsData = [
+            {
+                id: 1,
+                title: "O Vaso e a Bruma",
+                subtitle: "Parnasianismo & Simbolismo",
+                icon: "🏺",
+                color: "from-purple-600 to-indigo-700",
+                badge: "Mestre do Rigor & Mistério",
+                steps: [
+                    {
+                        type: "binary_choice",
+                        question: "É PARNASIANO OU NÃO? Identifique a frase com estética puramente Parnasiana:",
+                        options: [
+                            { text: "A) 'Meu coração chora lágrimas de sangue por um amor impossível...'", correct: false, feedback: "Incorreto! Essa carga emotiva e subjetiva é característica do Romantismo!" },
+                            { text: "B) 'O mármore branco refletia a luz sobre a superfície polida da copa.'", correct: true, feedback: "Exato! Objetividade, descrição detalhada de objeto de arte e apuro formal!" },
+                            { text: "C) 'A noite envolvia o silêncio da cidade em um manto azul e místico.'", correct: false, feedback: "Incorreto! Sugestão e mistério são marcas do Simbolismo!" }
+                        ]
+                    },
+                    {
+                        type: "synesthesia_quiz",
+                        question: "DETECTOR SINESTÉSICO (SIMBOLISMO): Quais sentidos estão misturados na expressão: 'Uma voz aveludada'?",
+                        options: [
+                            { text: "Audição 👂 + Tato ✋", correct: true, feedback: "Perfeito! 'Voz' é percebida pela audição e 'Aveludada' remete ao tato!" },
+                            { text: "Visão 👁️ + Paladar 👅", correct: false, feedback: "Ops! Nenhuma das palavras remete a visão ou paladar direto." },
+                            { text: "Audição 👂 + Olfato 👃", correct: false, feedback: "Incorreto! Aveludado é textura física (tato)." }
+                        ]
+                    },
+                    {
+                        type: "prevupe_challenge",
+                        question: "DESAFIO PREVUPE: 'A noite envolvia a cidade em um silêncio azul.' Qual característica simbolista destaca-se nessa frase?",
+                        options: [
+                            { text: "A) Objetividade científica e impessoalidade", correct: false, feedback: "Errado. Isso seria cientificismo do Realismo/Parnasianismo." },
+                            { text: "B) Sugestão, subjetividade e sinestesia", correct: true, feedback: "Correto! Cruzamento sensorial e sugestão de atmosfera espiritual!" },
+                            { text: "C) Nacionalismo e ufanismo romântico", correct: false, feedback: "Errado. Não há exaltação da pátria aqui." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "O Brasil Real",
+                subtitle: "Pré-Modernismo",
+                icon: "🏜️",
+                color: "from-amber-600 to-orange-700",
+                badge: "Denunciante Social",
+                steps: [
+                    {
+                        type: "matching_game",
+                        question: "ASSOCIAÇÃO DE PERSONAGENS & OBRAS: Relacione as figuras do Pré-Modernismo aos seus temas!",
+                        pairs: [
+                            { id: 1, label: "Canudos (Guerra no Sertão)", target: "Os Sertões (Euclides da Cunha)" },
+                            { id: 2, label: "Jeca Tatu (Homem do campo abandonado)", target: "Urupês (Monteiro Lobato)" },
+                            { id: 3, label: "Policarpo Quaresma (Patriota ingênuo)", target: "Triste Fim... (Lima Barreto)" }
+                        ]
+                    },
+                    {
+                        type: "binary_choice",
+                        question: "O Pré-Modernismo é considerado uma 'Escola Literária' formal com manifesto próprio?",
+                        options: [
+                            { text: "Sim, foi um movimento rígido unificado em 1900.", correct: false, feedback: "Incorreto! Não é uma escola formal, mas um período de transição pré-1922." },
+                            { text: "Não, é um período de transição marcado por variadas denúncias da realidade social brasileira.", correct: true, feedback: "Exato! Mostra o Brasil profundo: sertão, favelas, burocracia e preconceito." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Revolução das Vanguardas",
+                subtitle: "Vanguardas Europeias",
+                icon: "🎨",
+                color: "from-rose-600 to-pink-700",
+                badge: "Vanguardista Audaz",
+                steps: [
+                    {
+                        type: "vanguard_match",
+                        question: "IDENTIFIQUE A VANGUARDA: 'Elogio à velocidade, às máquinas, ao motor e ao dinamismo urbano moderno.'",
+                        options: [
+                            { text: "Futurismo 🚗", correct: true, feedback: "Exato! Marinetti e o culto à velocidade industrial." },
+                            { text: "Cubismo 🧩", correct: false, feedback: "Cubismo foca em geometria e múltiplas perspetivas." },
+                            { text: "Surrealismo 💤", correct: false, feedback: "Surrealismo foca em sonhos e no inconsciente." }
+                        ]
+                    },
+                    {
+                        type: "vanguard_match",
+                        question: "IDENTIFIQUE A VANGUARDA: 'Exploração dos sonhos, da mente sem filtro lógico, da psicanálise e do inconsciente.'",
+                        options: [
+                            { text: "Expressionismo 😱", correct: false, feedback: "Expressionismo foca na deformação dramática para expressar angústia." },
+                            { text: "Surrealismo 🌙", correct: true, feedback: "Correto! Salvador Dalí e a valorização do onírico!" },
+                            { text: "Dadaísmo 🤪", correct: false, feedback: "Dadaísmo privilegia a anarquia e o nonsense radical." }
+                        ]
+                    },
+                    {
+                        type: "vanguard_match",
+                        question: "IDENTIFIQUE A VANGUARDA: 'Deformação da realidade para projetar angústias e sentimentos intensos do indivíduo.'",
+                        options: [
+                            { text: "Expressionismo 🎨", correct: true, feedback: "Perfeito! O grito, a dor e a distorção da realidade externa." },
+                            { text: "Cubismo 📐", correct: false, feedback: "Cubismo fragmenta formas sem foco prioritário no drama emotivo." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Semana de 22 & Antropofagia",
+                subtitle: "Modernismo (1ª Geração)",
+                icon: "🥩",
+                color: "from-emerald-600 to-teal-700",
+                badge: "Herói Antropófago",
+                steps: [
+                    {
+                        type: "binary_choice",
+                        question: "Qual o sentido do conceito da 'ANTROPOFAGIA' proposto por Oswald de Andrade?",
+                        options: [
+                            { text: "A) Rejeitar 100% da cultura europeia e usar apenas tradições indígenas nativas.", correct: false, feedback: "Não! Antropofagia não é isolamento, mas deglutição crítica!" },
+                            { text: "B) 'Devorar' e assimilar influências estrangeiras, re-elaborando-as na realidade brasileira.", correct: true, feedback: "Exatamente! Absorver o exterior e recriar algo genuinamente nacional!" }
+                        ]
+                    },
+                    {
+                        type: "character_quiz",
+                        question: "Macunaíma, criado por Mário de Andrade, é definido como:",
+                        options: [
+                            { text: "O herói sem nenhum caráter (síntese plural e contraditória do povo brasileiro).", correct: true, feedback: "Correto! Mistura mitos, linguagem popular, humor e diversidade!" },
+                            { text: "Um cavaleiro medieval romântico imbuído de virtudes perfeitas.", correct: false, feedback: "Incorreto! Ele rompe com qualquer idealização romântica clássica!" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "A Batalha Final",
+                subtitle: "Revisão Geral e Simuladão",
+                icon: "⚔️",
+                color: "from-purple-700 via-pink-600 to-amber-600",
+                badge: "Mestre Supremo PREVUPE 2026",
+                steps: [
+                    {
+                        type: "rapid_quiz",
+                        question: "QUAL É A ESCOLA? 'Culto à forma rigorosa, busca da perfeição métrica, rimas ricas e objetividade descritiva.'",
+                        options: [
+                            { text: "Parnasianismo 🏺", correct: true },
+                            { text: "Simbolismo 🌙", correct: false },
+                            { text: "Modernismo 💥", correct: false }
+                        ]
+                    },
+                    {
+                        type: "rapid_quiz",
+                        question: "QUAL É A ESCOLA? 'Subjetividade, musicalidade marcante, mistério e uso constante de sinestesias.'",
+                        options: [
+                            { text: "Simbolismo 🌙", correct: true },
+                            { text: "Parnasianismo 🏺", correct: false },
+                            { text: "Pré-Modernismo 🌾", correct: false }
+                        ]
+                    },
+                    {
+                        type: "rapid_quiz",
+                        question: "QUAL É A ESCOLA? 'Ruptura radical, linguagem coloquial, humor, liberdade formal e antropofagia cultural.'",
+                        options: [
+                            { text: "Modernismo (1ª Geração) 🇧🇷", correct: true },
+                            { text: "Parnasianismo 🏺", correct: false },
+                            { text: "Barroco ✝️", correct: false }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        /* -------------------------------------------------------------
+           GAME STATE MANAGEMENT
+           ------------------------------------------------------------- */
+        let state = {
+            xp: 0,
+            streak: 0,
+            unlockedLevels: [1], // Level 1 is open by default
+            completedLevels: [],
+            currentLevelId: null,
+            currentStepIndex: 0,
+            audioEnabled: true,
+            userAnswers: []
+        };
+
+        /* -------------------------------------------------------------
+           AUDIO SYNTHESIZER (WEB AUDIO API - NO EXTERNAL FILES NEEDED)
+           ------------------------------------------------------------- */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!state.audioEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+                    osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.25); // G5
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.setValueAtTime(180, now + 0.15);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'fanfare') {
+                    // Short victory melody
+                    [440, 554.37, 659.25, 880].forEach((freq, i) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.frequency.setValueAtTime(freq, now + i * 0.1);
+                        g.gain.setValueAtTime(0.15, now + i * 0.1);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.3);
+                        o.start(now + i * 0.1);
+                        o.stop(now + i * 0.1 + 0.3);
+                    });
+                }
+            } catch(e) {
+                // Audio safely ignored if browser blocks autoplay
+            }
+        }
+
+        function toggleAudio() {
+            state.audioEnabled = !state.audioEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (state.audioEnabled) {
+                icon.className = 'fas fa-volume-up text-purple-400';
+            } else {
+                icon.className = 'fas fa-volume-mute text-slate-500';
+            }
+        }
+
+        /* -------------------------------------------------------------
+           UI CONTROLLERS & RENDERING
+           ------------------------------------------------------------- */
+        
+        function renderMenu() {
+            const grid = document.getElementById('levelGrid');
+            grid.innerHTML = '';
+
+            levelsData.forEach(lvl => {
+                const isUnlocked = state.unlockedLevels.includes(lvl.id);
+                const isCompleted = state.completedLevels.includes(lvl.id);
+
+                const card = document.createElement('div');
+                card.className = `glass-card rounded-2xl p-5 border transition flex flex-col justify-between ${
+                    isUnlocked 
+                        ? 'hover:border-purple-400/60 cursor-pointer hover:shadow-lg hover:-translate-y-1' 
+                        : 'opacity-50 cursor-not-allowed border-slate-800'
+                }`;
+
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="w-10 h-10 rounded-xl bg-gradient-to-tr ${lvl.color} flex items-center justify-center text-xl shadow">
+                                ${lvl.icon}
+                            </span>
+                            ${
+                                isCompleted 
+                                ? '<span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30"><i class="fas fa-check"></i> Concluído</span>'
+                                : (isUnlocked 
+                                    ? `<span class="px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold border border-purple-500/30">Fase ${lvl.id}</span>`
+                                    : '<span class="text-xs text-slate-500"><i class="fas fa-lock"></i> Bloqueado</span>')
+                            }
+                        </div>
+                        <div>
+                            <h4 class="font-serif font-bold text-slate-100 text-lg">${lvl.title}</h4>
+                            <p class="text-xs text-slate-400">${lvl.subtitle}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-slate-800/80 flex justify-between items-center mt-3">
+                        <span class="text-[11px] text-slate-500 font-medium">
+                            <i class="fas fa-layer-group text-slate-400"></i> ${lvl.steps.length} Desafios
+                        </span>
+                        ${
+                            isUnlocked 
+                            ? `<button onclick="startLevel(${lvl.id})" class="text-xs font-bold text-purple-300 hover:text-white flex items-center gap-1">
+                                Jogar <i class="fas fa-play text-[10px]"></i>
+                               </button>`
+                            : `<span class="text-xs text-slate-600">Bloqueado</span>`
+                        }
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Update overall progress bar
+            const total = levelsData.length;
+            const completedCount = state.completedLevels.length;
+            const pct = Math.round((completedCount / total) * 100);
+
+            document.getElementById('overallProgressBar').style.width = `${pct}%`;
+            document.getElementById('overallProgressPercent').innerText = `${pct}%`;
+            document.getElementById('progressStatusText').innerText = `${completedCount} de ${total} Fases Concluídas`;
+        }
+
+        function goToMenu() {
+            document.getElementById('screenMenu').classList.remove('hidden');
+            document.getElementById('screenGame').classList.add('hidden');
+            document.getElementById('screenVictory').classList.add('hidden');
+            renderMenu();
+        }
+
+        function startLevel(levelId) {
+            if (!state.unlockedLevels.includes(levelId)) return;
+
+            state.currentLevelId = levelId;
+            state.currentStepIndex = 0;
+
+            const lvl = levelsData.find(l => l.id === levelId);
+            document.getElementById('levelBadge').innerText = `Fase ${lvl.id}`;
+            document.getElementById('levelTitle').innerText = lvl.title;
+            document.getElementById('totalStepsNum').innerText = lvl.steps.length;
+
+            document.getElementById('screenMenu').classList.add('hidden');
+            document.getElementById('screenVictory').classList.add('hidden');
+            document.getElementById('screenGame').classList.remove('hidden');
+
+            renderCurrentStep();
+        }
+
+        function renderCurrentStep() {
+            const lvl = levelsData.find(l => l.id === state.currentLevelId);
+            const step = lvl.steps[state.currentStepIndex];
+
+            document.getElementById('currentStepNum').innerText = state.currentStepIndex + 1;
+            const progressPct = ((state.currentStepIndex + 1) / lvl.steps.length) * 100;
+            document.getElementById('levelStepProgressBar').style.width = `${progressPct}%`;
+
+            const card = document.getElementById('gameChallengeCard');
+            card.innerHTML = ''; // Clear container
+
+            // Render based on step type
+            if (step.type === 'matching_game') {
+                renderMatchingGame(step, card);
+            } else {
+                renderStandardQuiz(step, card);
+            }
+        }
+
+        function renderStandardQuiz(step, container) {
+            const questionHtml = `
+                <div class="space-y-4 mb-6">
+                    <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-semibold rounded-md border border-purple-500/30">
+                        Desafio Literário
+                    </span>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-100 leading-snug">${step.question}</h3>
+                </div>
+                <div class="space-y-3" id="quizOptionsContainer">
+                </div>
+                <div id="quizFeedbackArea" class="mt-4 hidden p-4 rounded-xl text-sm leading-relaxed border"></div>
+            `;
+            container.innerHTML = questionHtml;
+
+            const optsContainer = document.getElementById('quizOptionsContainer');
+
+            step.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700/90 border border-slate-700 transition flex items-start justify-between group";
+                btn.innerHTML = `
+                    <span class="text-sm md:text-base font-medium text-slate-200 group-hover:text-white">${opt.text}</span>
+                    <i class="fas fa-chevron-right text-slate-500 group-hover:text-purple-400 mt-1 text-xs"></i>
+                `;
+                btn.onclick = () => checkQuizAnswer(opt, step);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedOption, step) {
+            const feedbackArea = document.getElementById('quizFeedbackArea');
+            const optionsBtns = document.querySelectorAll('#quizOptionsContainer button');
+
+            // Disable all option buttons
+            optionsBtns.forEach(b => b.disabled = true);
+
+            if (selectedOption.correct) {
+                playSound('correct');
+                state.xp += 50;
+                state.streak += 1;
+                updateStatsUI();
+
+                feedbackArea.className = "mt-4 p-4 rounded-xl text-sm leading-relaxed bg-emerald-950/60 border border-emerald-500/40 text-emerald-200 flex flex-col gap-3";
+                feedbackArea.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-emerald-400">
+                        <i class="fas fa-check-circle text-lg"></i> Resposta Correta! (+50 XP)
+                    </div>
+                    <p>${selectedOption.feedback || "Excelente análise das características literárias!"}</p>
+                    <div class="text-right">
+                        <button onclick="nextStep()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg transition">
+                            Continuar <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                playSound('wrong');
+                state.streak = 0;
+                updateStatsUI();
+
+                feedbackArea.className = "mt-4 p-4 rounded-xl text-sm leading-relaxed bg-rose-950/60 border border-rose-500/40 text-rose-200 flex flex-col gap-3";
+                feedbackArea.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-rose-400">
+                        <i class="fas fa-times-circle text-lg"></i> Quase lá!
+                    </div>
+                    <p>${selectedOption.feedback || "Revise os conceitos do fichamento e tente novamente!"}</p>
+                    <div class="text-right">
+                        <button onclick="renderCurrentStep()" class="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg transition">
+                            Tentar Novamente <i class="fas fa-redo ml-1"></i>
+                        </button>
+                    </div>
+                `;
+            }
+            feedbackArea.classList.remove('hidden');
+        }
+
+        function renderMatchingGame(step, container) {
+            let selectedPairLeft = null;
+            let matchedCount = 0;
+
+            const html = `
+                <div class="space-y-2 mb-4">
+                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 text-xs font-semibold rounded-md border border-amber-500/30">
+                        Quebra-Cabeça do Brasil Real
+                    </span>
+                    <h3 class="text-lg font-bold text-slate-100">${step.question}</h3>
+                    <p class="text-xs text-slate-400">Selecione um item da esquerda e depois seu correspondente à direita!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
+                    <div class="space-y-2" id="leftMatchCol"></div>
+                    <div class="space-y-2" id="rightMatchCol"></div>
+                </div>
+
+                <div id="matchFeedback" class="hidden p-3 rounded-xl text-xs border text-center font-bold"></div>
+            `;
+            container.innerHTML = html;
+
+            const leftCol = document.getElementById('leftMatchCol');
+            const rightCol = document.getElementById('rightMatchCol');
+
+            // Shuffle right targets
+            const shuffledTargets = [...step.pairs].sort(() => Math.random() - 0.5);
+
+            step.pairs.forEach(pair => {
+                const btn = document.createElement('button');
+                btn.dataset.id = pair.id;
+                btn.className = "left-match-btn w-full p-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-left text-xs font-semibold text-slate-200 transition";
+                btn.innerText = pair.label;
+                btn.onclick = () => {
+                    document.querySelectorAll('.left-match-btn').forEach(b => b.classList.remove('border-amber-400', 'bg-amber-900/40'));
+                    btn.classList.add('border-amber-400', 'bg-amber-900/40');
+                    selectedPairLeft = pair.id;
+                };
+                leftCol.appendChild(btn);
+            });
+
+            shuffledTargets.forEach(pair => {
+                const btn = document.createElement('button');
+                btn.dataset.targetId = pair.id;
+                btn.className = "right-match-btn w-full p-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-left text-xs font-semibold text-slate-200 transition";
+                btn.innerText = pair.target;
+                btn.onclick = () => {
+                    if (!selectedPairLeft) {
+                        const fb = document.getElementById('matchFeedback');
+                        fb.className = "p-3 rounded-xl bg-amber-900/40 border border-amber-500/40 text-amber-300 text-xs";
+                        fb.innerText = "Escolha primeiro um item da coluna da esquerda!";
+                        fb.classList.remove('hidden');
+                        return;
+                    }
+
+                    if (selectedPairLeft === pair.id) {
+                        // Correct match!
+                        playSound('correct');
+                        btn.disabled = true;
+                        btn.className = "w-full p-3 rounded-xl bg-emerald-900/40 border border-emerald-500/50 text-emerald-300 text-xs font-bold";
+
+                        const matchedLeft = document.querySelector(`.left-match-btn[data-id="${selectedPairLeft}"]`);
+                        if (matchedLeft) {
+                            matchedLeft.disabled = true;
+                            matchedLeft.className = "w-full p-3 rounded-xl bg-emerald-900/40 border border-emerald-500/50 text-emerald-300 text-xs font-bold";
+                        }
+
+                        selectedPairLeft = null;
+                        matchedCount++;
+
+                        if (matchedCount === step.pairs.length) {
+                            state.xp += 80;
+                            updateStatsUI();
+                            const fb = document.getElementById('matchFeedback');
+                            fb.className = "p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs font-bold flex justify-between items-center";
+                            fb.innerHTML = `
+                                <span>🎉 Todas as associações pré-modernistas estão corretas! (+80 XP)</span>
+                                <button onclick="nextStep()" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs">Avançar</button>
+                            `;
+                            fb.classList.remove('hidden');
+                        }
+                    } else {
+                        playSound('wrong');
+                        const fb = document.getElementById('matchFeedback');
+                        fb.className = "p-3 rounded-xl bg-rose-900/40 border border-rose-500/40 text-rose-300 text-xs";
+                        fb.innerText = "Associação incorreta! Revise a relação entre autor/obra e o tema.";
+                        fb.classList.remove('hidden');
+                    }
+                };
+                rightCol.appendChild(btn);
+            });
+        }
+
+        function nextStep() {
+            const lvl = levelsData.find(l => l.id === state.currentLevelId);
+            state.currentStepIndex++;
+
+            if (state.currentStepIndex < lvl.steps.length) {
+                renderCurrentStep();
+            } else {
+                completeLevel(lvl);
+            }
+        }
+
+        function completeLevel(lvl) {
+            playSound('fanfare');
+
+            if (!state.completedLevels.includes(lvl.id)) {
+                state.completedLevels.push(lvl.id);
+            }
+
+            // Unlock next level if available
+            const nextLvlId = lvl.id + 1;
+            if (nextLvlId <= levelsData.length && !state.unlockedLevels.includes(nextLvlId)) {
+                state.unlockedLevels.push(nextLvlId);
+            }
+
+            document.getElementById('screenGame').classList.add('hidden');
+            document.getElementById('screenVictory').classList.remove('hidden');
+
+            document.getElementById('victorySubtitle').innerText = `Parabéns! Você concluiu a etapa de ${lvl.subtitle}!`;
+            document.getElementById('vicXP').innerText = `+150 XP`;
+            document.getElementById('vicBadge').innerText = lvl.badge;
+
+            const nextBtn = document.getElementById('nextLevelBtn');
+            if (nextLvlId > levelsData.length) {
+                nextBtn.innerText = "Ver Certificado Literário";
+                nextBtn.onclick = () => showFinalCertificate();
+            } else {
+                nextBtn.innerText = `Próxima Fase (${nextLvlId})`;
+                nextBtn.onclick = () => startLevel(nextLvlId);
+            }
+
+            state.xp += 100;
+            updateStatsUI();
+        }
+
+        function showFinalCertificate() {
+            alert(`🏆 PARABÉNS! Você concluiu todas as 5 Fases da Jornada PREVUPE 2026 com um total de ${state.xp} XP! Você domina o Parnasianismo, Simbolismo, Pré-Modernismo, Vanguardas e Modernismo de 22!`);
+            goToMenu();
+        }
+
+        function updateStatsUI() {
+            document.getElementById('playerXP').innerText = state.xp;
+            document.getElementById('playerStreak').innerText = state.streak;
+        }
+
+        /* -------------------------------------------------------------
+           MODAL TAB SYSTEM
+           ------------------------------------------------------------- */
+        function openStudyModal() {
+            document.getElementById('studyModal').classList.remove('hidden');
+            switchTab('tab1');
+        }
+
+        function closeStudyModal() {
+            document.getElementById('studyModal').classList.add('hidden');
+        }
+
+        function switchTab(tabId) {
+            ['tab1', 'tab2', 'tab3'].forEach(id => {
+                const btn = document.getElementById(`${id}Btn`);
+                if (id === tabId) {
+                    btn.className = "px-4 py-3 border-b-2 border-purple-500 text-purple-300 font-bold whitespace-nowrap";
+                } else {
+                    btn.className = "px-4 py-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap";
+                }
+            });
+
+            document.getElementById('studyModalContent').innerHTML = studyGuides[tabId];
+        }
+
+        window.onload = function() {
+            renderMenu();
+            updateStatsUI();
+        };
+    </script>
+</body>
+</html>
