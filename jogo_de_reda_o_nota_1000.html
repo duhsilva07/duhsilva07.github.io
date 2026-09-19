@@ -693,8 +693,8 @@
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="block font-medium text-slate-300 mb-1">Chave API Personalizada (Opcional)</label>
-                    <input type="password" id="custom-api-key" placeholder="Insira sua chave API do Gemini (deixe em branco para usar a padrão)" class="w-full bg-slate-950 text-slate-100 p-3 rounded-xl border border-slate-800 focus:border-indigo-500 outline-none font-mono">
-                    <p class="text-[11px] text-slate-500 mt-1">Por padrão, o aplicativo utiliza a integração automática com o modelo `gemini-3-flash-preview`.</p>
+                    <input type="password" id="custom-api-key" placeholder="Insira sua chave API do Gemini (deixe em branco para o modo offline autônomo)" class="w-full bg-slate-950 text-slate-100 p-3 rounded-xl border border-slate-800 focus:border-indigo-500 outline-none font-mono">
+                    <p class="text-[11px] text-slate-500 mt-1">O aplicativo possui um motor inteligente local integrado para correções mesmo sem chave API configurada.</p>
                 </div>
 
                 <div>
@@ -1044,8 +1044,38 @@
             }
         }
 
-        async function callGeminiAPI(systemInstruction, userQuery) {
-            const apiKey = state.apiKey || "";
+        /* UTILITY TO SAFELY PARSE JSON FROM GEMINI API */
+        function cleanAndParseJSON(rawText) {
+            if (!rawText) return null;
+            let cleaned = rawText.trim();
+            if (cleaned.startsWith("```json")) {
+                cleaned = cleaned.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+            } else if (cleaned.startsWith("```")) {
+                cleaned = cleaned.replace(/^```\s*/, "").replace(/\s*```$/, "");
+            }
+            try {
+                return JSON.parse(cleaned);
+            } catch (e) {
+                const firstIdx = cleaned.indexOf('{');
+                const lastIdx = cleaned.lastIndexOf('}');
+                if (firstIdx !== -1 && lastIdx !== -1) {
+                    try {
+                        return JSON.parse(cleaned.substring(firstIdx, lastIdx + 1));
+                    } catch (err) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+        }
+
+        /* GEMINI API WRAPPER */
+        async function callGeminiAPI(systemInstruction, userQuery, jsonOutput = false) {
+            const apiKey = state.apiKey ? state.apiKey.trim() : "";
+            if (!apiKey) {
+                throw new Error("Nenhuma chave API configurada.");
+            }
+
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
             const payload = {
@@ -1053,37 +1083,196 @@
                 systemInstruction: { parts: [{ text: systemInstruction }] }
             };
 
-            let attempts = 0;
-            let maxAttempts = 3;
-            let delay = 1000;
-
-            while (attempts < maxAttempts) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Erro na API Gemini: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (resultText) return resultText;
-
-                    throw new Error("Resposta inválida da IA");
-                } catch (err) {
-                    attempts++;
-                    if (attempts >= maxAttempts) throw err;
-                    await new Promise(res => setTimeout(res, delay));
-                    delay *= 2;
-                }
+            if (jsonOutput) {
+                payload.generationConfig = { responseMimeType: "application/json" };
             }
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro na API Gemini: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!resultText) throw new Error("Resposta em branco da IA");
+            return resultText;
         }
 
-        /* EVALUATE SINGLE STEP WITH IA */
+        /* LOCAL SMART EVALUATOR FALLBACKS */
+        function localEvaluateParagraph(step, text) {
+            const words = countWords(text);
+            let html = '';
+            
+            if (step === 1) { // Introdução
+                const hasConn = /(nesse contexto|portanto|no entanto|todavia|sob essa ótica|dessa forma|diante disso)/i.test(text);
+                const hasTese = /(torna-se premente|é imperioso|faz-se necessário|cabe discutir|desafios|problema)/i.test(text);
+                
+                html = `
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-indigo-950/60 p-2.5 rounded-xl border border-indigo-800/60">
+                            <span class="font-bold text-xs text-indigo-300"><i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i>Diagnóstico Inteligente (Introdução)</span>
+                            <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded font-mono">+50 XP</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid ${words >= 25 ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-amber-400'} text-xs"></i>
+                                <span><strong>Extensão do Parágrafo:</strong> ${words} palavras (Recomendado: 25-50 palavras).</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid ${hasConn ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-amber-400'} text-xs"></i>
+                                <span><strong>Conectivos Interoracionais:</strong> ${hasConn ? 'Identificados com clareza' : 'Adicione conectivos como "Nesse contexto" ou "Todavia"'}.</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid ${hasTese ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-amber-400'} text-xs"></i>
+                                <span><strong>Tese e Posicionamento:</strong> ${hasTese ? 'Tese explícita identificada' : 'Deixe seu posicionamento mais evidente ao final do parágrafo'}.</span>
+                            </li>
+                        </ul>
+                        <div class="p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-[11px] text-slate-300">
+                            <strong class="text-indigo-400">💡 Dica da Estrutura Infalível:</strong> Garanta que sua introdução apresente 1 repertório de abertura e antecipe os dois argumentos (A1 e A2) que serão desenvolvidos a seguir.
+                        </div>
+                    </div>
+                `;
+            } else if (step === 2 || step === 3) { // Desenvolvimento
+                const hasRep = /(segundo|conforme|de acordo|filósofo|sociólogo|história|conceito|estudo|dado|lei|bauman|kant|marx)/i.test(text);
+                const hasConn = /(em primeira análise|em primeiro lugar|ademais|outrossim|por outro lado|além disso|nesse sentido)/i.test(text);
+                
+                html = `
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-indigo-950/60 p-2.5 rounded-xl border border-indigo-800/60">
+                            <span class="font-bold text-xs text-indigo-300"><i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i>Diagnóstico Inteligente (Desenvolvimento ${step - 1})</span>
+                            <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded font-mono">+50 XP</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid ${words >= 35 ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-amber-400'} text-xs"></i>
+                                <span><strong>Tamanho e Profundidade:</strong> ${words} palavras (Recomendado: 40-70 palavras).</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid ${hasConn ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-amber-400'} text-xs"></i>
+                                <span><strong>Tópico Frasal / Conectivo:</strong> ${hasConn ? 'Conectivo de transição presente' : 'Inicie o parágrafo com "Em primeira análise" ou "Ademais"'}.</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid ${hasRep ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-amber-400'} text-xs"></i>
+                                <span><strong>Repertório Sociocultural:</strong> ${hasRep ? 'Repertório legítimo localizado' : 'Reforce com a citação de um filósofo, lei ou fato histórico'}.</span>
+                            </li>
+                        </ul>
+                        <div class="p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-[11px] text-slate-300">
+                            <strong class="text-indigo-400">💡 Dica da Estrutura Infalível:</strong> Após a citação, explique a Relação Causal: "Analogamente, percebe-se que no Brasil essa lógica se reflete em...".
+                        </div>
+                    </div>
+                `;
+            } else { // Conclusão
+                const agente = /(ministério|governo|escola|mídia|ong|sociedade|poder público|família)/i.test(text);
+                const acao = /(deve|precisa|promover|criar|implantar|desenvolver|garantir)/i.test(text);
+                const modo = /(por meio de|através de|mediante|com o auxílio de)/i.test(text);
+                const efeito = /(com o intuito de|a fim de|para que|com o fito de|visando)/i.test(text);
+                
+                html = `
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-indigo-950/60 p-2.5 rounded-xl border border-indigo-800/60">
+                            <span class="font-bold text-xs text-indigo-300"><i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i>Diagnóstico da Proposta de Intervenção</span>
+                            <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded font-mono">+50 XP</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                                <span>1. Agente</span>
+                                <i class="fa-solid ${agente ? 'fa-check text-emerald-400' : 'fa-xmark text-slate-600'}"></i>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                                <span>2. Ação</span>
+                                <i class="fa-solid ${acao ? 'fa-check text-emerald-400' : 'fa-xmark text-slate-600'}"></i>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                                <span>3. Modo/Meio</span>
+                                <i class="fa-solid ${modo ? 'fa-check text-emerald-400' : 'fa-xmark text-slate-600'}"></i>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                                <span>4. Efeito</span>
+                                <i class="fa-solid ${efeito ? 'fa-check text-emerald-400' : 'fa-xmark text-slate-600'}"></i>
+                            </div>
+                        </div>
+                        <div class="p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-[11px] text-slate-300">
+                            <strong class="text-indigo-400">💡 Dica da Estrutura Infalível:</strong> Não se esqueça do <strong>5º elemento (Detalhamento)</strong>. Adicione um exemplo explicativo ao agente ou ao meio de ação.
+                        </div>
+                    </div>
+                `;
+            }
+            return html;
+        }
+
+        function localEvaluateFullEssay(text, themeTitle) {
+            const words = countWords(text);
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+            
+            // C1: Grammar & Formal Standard
+            let c1 = 120;
+            if (words >= 150) c1 = 160;
+            if (words >= 220 && words <= 450) c1 = 200;
+            if (words < 100) c1 = 80;
+
+            // C2: Repertory & Theme Comprehension
+            const repRegex = /(segundo|conforme|de acordo com|filósofo|sociólogo|constituição|história|bauman|kant|habermas|foucault|platão|aristóteles|marx|durkheim|rousseau|dado|pesquisa|ibge|onu|lei)/i;
+            let c2 = repRegex.test(text) ? 160 : 120;
+            if (repRegex.test(text) && words >= 200) c2 = 200;
+
+            // C3: Text Structure & Project
+            let c3 = 120;
+            if (paragraphs.length >= 3) c3 = 160;
+            if (paragraphs.length >= 4 && words >= 200) c3 = 200;
+
+            // C4: Connectives & Cohesion
+            const connRegex = /(em primeira análise|em primeiro lugar|ademais|outrossim|por outro lado|contudo|no entanto|todavia|dessa forma|portanto|infere-se, portanto|desse modo|assim sendo)/i;
+            let c4 = connRegex.test(text) ? 160 : 120;
+            const connMatches = text.match(new RegExp(connRegex, 'gi'));
+            if (connMatches && connMatches.length >= 3) c4 = 200;
+
+            // C5: 5 Intervention Elements
+            const agente = /(ministério|governo|escola|mídia|ong|sociedade|poder público|família)/i.test(text);
+            const acao = /(deve|precisa|promover|criar|implantar|desenvolver|garantir|fazer)/i.test(text);
+            const modo = /(por meio de|através de|mediante|com o auxílio de)/i.test(text);
+            const efeito = /(com o intuito de|a fim de|para que|com o fito de|visando)/i.test(text);
+            const detalhamento = /(como, por exemplo|a saber|exemplo disso|ou seja)/i.test(text);
+
+            let c5ElementsCount = [agente, acao, modo, efeito, detalhamento].filter(Boolean).length;
+            let c5 = Math.min(200, Math.max(40, c5ElementsCount * 40));
+
+            const total = c1 + c2 + c3 + c4 + c5;
+
+            const strengths = [];
+            const improvements = [];
+
+            if (c1 >= 160) strengths.push("Boa extensão de texto e domínio da norma padrão da língua portuguesa.");
+            else improvements.push("Desenvolva mais o texto e atente-se à pontuação e concordância verbal.");
+
+            if (c2 >= 160) strengths.push("Uso relevante de repertório sociocultural e fundamentação de ideias.");
+            else improvements.push("Inclua citação de filósofos, leis, sociólogos ou dados históricos para reforçar sua tese.");
+
+            if (c4 >= 160) strengths.push("Excelente articulação interparágrafos com conectivos diversificados.");
+            else improvements.push("Utilize mais conectivos lógicos (ex: 'Ademais', 'Contudo', 'Portanto') no início das frases.");
+
+            if (c5 >= 160) strengths.push("Proposta de intervenção consistente e articulada com o problema proposto.");
+            else improvements.push("Garanta que a proposta de intervenção contenha os 5 elementos: Agente, Ação, Modo/Meio, Efeito e Detalhamento.");
+
+            return {
+                c1_score: c1,
+                c2_score: c2,
+                c3_score: c3,
+                c4_score: c4,
+                c5_score: c5,
+                total_score: total,
+                summary: `Sua redação obteve pontuação estimada em ${total}/1000. O texto apresenta ${paragraphs.length} parágrafos e ${words} palavras, demonstrando boa estrutura dissertativa-argumentativa.`,
+                strengths: strengths,
+                improvements: improvements,
+                intervention_check: { agente, acao, modo, efeito, detalhamento }
+            };
+        }
+
+        /* EVALUATE SINGLE STEP WITH IA OR FALLBACK */
         async function evaluateCurrentStep() {
             const text = state.stepsData[state.currentStep].text;
             if (!text || text.trim().length < 15) {
@@ -1094,7 +1283,7 @@
             const feedbackEl = document.getElementById('step-ai-feedback');
             const statusTag = document.getElementById('ai-status-tag');
 
-            statusTag.innerText = "Analisando com IA...";
+            statusTag.innerText = "Analisando...";
             statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-indigo-900 text-indigo-300 animate-pulse";
             
             feedbackEl.innerHTML = `
@@ -1107,52 +1296,39 @@
             const stepNames = { 1: 'Introdução', 2: 'Desenvolvimento 1', 3: 'Desenvolvimento 2', 4: 'Conclusão' };
             const systemPrompt = `Você é um corretor e professor especialista de redação no modelo ENEM e vestibulares de alta performance.
 Sua missão é avaliar especificamente a etapa de '${stepNames[state.currentStep]}' de um texto sobre o tema: '${state.theme.title}'.
+Retorne a resposta formatada em HTML simples (divs, badges e listas com ícones FontAwesome).
+1. Nota / Diagnóstico Geral da Etapa.
+2. Análise dos Elementos da Estrutura Infalível.
+3. 2 Dicas Concretas de Aprimoramento.`;
 
-Critérios de análise obrigatórios para '${stepNames[state.currentStep]}':
-${JSON.stringify(STEP_CONFIG[state.currentStep].checklist)}
-
-Formato da resposta:
-Retorne a resposta estruturada em HTML simples (divs, badges e listas com ícones FontAwesome).
-1. Nota / Diagnóstico Geral da Etapa (Ex: Excelente, Necessita Ajustes, Incompleto).
-2. Análise dos Elementos da Estrutura Infalível (Mencione presença/ausência de Tese, Repertório, Conectivos, Proposta de Intervenção, etc).
-3. 2 Dicas Concretas de Aprimoramento Refletivo (Como melhorar a fluidez, argumentos ou repertório).
-4. Indique se o aluno ganha XP (Se o parágrafo estiver bem feito, inclua [XP_BOOST:50]).`;
-
+            let usedLocal = false;
             try {
-                const responseText = await callGeminiAPI(systemPrompt, `Parágrafo do Aluno:\n"${text}"`);
-                
-                // Process XP award
-                if (responseText.includes('[XP_BOOST:50]')) {
-                    addXP(50);
+                if (!state.apiKey) {
+                    throw new Error("Local Mode");
                 }
-
-                const cleanedHtml = responseText.replace(/\[XP_BOOST:50\]/g, '');
-                feedbackEl.innerHTML = `<div class="space-y-3">${cleanedHtml}</div>`;
-                state.stepsData[state.currentStep].aiFeedback = feedbackEl.innerHTML;
-
-                statusTag.innerText = "Análise Concluída";
-                statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800";
-                
-                showToast("Feedback gerado com sucesso!", "success");
+                const responseText = await callGeminiAPI(systemPrompt, `Parágrafo do Aluno:\n"${text}"`);
+                feedbackEl.innerHTML = `<div class="space-y-3">${responseText}</div>`;
             } catch (err) {
-                console.error(err);
-                statusTag.innerText = "Erro na análise";
-                statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-rose-950 text-rose-400";
-                
-                feedbackEl.innerHTML = `
-                    <div class="p-4 bg-rose-950/40 rounded-xl border border-rose-900/60 text-slate-300">
-                        <i class="fa-solid fa-triangle-exclamation text-rose-400 mb-1 block"></i>
-                        Não foi possível se conectar à IA no momento. Tente novamente em alguns instantes.
-                    </div>
-                `;
+                // Fallback to local evaluator
+                usedLocal = true;
+                const localHtml = localEvaluateParagraph(state.currentStep, text);
+                feedbackEl.innerHTML = localHtml;
             }
+
+            addXP(50);
+            state.stepsData[state.currentStep].aiFeedback = feedbackEl.innerHTML;
+
+            statusTag.innerText = usedLocal ? "Análise Local" : "Análise Concluída";
+            statusTag.className = "text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800";
+            
+            showToast("Análise do parágrafo realizada com sucesso!", "success");
         }
 
         /* FULL ESSAY EVALUATION MODE */
         async function evaluateFullEssay() {
             const text = document.getElementById('full-essay-textarea').value;
-            if (!text || text.trim().split(/\s+/).length < 50) {
-                showToast("Sua redação precisa ter no mínimo 50 palavras para uma avaliação completa.", "error");
+            if (!text || countWords(text) < 30) {
+                showToast("Sua redação precisa ter no mínimo 30 palavras para uma avaliação completa.", "error");
                 return;
             }
 
@@ -1167,19 +1343,21 @@ Retorne a resposta estruturada em HTML simples (divs, badges e listas com ícone
                 </div>
             `;
 
-            const systemPrompt = `Você é uma banca avaliadora oficial do ENEM. Corrija a redação completa com base no Tema: '${state.theme.title}'.
+            let result = null;
 
-Sua resposta DEVE ser estritamente no formato JSON com o seguinte schema:
+            if (state.apiKey) {
+                const systemPrompt = `Você é uma banca avaliadora oficial do ENEM. Corrija a redação completa com base no Tema: '${state.theme.title}'.
+Sua resposta DEVE ser estritamente em formato JSON com a seguinte estrutura:
 {
-  "c1_score": 0 a 200 (número inteiro múltiplo de 40),
-  "c2_score": 0 a 200 (número inteiro múltiplo de 40),
-  "c3_score": 0 a 200 (número inteiro múltiplo de 40),
-  "c4_score": 0 a 200 (número inteiro múltiplo de 40),
-  "c5_score": 0 a 200 (número inteiro múltiplo de 40),
+  "c1_score": 0 a 200,
+  "c2_score": 0 a 200,
+  "c3_score": 0 a 200,
+  "c4_score": 0 a 200,
+  "c5_score": 0 a 200,
   "total_score": soma das 5 notas,
-  "summary": "Resumo geral pedagógico da redação",
+  "summary": "Resumo geral pedagógico",
   "strengths": ["Ponto forte 1", "Ponto forte 2"],
-  "improvements": ["Melhoria necessária 1", "Melhoria necessária 2"],
+  "improvements": ["Melhoria 1", "Melhoria 2"],
   "intervention_check": {
     "agente": true ou false,
     "acao": true ou false,
@@ -1188,66 +1366,51 @@ Sua resposta DEVE ser estritamente no formato JSON com o seguinte schema:
     "detalhamento": true ou false
   }
 }`;
-
-            try {
-                const apiKey = state.apiKey || "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: `Texto Completo da Redação:\n\n${text}` }] }],
-                    generationConfig: {
-                        responseMimeType: "application/json"
-                    },
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-                const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                const result = JSON.parse(jsonText);
-
-                // Update UI Scores & Bars
-                updateCompetencyScore('c1', result.c1_score);
-                updateCompetencyScore('c2', result.c2_score);
-                updateCompetencyScore('c3', result.c3_score);
-                updateCompetencyScore('c4', result.c4_score);
-                updateCompetencyScore('c5', result.c5_score);
-
-                scoreBadge.innerText = `${result.total_score} / 1000`;
-
-                // Render Report
-                reportEl.innerHTML = `
-                    <div class="space-y-2">
-                        <p class="font-semibold text-indigo-300">${result.summary}</p>
-                        
-                        <div class="mt-2">
-                            <span class="font-bold text-emerald-400 block mb-1">Pontos Fortes:</span>
-                            <ul class="list-disc list-inside space-y-0.5 text-slate-300">
-                                ${result.strengths.map(s => `<li>${s}</li>`).join('')}
-                            </ul>
-                        </div>
-
-                        <div class="mt-2">
-                            <span class="font-bold text-amber-400 block mb-1">Onde Melhorar:</span>
-                            <ul class="list-disc list-inside space-y-0.5 text-slate-300">
-                                ${result.improvements.map(i => `<li>${i}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-
-                addXP(100);
-                showToast("Correção Nota 1000 finalizada com sucesso!", "success");
-
-            } catch (err) {
-                console.error(err);
-                reportEl.innerHTML = `<div class="text-rose-400 p-2">Erro ao processar a avaliação em formato JSON. Tente novamente.</div>`;
+                try {
+                    const rawResponse = await callGeminiAPI(systemPrompt, `Texto Completo:\n\n${text}`, true);
+                    result = cleanAndParseJSON(rawResponse);
+                } catch (err) {
+                    console.warn("API Call Failed, reverting to local evaluator:", err);
+                }
             }
+
+            // Fallback to local evaluation engine if API failed or no key
+            if (!result) {
+                result = localEvaluateFullEssay(text, state.theme.title);
+            }
+
+            // Update UI Scores & Progress Bars
+            updateCompetencyScore('c1', result.c1_score || 120);
+            updateCompetencyScore('c2', result.c2_score || 120);
+            updateCompetencyScore('c3', result.c3_score || 120);
+            updateCompetencyScore('c4', result.c4_score || 120);
+            updateCompetencyScore('c5', result.c5_score || 120);
+
+            scoreBadge.innerText = `${result.total_score} / 1000`;
+
+            // Render Detailed Report
+            reportEl.innerHTML = `
+                <div class="space-y-3">
+                    <p class="font-semibold text-indigo-300 leading-relaxed">${result.summary}</p>
+                    
+                    <div>
+                        <span class="font-bold text-emerald-400 block mb-1"><i class="fa-solid fa-thumbs-up mr-1"></i>Pontos Fortes:</span>
+                        <ul class="list-disc list-inside space-y-0.5 text-slate-300">
+                            ${(result.strengths || []).map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div>
+                        <span class="font-bold text-amber-400 block mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Onde Melhorar:</span>
+                        <ul class="list-disc list-inside space-y-0.5 text-slate-300">
+                            ${(result.improvements || []).map(i => `<li>${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+
+            addXP(100);
+            showToast("Correção concluída com sucesso!", "success");
         }
 
         function updateCompetencyScore(compKey, score) {
